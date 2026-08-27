@@ -145,7 +145,6 @@ smarttv: {
   location: "Accra",
   description: "New Smart TV with high quality display."
 },
-
 laptop: {
   icon: "💻",
   name: "Laptop Computer",
@@ -157,14 +156,20 @@ laptop: {
 };
 
 const params = new URLSearchParams(window.location.search);
-const product = products[params.get("item")] || products.iphone;
+const item = params.get("item");
 
-document.getElementById("productIcon").textContent = product.icon;
-document.getElementById("productName").textContent = product.name;
-document.getElementById("productPrice").textContent = product.price;
-document.getElementById("productCondition").textContent = product.condition;
-document.getElementById("productLocation").textContent = product.location;
-document.getElementById("productDescription").textContent = product.description;
+const product = products[item];
+
+if (product) {
+  document.getElementById("productIcon").textContent = product.icon;
+  document.getElementById("productName").textContent = product.name;
+  document.getElementById("productPrice").textContent = product.price;
+  document.getElementById("productCondition").textContent = product.condition;
+  document.getElementById("productLocation").textContent = product.location;
+  document.getElementById("productDescription").textContent = product.description;
+} else {
+  document.getElementById("productName").textContent = "Product not found";
+}
 </script>
 
 </body>
