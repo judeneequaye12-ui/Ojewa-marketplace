@@ -55,9 +55,18 @@ if (item) {
     <h2>${item.name}</h2>
     <p class="price">${item.price}</p>
     <p>${item.location}</p>
+
+    <button onclick="removeFavorite()">🗑️ Remove Favourite</button>
   `;
 }
 
+function removeFavorite() {
+  localStorage.removeItem("favoriteItem");
+  alert("Removed from favourites");
+  location.reload();
+}
+
 </script>
+
 </body>
 </html>
