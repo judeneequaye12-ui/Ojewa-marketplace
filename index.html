@@ -91,8 +91,31 @@
 <script>
 function searchDemo(e){
   e.preventDefault();
-  const q=document.getElementById('searchInput').value.trim();
-  alert(q ? 'OJEWA search ready for: '+q : 'Type something to search OJEWA.');
+
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+
+  if(q.includes("laptop")){
+    window.location.href = "product.html?item=laptop";
+  }
+  else if(q.includes("iphone") || q.includes("phone")){
+    window.location.href = "product.html?item=iphone";
+  }
+  else if(q.includes("samsung")){
+    window.location.href = "product.html?item=samsung";
+  }
+  else if(q.includes("car") || q.includes("toyota")){
+    window.location.href = "product.html?item=toyota";
+  }
+  else if(q.includes("tyre") || q.includes("wheel")){
+    window.location.href = "product.html?item=tyres";
+  }
+  else if(q.includes("sofa")){
+  alert("Sofa coming soon.");
+}
+  else {
+    alert("Product not found. Try another search.");
+  }
+
   return false;
 }
 </script>
