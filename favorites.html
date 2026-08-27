@@ -45,6 +45,19 @@ header {
 <a href="index.html">Back to OJEWA</a>
 
 </div>
+<script>
 
+const item = JSON.parse(localStorage.getItem("favoriteItem"));
+
+if (item) {
+  document.querySelector(".favourites").innerHTML = `
+    <div class="pic">${item.icon}</div>
+    <h2>${item.name}</h2>
+    <p class="price">${item.price}</p>
+    <p>${item.location}</p>
+  `;
+}
+
+</script>
 </body>
 </html>
