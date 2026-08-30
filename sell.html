@@ -111,7 +111,6 @@ header {
 </div>
 
 <script>
-
 function postItem() {
   const name = document.getElementById("productName").value;
   const price = document.getElementById("productPrice").value;
@@ -123,9 +122,22 @@ function postItem() {
     return;
   }
 
+  const listing = {
+    name: name,
+    price: price,
+    location: location,
+    description: description,
+    date: new Date().toLocaleDateString()
+  };
+
+  let listings = JSON.parse(localStorage.getItem("ojewaListings")) || [];
+
+  listings.push(listing);
+
+  localStorage.setItem("ojewaListings", JSON.stringify(listings));
+
   alert("Your item has been posted to OJEWA! 🎉");
 }
-
 </script>
 
 </body>
