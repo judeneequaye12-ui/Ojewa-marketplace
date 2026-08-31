@@ -4,66 +4,330 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>OJEWA — Buy • Sell • Connect</title>
+
   <style>
-    :root{--green:#12834b;--orange:#f28c28;--dark:#18221b;--light:#f8faf8}
-    *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:var(--dark);background:var(--light)}
-    header{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:#fff}
-    .brand{font-size:28px;font-weight:800;color:var(--green)}.brand span{background:var(--green);color:#fff;border-radius:12px;padding:5px 10px;margin-right:8px}
-    nav a{margin:0 10px;color:var(--dark);text-decoration:none}.hero{padding:70px 6%;background:linear-gradient(135deg,#e9f8ef,#fff4e8)}
-    .hero h1{font-size:56px;line-height:1;margin:10px 0}.hero h1 span{color:var(--green)}
-    .hero p{font-size:19px;max-width:560px}.search{display:flex;max-width:650px;margin-top:28px}
-    .search input{flex:1;padding:17px;border:1px solid #ccd6ce;border-radius:12px 0 0 12px;font-size:16px}
-    .search button,.sell{padding:17px 22px;border:0;background:var(--green);color:#fff;font-weight:700;border-radius:0 12px 12px 0}
-    .sell{border-radius:12px;margin-top:16px;background:var(--orange)}.section{padding:45px 6%}.section h2{font-size:30px}
-    .cats,.listings{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
-    .cat,.card{background:#fff;border:1px solid #e1e7e2;border-radius:16px;padding:22px}.cat{font-weight:700}
-    .cat span{font-size:30px;display:block;margin-bottom:10px}.listings{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
-    .pic{height:140px;border-radius:12px;background:#eef5ef;display:grid;place-items:center;font-size:55px}
-    .price{font-size:20px;font-weight:800;color:var(--green)}.tag{font-size:12px;color:var(--orange);font-weight:700}
-    .banner{margin:20px 6% 60px;padding:40px;border-radius:20px;background:var(--green);color:#fff}.banner h2{font-size:32px}
-    footer{text-align:center;padding:30px;background:var(--dark);color:#fff}footer span{display:block;margin-top:8px}
-    .mobile{display:none}
+    :root{
+      --green:#12834b;
+      --orange:#f28c28;
+      --dark:#18221b;
+      --light:#f8faf8
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      color:var(--dark);
+      background:var(--light)
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 6%;
+      background:#fff
+    }
+
+    .brand{
+      font-size:28px;
+      font-weight:800;
+      color:var(--green)
+    }
+
+    .brand span{
+      background:var(--green);
+      color:#fff;
+      border-radius:12px;
+      padding:5px 10px;
+      margin-right:8px
+    }
+
+    nav a{
+      margin:0 10px;
+      color:var(--dark);
+      text-decoration:none
+    }
+
+    .hero{
+      padding:70px 6%;
+      background:linear-gradient(135deg,#e9f8ef,#fff4e8)
+    }
+
+    .hero h1{
+      font-size:56px;
+      line-height:1;
+      margin:10px 0
+    }
+
+    .hero h1 span{
+      color:var(--green)
+    }
+
+    .hero p{
+      font-size:19px;
+      max-width:560px
+    }
+
+    .search{
+      display:flex;
+      max-width:650px;
+      margin-top:28px
+    }
+
+    .search input{
+      flex:1;
+      padding:17px;
+      border:1px solid #ccd6ce;
+      border-radius:12px 0 0 12px;
+      font-size:16px
+    }
+
+    .search button,
+    .sell{
+      padding:17px 22px;
+      border:0;
+      background:var(--green);
+      color:#fff;
+      font-weight:700;
+      border-radius:0 12px 12px 0
+    }
+
+    .sell{
+      border-radius:12px;
+      margin-top:16px;
+      background:var(--orange);
+      text-decoration:none;
+      display:inline-block
+    }
+
+    .section{
+      padding:45px 6%
+    }
+
+    .section h2{
+      font-size:30px
+    }
+
+    .cats,
+    .listings{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+      gap:14px
+    }
+
+    .cat,
+    .card{
+      background:#fff;
+      border:1px solid #e1e7e2;
+      border-radius:16px;
+      padding:22px;
+      text-decoration:none;
+      color:var(--dark);
+      display:block
+    }
+
+    .cat{
+      font-weight:700
+    }
+
+    .cat span{
+      font-size:30px;
+      display:block;
+      margin-bottom:10px
+    }
+
+    .listings{
+      grid-template-columns:repeat(auto-fit,minmax(210px,1fr))
+    }
+
+    .pic{
+      height:140px;
+      border-radius:12px;
+      background:#eef5ef;
+      display:grid;
+      place-items:center;
+      font-size:55px
+    }
+
+    .price{
+      font-size:20px;
+      font-weight:800;
+      color:var(--green)
+    }
+
+    .tag{
+      font-size:12px;
+      color:var(--orange);
+      font-weight:700
+    }
+
+    .banner{
+      margin:20px 6% 60px;
+      padding:40px;
+      border-radius:20px;
+      background:var(--green);
+      color:#fff
+    }
+
+    .banner h2{
+      font-size:32px
+    }
+
+    footer{
+      text-align:center;
+      padding:30px;
+      background:var(--dark);
+      color:#fff
+    }
+
+    footer span{
+      display:block;
+      margin-top:8px
+    }
+
+    .mobile{
+      display:none
+    }
+
     @media(max-width:700px){
-      nav{display:none}.hero h1{font-size:44px}.search{display:block}
-      .search input,.search button{width:100%;border-radius:12px;margin:3px 0}
-      .mobile{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;justify-content:space-around;padding:12px;border-top:1px solid #ddd;z-index:10}
-      .mobile a{color:var(--dark);text-decoration:none;font-size:12px;text-align:center}.mobile b{display:block;font-size:20px}
+
+      nav{
+        display:none
+      }
+
+      .hero h1{
+        font-size:44px
+      }
+
+      .search{
+        display:block
+      }
+
+      .search input,
+      .search button{
+        width:100%;
+        border-radius:12px;
+        margin:3px 0
+      }
+
+      .mobile{
+        display:flex;
+        position:fixed;
+        bottom:0;
+        left:0;
+        right:0;
+        background:#fff;
+        justify-content:space-around;
+        padding:12px;
+        border-top:1px solid #ddd;
+        z-index:10
+      }
+
+      .mobile a{
+        color:var(--dark);
+        text-decoration:none;
+        font-size:12px;
+        text-align:center
+      }
+
+      .mobile b{
+        display:block;
+        font-size:20px
+      }
     }
   </style>
 </head>
+
 <body>
+
 <header>
-  <div class="brand"><span>O</span>OJEWA</div>
-  <nav><a href="Categories.html">Categories</a>
-  <strong>Account</strong>
+  <div class="brand">
+    <span>O</span>OJEWA
+  </div>
+
+  <nav>
+    <a href="categories.html">Categories</a>
+    <a href="account.html">Account</a>
+  </nav>
 </header>
 
 <main>
+
 <section class="hero">
   <small>GHANA'S GROWING MARKETPLACE</small>
-  <h1>Buy. Sell.<br><span>Connect.</span></h1>
-  <p>Find great deals, discover local sellers, and put your own products in front of buyers.</p>
+
+  <h1>
+    Buy. Sell.<br>
+    <span>Connect.</span>
+  </h1>
+
+  <p>
+    Find great deals, discover local sellers, and put your own products in front of buyers.
+  </p>
+
   <form class="search" onsubmit="return searchDemo(event)">
     <input id="searchInput" placeholder="What are you looking for?">
-   <button>Search</button>
+    <button type="submit">Search</button>
   </form>
+
   <a href="sell.html" class="sell">+ Start Selling</a>
 </section>
 
+
 <section class="section" id="categories">
+
   <h2>Shop by category</h2>
+
   <div class="cats">
-    <a href="phones.html" class="cat"><span>📱</span>Phones & Tablets</a>
-    <a href="cars.html" class="cat"><span>🚗</span>Cars & Vehicles</a>
-    <a href="tyres.html" class="cat"><span>🛞</span>Tyres & Wheels</a>
-    <a href="electronics.html" class="cat"><span>💻</span>Electronics</a>
-    <a href="fashion.html" class="cat"><span>👗</span>Fashion</a>
-   <a href="home.html" class="cat"><span>🏠</span>Home & Living</a>
-    <a href="property.html" class="cat"><span>🏘️</span>Property</a>
-    <a href="jobs.html" class="cat"><span>💼</span>Jobs & Services</a>
+
+    <a href="phones.html" class="cat">
+      <span>📱</span>
+      Phones & Tablets
+    </a>
+
+    <a href="cars.html" class="cat">
+      <span>🚗</span>
+      Cars & Vehicles
+    </a>
+
+    <a href="tyres.html" class="cat">
+      <span>🛞</span>
+      Tyres & Wheels
+    </a>
+
+    <a href="electronics.html" class="cat">
+      <span>💻</span>
+      Electronics
+    </a>
+
+    <a href="fashion.html" class="cat">
+      <span>👗</span>
+      Fashion
+    </a>
+
+    <a href="home.html" class="cat">
+      <span>🏠</span>
+      Home & Living
+    </a>
+
+    <a href="property.html" class="cat">
+      <span>🏘️</span>
+      Property
+    </a>
+
+    <a href="jobs.html" class="cat">
+      <span>💼</span>
+      Jobs & Services
+    </a>
+
   </div>
 </section>
+
+
 <section class="section" id="featured">
+
   <h2>Featured listings</h2>
 
   <div class="listings">
@@ -105,49 +369,118 @@
 
 
 <section class="banner" id="sell">
+
   <h2>Turn what you have into an opportunity.</h2>
-  <p>Post a listing on OJEWA and reach buyers around Ghana.</p>
-  <button class="sell" onclick="alert('Selling flow coming next in the OJEWA MVP.')">Post an item</button>
+
+  <p>
+    Post a listing on OJEWA and reach buyers around Ghana.
+  </p>
+
+  <button
+    class="sell"
+    onclick="alert('Selling flow coming next in the OJEWA MVP.')">
+    Post an item
+  </button>
+
 </section>
+
 </main>
 
+
 <nav class="mobile">
-  <a href="#"><b>⌂</b>Home</a><a href="#categories"><b>▦</b>Categories</a><a href="#sell"><b>＋</b>Sell</a>
-  <a href="#featured"><b>♡</b>Favorites</a><a href="account.html"><b>◉</b>Account</a>
+
+  <a href="#">
+    <b>⌂</b>
+    Home
+  </a>
+
+  <a href="#categories">
+    <b>▦</b>
+    Categories
+  </a>
+
+  <a href="#sell">
+    <b>＋</b>
+    Sell
+  </a>
+
+  <a href="#featured">
+    <b>♡</b>
+    Favorites
+  </a>
+
+  <a href="account.html">
+    <b>◉</b>
+    Account
+  </a>
+
 </nav>
 
-<footer><strong>OJEWA</strong><span>BUY • SELL • CONNECT</span></footer>
+
+<footer>
+  <strong>OJEWA</strong>
+  <span>BUY • SELL • CONNECT</span>
+</footer>
+
 
 <script>
+
 function searchDemo(e){
+
   e.preventDefault();
 
-  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  const q = document
+    .getElementById('searchInput')
+    .value
+    .toLowerCase()
+    .trim();
 
   if(q.includes("laptop")){
+
     window.location.href = "product.html?item=laptop";
+
   }
+
   else if(q.includes("iphone") || q.includes("phone")){
+
     window.location.href = "product.html?item=iphone";
+
   }
+
   else if(q.includes("samsung")){
+
     window.location.href = "product.html?item=samsung";
+
   }
+
   else if(q.includes("car") || q.includes("toyota")){
+
     window.location.href = "product.html?item=toyota";
+
   }
+
   else if(q.includes("tyre") || q.includes("wheel")){
+
     window.location.href = "product.html?item=tyres";
+
   }
+
   else if(q.includes("sofa")){
-  alert("Sofa coming soon.");
-}
-  else {
+
+    window.location.href = "product.html?item=sofa";
+
+  }
+
+  else{
+
     alert("Product not found. Try another search.");
+
   }
 
   return false;
 }
+
 </script>
+
 </body>
 </html>
