@@ -57,11 +57,35 @@ header {
 
 <h2>Your Listings</h2>
 
-<div class="listing">
-<div class="pic">📦</div>
-<h3>No listings yet</h3>
-<p>Your products will appear here when you post them.</p>
-</div>
+<div id="myListings"></div>
+
+<script>
+const listings = JSON.parse(localStorage.getItem("ojewaListings")) || [];
+const container = document.getElementById("myListings");
+
+if (listings.length === 0) {
+  container.innerHTML = `
+    <div class="listing">
+      <div class="pic">📦</div>
+      <h3>No listings yet</h3>
+      <p>Your products will appear here when you post them.</p>
+    </div>
+  `;
+} else {
+  listings.forEach(item => {
+    container.innerHTML += `
+      <div class="listing">
+        <div class="pic">📱</div>
+        <h3>${item.name}</h3>
+        <p><strong>GH₵ ${item.price}</strong></p>
+        <p>📍 ${item.location}</p>
+        <p>${item.description}</p>
+        <small>Posted: ${item.date}</small>
+      </div>
+    `;
+  });
+}
+</script>
 
 <a href="account.html" class="back">← Back to Account</a>
 
