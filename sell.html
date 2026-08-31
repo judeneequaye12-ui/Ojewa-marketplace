@@ -46,6 +46,27 @@ header {
   font-size: 15px;
 }
 
+.sell-form input[type="file"] {
+  background: #f8faf8;
+  padding: 10px;
+}
+
+.photo-note {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+}
+
+.preview {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  margin-top: 12px;
+  border-radius: 10px;
+  display: none;
+  background: #eef5ef;
+}
+
 .sell-form button {
   width: 100%;
   padding: 14px;
@@ -114,6 +135,24 @@ header {
     placeholder="e.g. Accra"
   >
 
+  <label>Product Photo</label>
+
+  <input
+    type="file"
+    id="productImage"
+    accept="image/*"
+  >
+
+  <p class="photo-note">
+    Add a clear photo of the item you're selling.
+  </p>
+
+  <img
+    id="preview"
+    class="preview"
+    alt="Photo preview"
+  >
+
   <label>Description</label>
   <textarea
     id="productDescription"
@@ -123,11 +162,44 @@ header {
 
   <button onclick="postItem()">Post Item</button>
 
-  <a href="index.html" class="back">← Back to OJEWA</a>
+  <a href="index.html" class="back">
+    ← Back to OJEWA
+  </a>
 
 </div>
 
 <script>
+
+const imageInput =
+  document.getElementById("productImage");
+
+const preview =
+  document.getElementById("preview");
+
+
+imageInput.addEventListener("change", function() {
+
+  const file = imageInput.files[0];
+
+  if (!file) {
+    preview.style.display = "none";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(event) {
+
+    preview.src = event.target.result;
+
+    preview.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
 
 function postItem() {
 
@@ -146,51 +218,79 @@ function postItem() {
   const description =
     document.getElementById("productDescription").value.trim();
 
+  const imageFile =
+    document.getElementById("productImage").files[0];
+
 
   if (!name || !price || !location || !description) {
 
     alert("Please fill in all the details.");
 
     return;
+
   }
 
 
-  const listing = {
+  if (!imageFile) {
 
-    id: Date.now(),
+    alert("Please add a photo of your item.");
 
-    name: name,
+    return;
 
-    price: price,
+  }
 
-    category: category,
 
-    location: location,
+  const reader = new FileReader();
 
-    description: description,
 
-    date: new Date().toLocaleDateString()
+  reader.onload = function(event) {
+
+    const listing = {
+
+      id: Date.now(),
+
+      name: name,
+
+      price: price,
+
+      category: category,
+
+      location: location,
+
+      description: description,
+
+      image: event.target.result,
+
+      date: new Date().toLocaleDateString()
+
+    };
+
+
+    let listings =
+      JSON.parse(
+        localStorage.getItem("ojewaListings")
+      ) || [];
+
+
+    listings.push(listing);
+
+
+    localStorage.setItem(
+      "ojewaListings",
+      JSON.stringify(listings)
+    );
+
+
+    alert("Your item has been posted to OJEWA! 🎉");
+
+
+    window.location.href =
+      "my-listings.html";
 
   };
 
 
-  let listings =
-    JSON.parse(localStorage.getItem("ojewaListings")) || [];
-
-
-  listings.push(listing);
-
-
-  localStorage.setItem(
-    "ojewaListings",
-    JSON.stringify(listings)
-  );
-
-
-  alert("Your item has been posted to OJEWA! 🎉");
-
-
-  window.location.href = "my-listings.html";
+  reader.readAsDataURL(imageFile);
 
 }
 
