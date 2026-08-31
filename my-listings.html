@@ -46,6 +46,10 @@ h2 {
   border: 1px solid #ddd;
 }
 
+.listing-content {
+  cursor: pointer;
+}
+
 .pic {
   height: 130px;
   background: #eef5ef;
@@ -141,6 +145,14 @@ function getIcon(category) {
 }
 
 
+function openListing(id) {
+
+  window.location.href =
+    "product.html?listing=" + id;
+
+}
+
+
 function displayListings() {
 
   const container =
@@ -173,37 +185,45 @@ function displayListings() {
     card.className = "listing";
 
     card.innerHTML = `
-      <div class="pic">
-        ${getIcon(item.category)}
+
+      <div
+        class="listing-content"
+        onclick="openListing(${item.id})">
+
+        <div class="pic">
+          ${getIcon(item.category)}
+        </div>
+
+        <p class="category">
+          ${item.category}
+        </p>
+
+        <h3>${item.name}</h3>
+
+        <p class="price">
+          ${item.price}
+        </p>
+
+        <p>
+          📍 ${item.location}
+        </p>
+
+        <p>
+          ${item.description}
+        </p>
+
+        <small>
+          Posted: ${item.date}
+        </small>
+
       </div>
-
-      <p class="category">
-        ${item.category}
-      </p>
-
-      <h3>${item.name}</h3>
-
-      <p class="price">
-        ${item.price}
-      </p>
-
-      <p>
-        📍 ${item.location}
-      </p>
-
-      <p>
-        ${item.description}
-      </p>
-
-      <small>
-        Posted: ${item.date}
-      </small>
 
       <button
         class="delete"
         onclick="deleteListing(${item.id})">
         Delete Listing
       </button>
+
     `;
 
     container.appendChild(card);
