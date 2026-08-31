@@ -43,6 +43,7 @@ header {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 6px;
+  font-size: 15px;
 }
 
 .sell-form button {
@@ -54,6 +55,7 @@ header {
   border: none;
   border-radius: 8px;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .back {
@@ -63,81 +65,135 @@ header {
   color: #0b6b3a;
   text-decoration: none;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>OJEWA</h1>
-<p>Sell an Item</p>
+  <h1>OJEWA</h1>
+  <p>Sell an Item</p>
 </header>
 
 <div class="sell-form">
 
-<h2>Post Your Item</h2>
+  <h2>Post Your Item</h2>
 
-<label>Product Name</label>
-<input type="text" id="productName" placeholder="e.g. iPhone 14">
+  <label>Product Name</label>
+  <input
+    type="text"
+    id="productName"
+    placeholder="e.g. iPhone 14"
+  >
 
-<label>Price</label>
-<input type="text" id="productPrice" placeholder="e.g. GH₵ 3,500">
+  <label>Price</label>
+  <input
+    type="text"
+    id="productPrice"
+    placeholder="e.g. GH₵ 3,500"
+  >
 
-<label>Category</label>
-<select id="productCategory">
-<option>Phones & Tablets</option>
-<option>Computers</option>
-<option>Cars & Vehicles</option>
-<option>Tyres & Wheels</option>
-<option>Property</option>
-<option>Fashion</option>
-<option>Home & Living</option>
-<option>Electronics</option>
-<option>Jobs & Services</option>
-<option>Other</option>
-</select>
+  <label>Category</label>
+  <select id="productCategory">
+    <option>Phones & Tablets</option>
+    <option>Computers</option>
+    <option>Cars & Vehicles</option>
+    <option>Tyres & Wheels</option>
+    <option>Property</option>
+    <option>Fashion</option>
+    <option>Home & Living</option>
+    <option>Electronics</option>
+    <option>Jobs & Services</option>
+    <option>Other</option>
+  </select>
 
-<label>Location</label>
-<input type="text" id="productLocation" placeholder="e.g. Accra">
+  <label>Location</label>
+  <input
+    type="text"
+    id="productLocation"
+    placeholder="e.g. Accra"
+  >
 
-<label>Description</label>
-<textarea id="productDescription" rows="5" placeholder="Describe your item"></textarea>
+  <label>Description</label>
+  <textarea
+    id="productDescription"
+    rows="5"
+    placeholder="Describe your item"
+  ></textarea>
 
-<button onclick="postItem()">Post Item</button>
+  <button onclick="postItem()">Post Item</button>
 
-<a href="index.html" class="back">← Back to OJEWA</a>
+  <a href="index.html" class="back">← Back to OJEWA</a>
 
 </div>
 
 <script>
+
 function postItem() {
-  const name = document.getElementById("productName").value;
-  const price = document.getElementById("productPrice").value;
-  const location = document.getElementById("productLocation").value;
-  const description = document.getElementById("productDescription").value;
+
+  const name =
+    document.getElementById("productName").value.trim();
+
+  const price =
+    document.getElementById("productPrice").value.trim();
+
+  const category =
+    document.getElementById("productCategory").value;
+
+  const location =
+    document.getElementById("productLocation").value.trim();
+
+  const description =
+    document.getElementById("productDescription").value.trim();
+
 
   if (!name || !price || !location || !description) {
+
     alert("Please fill in all the details.");
+
     return;
   }
 
+
   const listing = {
+
+    id: Date.now(),
+
     name: name,
+
     price: price,
+
+    category: category,
+
     location: location,
+
     description: description,
+
     date: new Date().toLocaleDateString()
+
   };
 
-  let listings = JSON.parse(localStorage.getItem("ojewaListings")) || [];
+
+  let listings =
+    JSON.parse(localStorage.getItem("ojewaListings")) || [];
+
 
   listings.push(listing);
 
-  localStorage.setItem("ojewaListings", JSON.stringify(listings));
+
+  localStorage.setItem(
+    "ojewaListings",
+    JSON.stringify(listings)
+  );
+
 
   alert("Your item has been posted to OJEWA! 🎉");
+
+
+  window.location.href = "my-listings.html";
+
 }
+
 </script>
 
 </body>
