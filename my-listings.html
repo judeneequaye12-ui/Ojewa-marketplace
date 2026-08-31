@@ -51,12 +51,19 @@ h2 {
 }
 
 .pic {
-  height: 130px;
+  height: 180px;
   background: #eef5ef;
   border-radius: 10px;
   display: grid;
   place-items: center;
   font-size: 50px;
+  overflow: hidden;
+}
+
+.pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .listing h3 {
@@ -180,9 +187,29 @@ function displayListings() {
 
   listings.forEach(function(item) {
 
-    const card = document.createElement("div");
+    const card =
+      document.createElement("div");
 
     card.className = "listing";
+
+
+    let picture;
+
+    if (item.image) {
+
+      picture = `
+        <img
+          src="${item.image}"
+          alt="${item.name}">
+      `;
+
+    } else {
+
+      picture =
+        getIcon(item.category);
+
+    }
+
 
     card.innerHTML = `
 
@@ -191,7 +218,7 @@ function displayListings() {
         onclick="openListing(${item.id})">
 
         <div class="pic">
-          ${getIcon(item.category)}
+          ${picture}
         </div>
 
         <p class="category">
@@ -226,6 +253,7 @@ function displayListings() {
 
     `;
 
+
     container.appendChild(card);
 
   });
@@ -241,12 +269,16 @@ function deleteListing(id) {
 
 
   let listings =
-    JSON.parse(localStorage.getItem("ojewaListings")) || [];
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
 
 
   listings =
     listings.filter(function(item) {
+
       return item.id !== id;
+
     });
 
 
