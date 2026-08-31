@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>OJEWA - Product Details</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -51,7 +53,21 @@ header {
   margin-top: 20px;
   font-weight: bold;
   font-size: 16px;
+  border: none;
 }
+
+.favorite {
+  display: inline-block;
+  background: #f28c28;
+  color: white;
+  padding: 14px 25px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+}
+
 </style>
 
 </head>
@@ -59,9 +75,13 @@ header {
 <body>
 
 <header>
+
 <h1>OJEWA</h1>
+
 <p>Product Details</p>
+
 </header>
+
 
 <div class="product-details">
 
@@ -71,22 +91,53 @@ header {
 
 <p class="price" id="productPrice">GH₵ 0</p>
 
+
 <div class="info">
-<p><strong>Condition:</strong> <span id="productCondition">Not specified</span></p>
-<p><strong>Location:</strong> <span id="productLocation">Not specified</span></p>
-<p><strong>Description:</strong> <span id="productDescription">No description available.</span></p>
+
+<p>
+<strong>Condition:</strong>
+<span id="productCondition">Not specified</span>
+</p>
+
+<p>
+<strong>Location:</strong>
+<span id="productLocation">Not specified</span>
+</p>
+
+<p>
+<strong>Description:</strong>
+<span id="productDescription">No description available.</span>
+</p>
+
 </div>
 
-<button class="favorite" onclick="saveFavorite()">❤️ Save Item</button>
-<a href="favorites.html" class="contact">View Favourites</a>
 
-<a href="https://wa.me/233256275310" class="contact">Contact Seller</a>
+<button class="favorite" onclick="saveFavorite()">
+❤️ Save Item
+</button>
 
-<a href="index.html" class="contact">Back to OJEWA</a>
+
+<a href="favorites.html" class="contact">
+View Favourites
+</a>
+
+
+<a href="https://wa.me/233256275310" class="contact">
+Contact Seller
+</a>
+
+
+<a href="index.html" class="contact">
+Back to OJEWA
+</a>
+
 </div>
+
 
 <script>
+
 const products = {
+
   iphone: {
     icon: "📱",
     name: "iPhone 11 Pro Max",
@@ -124,139 +175,255 @@ const products = {
   },
 
   tyres: {
-  icon: "🛞",
-  name: "Car Tyres Set",
-  price: "GH₵ 1,200",
-  condition: "New tyres - Good quality",
-  location: "Accra",
-  description: "New car tyres set in good quality."
-},
+    icon: "🛞",
+    name: "Car Tyres Set",
+    price: "GH₵ 1,200",
+    condition: "New tyres - Good quality",
+    location: "Accra",
+    description: "New car tyres set in good quality."
+  },
 
-alloy: {
-  icon: "🛞",
-  name: "Alloy Wheels",
-  price: "GH₵ 2,000",
-  condition: "Used - Excellent condition",
-  location: "Tema",
-  description: "Used alloy wheels in excellent condition."
-},
+  alloy: {
+    icon: "🛞",
+    name: "Alloy Wheels",
+    price: "GH₵ 2,000",
+    condition: "Used - Excellent condition",
+    location: "Tema",
+    description: "Used alloy wheels in excellent condition."
+  },
 
-smarttv: {
-  icon: "📺",
-  name: "Smart TV",
-  price: "GH₵ 3,000",
-  condition: "New - High quality display",
-  location: "Accra",
-  description: "New Smart TV with high quality display."
-},
-laptop: {
-  icon: "💻",
-  name: "Laptop Computer",
-  price: "GH₵ 4,800",
-  condition: "Used - Good condition",
-  location: "East Legon",
-  description: "Laptop computer in good condition."
-},
+  smarttv: {
+    icon: "📺",
+    name: "Smart TV",
+    price: "GH₵ 3,000",
+    condition: "New - High quality display",
+    location: "Accra",
+    description: "New Smart TV with high quality display."
+  },
 
-shirt: {
-  icon: "👕",
-  name: "Men's Shirt",
-  price: "GH₵ 150",
-  condition: "New - Quality material",
-  location: "Accra",
-  description: "Men's shirt made with quality material."
-},
+  laptop: {
+    icon: "💻",
+    name: "Laptop Computer",
+    price: "GH₵ 4,800",
+    condition: "Used - Good condition",
+    location: "East Legon",
+    description: "Laptop computer in good condition."
+  },
 
-dress: {
-  icon: "👗",
-  name: "Women's Dress",
-  price: "GH₵ 250",
-  condition: "New - Stylish design",
-  location: "Tema",
-  description: "Women's dress with a stylish design."
-},
+  shirt: {
+    icon: "👕",
+    name: "Men's Shirt",
+    price: "GH₵ 150",
+    condition: "New - Quality material",
+    location: "Accra",
+    description: "Men's shirt made with quality material."
+  },
 
-sofa: {
-  icon: "🛋️",
-  name: "Sofa Set",
-  price: "GH₵ 3,500",
-  condition: "Quality furniture - Good condition",
-  location: "Accra",
-  description: "Quality sofa set in good condition."
-},
+  dress: {
+    icon: "👗",
+    name: "Women's Dress",
+    price: "GH₵ 250",
+    condition: "New - Stylish design",
+    location: "Tema",
+    description: "Women's dress with a stylish design."
+  },
 
-dining: {
-  icon: "🍽️",
-  name: "Dining Table",
-  price: "GH₵ 1,800",
-  condition: "New - Modern design",
-  location: "Tema",
-  description: "Modern design dining table."
-},
+  sofa: {
+    icon: "🛋️",
+    name: "Sofa Set",
+    price: "GH₵ 3,500",
+    condition: "Quality furniture - Good condition",
+    location: "Accra",
+    description: "Quality sofa set in good condition."
+  },
 
-apartment: {
-  icon: "🏠",
-  name: "2 Bedroom Apartment",
-  price: "GH₵ 1,500/month",
-  condition: "Available for rent",
-  location: "Accra",
-  description: "2 bedroom apartment available for rent."
-},
+  dining: {
+    icon: "🍽️",
+    name: "Dining Table",
+    price: "GH₵ 1,800",
+    condition: "New - Modern design",
+    location: "Tema",
+    description: "Modern design dining table."
+  },
 
-familyhouse: {
-  icon: "🏡",
-  name: "Family House",
-  price: "GH₵ 450,000",
-  condition: "For sale - Good location",
-  location: "Tema",
-  description: "Family house for sale in a good location."
-},
+  apartment: {
+    icon: "🏠",
+    name: "2 Bedroom Apartment",
+    price: "GH₵ 1,500/month",
+    condition: "Available for rent",
+    location: "Accra",
+    description: "2 bedroom apartment available for rent."
+  },
 
-designer: {
-  icon: "🎨",
-  name: "Graphic Designer",
-  price: "GH₵ 500",
-  condition: "Creates flyers, logos and designs",
-  location: "Accra",
-  description: "Professional graphic designer for flyers, logos and designs."
-},
+  familyhouse: {
+    icon: "🏡",
+    name: "Family House",
+    price: "GH₵ 450,000",
+    condition: "For sale - Good location",
+    location: "Tema",
+    description: "Family house for sale in a good location."
+  },
 
-repair: {
-  icon: "🔧",
-  name: "Phone Repair Service",
-  price: "GH₵ 100",
-  condition: "Professional phone repairs",
-  location: "Tema",
-  description: "Professional phone repair service."
-}
+  designer: {
+    icon: "🎨",
+    name: "Graphic Designer",
+    price: "GH₵ 500",
+    condition: "Creates flyers, logos and designs",
+    location: "Accra",
+    description: "Professional graphic designer for flyers, logos and designs."
+  },
+
+  repair: {
+    icon: "🔧",
+    name: "Phone Repair Service",
+    price: "GH₵ 100",
+    condition: "Professional phone repairs",
+    location: "Tema",
+    description: "Professional phone repair service."
+  }
+
 };
 
-const params = new URLSearchParams(window.location.search);
-const item = params.get("item");
 
-const product = products[item];
+const params =
+  new URLSearchParams(window.location.search);
+
+const item =
+  params.get("item");
+
+const listingId =
+  params.get("listing");
+
+
+let product = null;
+
+
+if (listingId) {
+
+  const listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+
+
+  product =
+    listings.find(function(listing) {
+
+      return String(listing.id) === String(listingId);
+
+    });
+
+
+  if (product) {
+
+    product.icon =
+      getIcon(product.category);
+
+    product.condition =
+      "Seller listed item";
+
+  }
+
+}
+
+
+else if (item) {
+
+  product =
+    products[item];
+
+}
+
 
 if (product) {
-  document.getElementById("productIcon").textContent = product.icon;
-  document.getElementById("productName").textContent = product.name;
-  document.getElementById("productPrice").textContent = product.price;
-  document.getElementById("productCondition").textContent = product.condition;
-  document.getElementById("productLocation").textContent = product.location;
-  document.getElementById("productDescription").textContent = product.description;
-} else {
-  document.getElementById("productName").textContent = "Product not found";
+
+  document.getElementById("productIcon").textContent =
+    product.icon;
+
+  document.getElementById("productName").textContent =
+    product.name;
+
+  document.getElementById("productPrice").textContent =
+    product.price;
+
+  document.getElementById("productCondition").textContent =
+    product.condition;
+
+  document.getElementById("productLocation").textContent =
+    product.location;
+
+  document.getElementById("productDescription").textContent =
+    product.description;
+
 }
-  function saveFavorite() {
-  const item = {
+
+else {
+
+  document.getElementById("productName").textContent =
+    "Product not found";
+
+}
+
+
+function getIcon(category) {
+
+  if (category === "Phones & Tablets") return "📱";
+
+  if (category === "Computers") return "💻";
+
+  if (category === "Cars & Vehicles") return "🚗";
+
+  if (category === "Tyres & Wheels") return "🛞";
+
+  if (category === "Property") return "🏠";
+
+  if (category === "Fashion") return "👗";
+
+  if (category === "Home & Living") return "🛋️";
+
+  if (category === "Electronics") return "📺";
+
+  if (category === "Jobs & Services") return "🔧";
+
+  return "📦";
+
+}
+
+
+function saveFavorite() {
+
+  if (!product) {
+
+    alert("Product not found.");
+
+    return;
+
+  }
+
+
+  const favorite = {
+
     icon: product.icon,
+
     name: product.name,
+
     price: product.price,
+
     location: product.location
+
   };
-localStorage.setItem("favoriteItem", JSON.stringify(item));
+
+
+  localStorage.setItem(
+    "favoriteItem",
+    JSON.stringify(favorite)
+  );
+
 
   alert("Item saved to favourites ❤️");
+
 }
+
 </script>
 
 </body>
