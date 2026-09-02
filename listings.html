@@ -77,13 +77,13 @@ if (listings.length === 0) {
   listings.forEach(item => {
     container.innerHTML += `
       <div class="listing">
-        <div class="pic">
-          ${
-            item.image
-              ? `<img src="${item.image}" alt="${item.name}">`
-              : "📦"
-          }
-        </div>
+        <div class="pic" onclick="openListing('${item.id}')">
+  ${
+    item.image
+      ? `<img src="${item.image}" alt="${item.name}">`
+      : "📦"
+  }
+</div>
         <h3>${item.name}</h3>
         <p>
           <strong>GH₵ ${item.price}</strong>
