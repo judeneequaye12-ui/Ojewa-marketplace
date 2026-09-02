@@ -27,6 +27,11 @@ header {
   margin: 15px 0;
   border-radius: 8px;
 }
+.pic-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
 .pic {
   width: 100%;
   height: 220px;
@@ -41,6 +46,16 @@ header {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+.view-details {
+  display: inline-block;
+  margin-top: 10px;
+  background: #0b6b3a;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
 }
 .back {
   display: inline-block;
@@ -66,7 +81,9 @@ const container =
 if (listings.length === 0) {
   container.innerHTML = `
     <div class="listing">
-      <div class="pic">📦</div>
+      <div class="pic">
+        📦
+      </div>
       <h3>No listings yet</h3>
       <p>
         Your products will appear here when you post them.
@@ -75,18 +92,30 @@ if (listings.length === 0) {
   `;
 } else {
   listings.forEach(item => {
+    const listingLink =
+      "product.html?listing=" +
+      encodeURIComponent(item.id);
     container.innerHTML += `
       <div class="listing">
-        <div class="pic" onclick="openListing('${item.id}')">
-  ${
-    item.image
-      ? `<img src="${item.image}" alt="${item.name}">`
-      : "📦"
-  }
-</div>
-        <h3>${item.name}</h3>
+        <a
+          href="${listingLink}"
+          class="pic-link"
+        >
+          <div class="pic">
+            ${
+              item.image
+                ? `<img src="${item.image}" alt="${item.name}">`
+                : "📦"
+            }
+          </div>
+        </a>
+        <h3>
+          ${item.name}
+        </h3>
         <p>
-          <strong>GH₵ ${item.price}</strong>
+          <strong>
+            GH₵ ${item.price}
+          </strong>
         </p>
         <p>
           📍 ${item.location}
@@ -97,13 +126,23 @@ if (listings.length === 0) {
         <small>
           Posted: ${item.date}
         </small>
+        <br>
+        <a
+          href="${listingLink}"
+          class="view-details"
+        >
+          View Details
+        </a>
       </div>
     `;
   });
 }
 </script>
-<a href="account.html" class="back">
-← Back to Account
+<a
+  href="account.html"
+  class="back"
+>
+  ← Back to Account
 </a>
 </div>
 </body>
