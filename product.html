@@ -358,30 +358,37 @@ function saveFavorite() {
     alert("Product not found.");
     return;
   }
+
   const favorite = {
-    id:
-      product.id || Date.now(),
-    icon:
-      product.icon ||
-      getIcon(product.category),
-    name:
-      product.name,
-    price:
-      product.price,
-    location:
-      product.location,
-    description:
-      product.description,
-    image:
-      product.image || ""
+    id: product.id || Date.now(),
+    icon: product.icon || getIcon(product.category),
+    name: product.name,
+    price: product.price,
+    location: product.location,
+    description: product.description,
+    image: product.image || ""
   };
+
+  let favorites =
+    JSON.parse(localStorage.getItem("ojewaFavorites")) || [];
+
+  const alreadySaved = favorites.some(function(item) {
+    return String(item.id) === String(favorite.id);
+  });
+
+  if (alreadySaved) {
+    alert("This item is already in your Favorites ❤️");
+    return;
+  }
+
+  favorites.push(favorite);
+
   localStorage.setItem(
-    "favoriteItem",
-    JSON.stringify(favorite)
+    "ojewaFavorites",
+    JSON.stringify(favorites)
   );
-  alert(
-    "Item added to Favorites ❤️"
-  );
+
+  alert("Item added to Favorites ❤️");
 }
 </script>
 </body>
