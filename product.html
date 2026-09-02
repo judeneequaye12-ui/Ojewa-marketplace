@@ -371,33 +371,26 @@ if (product) {
     so OJEWA can use the image already saved.
   */
 
-  const image =
-    product.image ||
-    product.imageUrl ||
-    product.photo ||
-    product.photoUrl ||
-    product.imageData;
+ const productImage =
+  document.getElementById("productImage");
 
+const productIcon =
+  document.getElementById("productIcon");
 
-  if (image) {
+if (product.image) {
 
-    document.getElementById("productImage").src =
-      image;
+  productImage.src = product.image;
+  productImage.style.display = "block";
+  productIcon.style.display = "none";
 
-    document.getElementById("productImage").style.display =
-      "block";
+} else {
 
-    document.getElementById("productIcon").style.display =
-      "none";
+  productImage.style.display = "none";
+  productIcon.style.display = "block";
+  productIcon.textContent =
+    product.icon || getIcon(product.category);
 
-  }
-
-  else {
-
-    document.getElementById("productIcon").textContent =
-      product.icon || getIcon(product.category);
-
-  }
+}
 
 }
 
