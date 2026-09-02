@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>OJEWA - My Listings</title>
+<title>OJEWA - Product Details</title>
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -14,120 +14,375 @@ header {
   padding: 20px;
   text-align: center;
 }
-.listings {
+.product-details {
   background: white;
   margin: 20px;
   padding: 25px;
   border-radius: 10px;
   text-align: center;
 }
-.listing {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.listing:hover {
-  background: #f8faf8;
+.product-image {
+  width: 100%;
+  max-width: 500px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto 20px;
 }
 .pic {
-  width: 100%;
-  height: 220px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 8px;
-  background: #eef5ef;
+  font-size: 80px;
+  margin-bottom: 15px;
 }
-.pic img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.view-details {
-  display: inline-block;
-  margin-top: 10px;
-  background: #0b6b3a;
-  color: white;
-  padding: 10px 18px;
-  border-radius: 6px;
+.price {
+  color: green;
+  font-size: 22px;
   font-weight: bold;
 }
-.back {
+.info {
+  text-align: left;
+  margin-top: 20px;
+}
+.contact,
+.favorite {
   display: inline-block;
-  margin-top: 15px;
-  color: #0b6b3a;
+  color: white;
+  padding: 14px 25px;
+  border-radius: 8px;
   text-decoration: none;
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.contact {
+  background: #0b6b3a;
+}
+.favorite {
+  background: #f28c28;
 }
 </style>
 </head>
 <body>
 <header>
 <h1>OJEWA</h1>
-<p>My Listings</p>
+<p>Product Details</p>
 </header>
-<div class="listings">
-<h2>Your Listings</h2>
-<div id="myListings"></div>
-<script>
-const listings =
-  JSON.parse(localStorage.getItem("ojewaListings")) || [];
-const container =
-  document.getElementById("myListings");
-if (listings.length === 0) {
-  container.innerHTML = `
-    <div class="listing">
-      <div class="pic">📦</div>
-      <h3>No listings yet</h3>
-      <p>
-        Your products will appear here when you post them.
-      </p>
-    </div>
-  `;
-} else {
-  listings.forEach(item => {
-    container.innerHTML += `
-      <div
-        class="listing"
-        onclick="openListing('${item.id}')"
-      >
-        <div class="pic">
-          ${
-            item.image
-              ? `<img src="${item.image}" alt="${item.name}">`
-              : "📦"
-          }
-        </div>
-        <h3>${item.name}</h3>
-        <p>
-          <strong>GH₵ ${item.price}</strong>
-        </p>
-        <p>
-          📍 ${item.location}
-        </p>
-        <p>
-          ${item.description}
-        </p>
-        <small>
-          Posted: ${item.date}
-        </small>
-        <div class="view-details">
-          View Details
-        </div>
-      </div>
-    `;
-  });
-}
-function openListing(id) {
-  window.location.href =
-    "product.html?listing=" + encodeURIComponent(id);
-}
-</script>
-<a href="account.html" class="back">
-← Back to Account
+<div class="product-details">
+<img
+  id="productImage"
+  class="product-image"
+  style="display:none;"
+  alt="Product photo"
+>
+<div
+  class="pic"
+  id="productIcon"
+>
+  📦
+</div>
+<h2 id="productName">
+  Product
+</h2>
+<p
+  class="price"
+  id="productPrice"
+>
+  GH₵ 0
+</p>
+<div class="info">
+<p>
+<strong>Condition:</strong>
+<span id="productCondition">
+Not specified
+</span>
+</p>
+<p>
+<strong>Location:</strong>
+<span id="productLocation">
+Not specified
+</span>
+</p>
+<p>
+<strong>Description:</strong>
+<span id="productDescription">
+No description available.
+</span>
+</p>
+</div>
+<button
+  class="favorite"
+  onclick="saveFavorite()"
+>
+❤️ Add to Favorites
+</button>
+<br>
+<a
+  href="favorites.html"
+  class="contact"
+>
+❤️ View Favourites
+</a>
+<a
+  href="https://wa.me/233256275310"
+  class="contact"
+>
+📞 Contact Seller
+</a>
+<a
+  href="index.html"
+  class="contact"
+>
+← Back to OJEWA
 </a>
 </div>
+<script>
+const products = {
+  iphone: {
+    icon: "📱",
+    name: "iPhone 11 Pro Max",
+    price: "GH₵ 3,500",
+    condition: "Used - Good condition",
+    location: "Accra",
+    description: "iPhone 11 Pro Max in good condition."
+  },
+  samsung: {
+    icon: "📱",
+    name: "Samsung Galaxy Phone",
+    price: "GH₵ 2,500",
+    condition: "New",
+    location: "Tema",
+    description: "New Samsung Galaxy phone."
+  },
+  toyota: {
+    icon: "🚗",
+    name: "Toyota Corolla",
+    price: "GH₵ 65,000",
+    condition: "Used - Good condition",
+    location: "Accra",
+    description: "Toyota Corolla in good condition."
+  },
+  hyundai: {
+    icon: "🚗",
+    name: "Hyundai Elantra",
+    price: "GH₵ 55,000",
+    condition: "Used",
+    location: "Tema",
+    description: "Used Hyundai Elantra."
+  },
+  tyres: {
+    icon: "🛞",
+    name: "Car Tyres Set",
+    price: "GH₵ 1,200",
+    condition: "New tyres - Good quality",
+    location: "Accra",
+    description: "New car tyres set in good quality."
+  },
+  alloy: {
+    icon: "🛞",
+    name: "Alloy Wheels",
+    price: "GH₵ 2,000",
+    condition: "Used - Excellent condition",
+    location: "Tema",
+    description: "Used alloy wheels in excellent condition."
+  },
+  smarttv: {
+    icon: "📺",
+    name: "Smart TV",
+    price: "GH₵ 3,000",
+    condition: "New - High quality display",
+    location: "Accra",
+    description: "New Smart TV with high quality display."
+  },
+  laptop: {
+    icon: "💻",
+    name: "Laptop Computer",
+    price: "GH₵ 4,800",
+    condition: "Used - Good condition",
+    location: "East Legon",
+    description: "Laptop computer in good condition."
+  },
+  shirt: {
+    icon: "👕",
+    name: "Men's Shirt",
+    price: "GH₵ 150",
+    condition: "New - Quality material",
+    location: "Accra",
+    description: "Men's shirt made with quality material."
+  },
+  dress: {
+    icon: "👗",
+    name: "Women's Dress",
+    price: "GH₵ 250",
+    condition: "New - Stylish design",
+    location: "Tema",
+    description: "Women's dress with a stylish design."
+  },
+  sofa: {
+    icon: "🛋️",
+    name: "Sofa Set",
+    price: "GH₵ 3,500",
+    condition: "Quality furniture - Good condition",
+    location: "Accra",
+    description: "Quality sofa set in good condition."
+  },
+  dining: {
+    icon: "🍽️",
+    name: "Dining Table",
+    price: "GH₵ 1,800",
+    condition: "New - Modern design",
+    location: "Tema",
+    description: "Modern design dining table."
+  },
+  apartment: {
+    icon: "🏠",
+    name: "2 Bedroom Apartment",
+    price: "GH₵ 1,500/month",
+    condition: "Available for rent",
+    location: "Accra",
+    description: "2 bedroom apartment available for rent."
+  },
+  familyhouse: {
+    icon: "🏡",
+    name: "Family House",
+    price: "GH₵ 450,000",
+    condition: "For sale - Good location",
+    location: "Tema",
+    description: "Family house for sale in a good location."
+  },
+  designer: {
+    icon: "🎨",
+    name: "Graphic Designer",
+    price: "GH₵ 500",
+    condition: "Creates flyers, logos and designs",
+    location: "Accra",
+    description: "Professional graphic designer for flyers, logos and designs."
+  },
+  repair: {
+    icon: "🔧",
+    name: "Phone Repair Service",
+    price: "GH₵ 100",
+    condition: "Professional phone repairs",
+    location: "Tema",
+    description: "Professional phone repair service."
+  }
+};
+const params =
+  new URLSearchParams(window.location.search);
+const item =
+  params.get("item");
+const listingId =
+  params.get("listing");
+let product = null;
+if (listingId) {
+  const listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+  product =
+    listings.find(function(listing) {
+      return String(listing.id) === String(listingId);
+    });
+  if (product) {
+    product.icon =
+      getIcon(product.category);
+    product.condition =
+      "Seller listed item";
+  }
+}
+else if (item) {
+  product =
+    products[item];
+}
+if (product) {
+  document.getElementById("productName").textContent =
+    product.name;
+  document.getElementById("productPrice").textContent =
+    product.price;
+  document.getElementById("productCondition").textContent =
+    product.condition || "Not specified";
+  document.getElementById("productLocation").textContent =
+    product.location || "Not specified";
+  document.getElementById("productDescription").textContent =
+    product.description || "No description available.";
+  const productImage =
+    document.getElementById("productImage");
+  const productIcon =
+    document.getElementById("productIcon");
+  if (product.image) {
+    productImage.src =
+      product.image;
+    productImage.style.display =
+      "block";
+    productIcon.style.display =
+      "none";
+  }
+  else {
+    productImage.style.display =
+      "none";
+    productIcon.style.display =
+      "block";
+    productIcon.textContent =
+      product.icon ||
+      getIcon(product.category);
+  }
+}
+else {
+  document.getElementById("productName").textContent =
+    "Product not found";
+}
+function getIcon(category) {
+  if (category === "Phones & Tablets")
+    return "📱";
+  if (category === "Computers")
+    return "💻";
+  if (category === "Cars & Vehicles")
+    return "🚗";
+  if (category === "Tyres & Wheels")
+    return "🛞";
+  if (category === "Property")
+    return "🏠";
+  if (category === "Fashion")
+    return "👗";
+  if (category === "Home & Living")
+    return "🛋️";
+  if (category === "Electronics")
+    return "📺";
+  if (category === "Jobs & Services")
+    return "🔧";
+  return "📦";
+}
+function saveFavorite() {
+  if (!product) {
+    alert("Product not found.");
+    return;
+  }
+  const favorite = {
+    id:
+      product.id || Date.now(),
+    icon:
+      product.icon ||
+      getIcon(product.category),
+    name:
+      product.name,
+    price:
+      product.price,
+    location:
+      product.location,
+    description:
+      product.description,
+    image:
+      product.image || ""
+  };
+  localStorage.setItem(
+    "favoriteItem",
+    JSON.stringify(favorite)
+  );
+  alert(
+    "Item added to Favorites ❤️"
+  );
+}
+</script>
 </body>
 </html>
