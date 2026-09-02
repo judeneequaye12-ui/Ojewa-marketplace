@@ -83,7 +83,7 @@ if (favorites.length === 0) {
     border-radius:8px;
     cursor:pointer;
   "
-  onclick="openFavorite('${item.id}')"
+  onclick="openFavorite('${item.id}', '${item.item || ""}')"
 >
 
         ${
@@ -129,9 +129,14 @@ function removeFavorite(index) {
 
   location.reload();
 }
-function openFavorite(id) {
-  window.location.href =
-    "product.html?listing=" + encodeURIComponent(id);
+function openFavorite(id, item) {
+  if (item) {
+    window.location.href =
+      "product.html?item=" + encodeURIComponent(item);
+  } else {
+    window.location.href =
+      "product.html?listing=" + encodeURIComponent(id);
+  }
 }
 </script>
 
