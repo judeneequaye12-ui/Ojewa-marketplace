@@ -360,7 +360,7 @@ function saveFavorite() {
   }
 
   const favorite = {
-    id: product.id || Date.now(),
+    id: product.id,
     icon: product.icon || getIcon(product.category),
     name: product.name,
     price: product.price,
