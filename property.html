@@ -1,61 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>OJEWA - Property</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f5f5;
-}
-
-header {
-  background: #0b6b3a;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.product {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.price {
-  color: green;
-  font-weight: bold;
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OJEWA - Property</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    header {
+      background: #0b6b3a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .back {
+      display: block;
+      margin: 15px;
+      color: #0b6b3a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .pic {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      margin: 8px 0;
+    }
+    .price {
+      color: #0b6b3a;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .location {
+      color: #666;
+    }
+  </style>
 </head>
-
 <body>
-
 <header>
-<h1>OJEWA</h1>
-<p>Property</p>
+  <h1>🏠 Property</h1>
+  <p>Find houses, apartments and land on OJEWA</p>
 </header>
-
-<div class="product">
-<div class="pic">🏠</div>
-<h2>2 Bedroom Apartment</h2>
-<p>Available for rent</p>
-<p class="price">GH₵ 1,500/month</p>
-<p>Accra</p>
-<a href="product.html?item=apartment" class="button">View Details</a>
-</div>
-
-<div class="product">
-<div class="pic">🏡</div>
-<h2>Family House</h2>
-<p>For sale - Good location</p>
-<p class="price">GH₵ 450,000</p>
-<p>Tema</p>
-<a href="product.html?item=familyhouse" class="button">View Details</a>
-</div>
-
+<a class="back" href="categories.html">← Back to Categories</a>
+<section class="products">
+  <div class="product">
+    <div class="pic">🏠</div>
+    <h3>2 Bedroom Apartment</h3>
+    <p class="price">GH₵ 1,500/month</p>
+    <p>For Rent</p>
+    <p class="location">📍 Accra</p>
+  </div>
+  <div class="product">
+    <div class="pic">🏡</div>
+    <h3>Family House</h3>
+    <p class="price">GH₵ 450,000</p>
+    <p>For Sale</p>
+    <p class="location">📍 Tema</p>
+  </div>
+  <div class="product">
+    <div class="pic">🏢</div>
+    <h3>Modern Apartment</h3>
+    <p class="price">GH₵ 3,000/month</p>
+    <p>For Rent</p>
+    <p class="location">📍 East Legon</p>
+  </div>
+  <div class="product">
+    <div class="pic">🌳</div>
+    <h3>Building Land</h3>
+    <p class="price">GH₵ 180,000</p>
+    <p>For Sale</p>
+    <p class="location">📍 Kasoa</p>
+  </div>
+</section>
 </body>
 </html>
