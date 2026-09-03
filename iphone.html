@@ -1,83 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>OJEWA - iPhone 11 Pro Max</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f5f5;
-}
-
-header {
-  background: #0b6b3a;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.product-details {
-  background: white;
-  margin: 20px;
-  padding: 25px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.pic {
-  font-size: 80px;
-  margin-bottom: 15px;
-}
-
-.price {
-  color: green;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.info {
-  text-align: left;
-  margin-top: 20px;
-.contact {
-  display: inline-block;
-  background: #0b6b3a;
-  color: white;
-  padding: 14px 25px;
-  border-radius: 8px;
-  text-decoration: none;
-  margin-top: 20px;
-  font-weight: bold;
-  font-size: 16px;
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OJEWA - Phones & Tablets</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    header {
+      background: #0b6b3a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .back {
+      display: block;
+      margin: 15px;
+      color: #0b6b3a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .pic {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      margin: 8px 0;
+    }
+    .price {
+      color: #0b6b3a;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .location {
+      color: #666;
+    }
+  </style>
 </head>
-
 <body>
-
 <header>
-<h1>OJEWA</h1>
-<p>Product Details</p>
+  <h1>📱 Phones & Tablets</h1>
+  <p>Find phones and tablets on OJEWA</p>
 </header>
-
-<div class="product-details">
-
-<div class="pic">📱</div>
-
-<h2>iPhone 11 Pro Max</h2>
-
-<p class="price">GH₵ 3,500</p>
-
-<div class="info">
-<p><strong>Condition:</strong> Used - Good condition</p>
-<p><strong>Location:</strong> Accra</p>
-<p><strong>Description:</strong> iPhone 11 Pro Max in good condition.</p>
-</div>
-
-<a href="index.html" class="contact">Back to OJEWA</a>
-
-</div>
-
+<a class="back" href="categories.html">← Back to Categories</a>
+<section class="products">
+  <div class="product">
+    <div class="pic">📱</div>
+    <h3>iPhone 11 Pro Max</h3>
+    <p class="price">GH₵ 3,500</p>
+    <p>Used</p>
+    <p class="location">📍 Accra</p>
+  </div>
+  <div class="product">
+    <div class="pic">📱</div>
+    <h3>Samsung Galaxy Phone</h3>
+    <p class="price">GH₵ 2,500</p>
+    <p>New</p>
+    <p class="location">📍 Tema</p>
+  </div>
+  <div class="product">
+    <div class="pic">📱</div>
+    <h3>iPad Tablet</h3>
+    <p class="price">GH₵ 4,000</p>
+    <p>Used</p>
+    <p class="location">📍 Accra</p>
+  </div>
+  <div class="product">
+    <div class="pic">📱</div>
+    <h3>Android Tablet</h3>
+    <p class="price">GH₵ 1,800</p>
+    <p>New</p>
+    <p class="location">📍 Kumasi</p>
+  </div>
+</section>
 </body>
 </html>
