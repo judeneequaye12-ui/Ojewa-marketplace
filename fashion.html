@@ -1,61 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>OJEWA - Fashion</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f5f5;
-}
-
-header {
-  background: #0b6b3a;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.product {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.price {
-  color: green;
-  font-weight: bold;
-}
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OJEWA - Fashion</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    header {
+      background: #0b6b3a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .back {
+      display: block;
+      margin: 15px;
+      color: #0b6b3a;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 15px;
+    }
+    .product {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .pic {
+      font-size: 55px;
+      margin-bottom: 10px;
+    }
+    .product h3 {
+      margin: 8px 0;
+    }
+    .price {
+      color: #0b6b3a;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .location {
+      color: #666;
+    }
+  </style>
 </head>
-
 <body>
-
 <header>
-<h1>OJEWA</h1>
-<p>Fashion</p>
+  <h1>👕 Fashion</h1>
+  <p>Find clothes, shoes and fashion items on OJEWA</p>
 </header>
-
-<div class="product">
-<div class="pic">👕</div>
-<h2>Men's Shirt</h2>
-<p>New - Quality material</p>
-<p class="price">GH₵ 150</p>
-<p>Accra</p>
-<a href="product.html?item=shirt" class="button">View Details</a>
-</div>
-
-<div class="product">
-<div class="pic">👗</div>
-<h2>Women's Dress</h2>
-<p>New - Stylish design</p>
-<p class="price">GH₵ 250</p>
-<p>Tema</p>
-<a href="product.html?item=dress" class="button">View Details</a>
-</div>
-
+<a class="back" href="categories.html">← Back to Categories</a>
+<section class="products">
+  <div class="product">
+    <div class="pic">👕</div>
+    <h3>Men's T-Shirt</h3>
+    <p class="price">GH₵ 120</p>
+    <p>New</p>
+    <p class="location">📍 Accra</p>
+  </div>
+  <div class="product">
+    <div class="pic">👗</div>
+    <h3>Women's Dress</h3>
+    <p class="price">GH₵ 250</p>
+    <p>New</p>
+    <p class="location">📍 Tema</p>
+  </div>
+  <div class="product">
+    <div class="pic">👟</div>
+    <h3>Sneakers</h3>
+    <p class="price">GH₵ 450</p>
+    <p>New</p>
+    <p class="location">📍 Kumasi</p>
+  </div>
+  <div class="product">
+    <div class="pic">👜</div>
+    <h3>Fashion Handbag</h3>
+    <p class="price">GH₵ 300</p>
+    <p>New</p>
+    <p class="location">📍 Accra</p>
+  </div>
+</section>
 </body>
 </html>
