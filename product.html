@@ -137,10 +137,11 @@ No description available.
   💬 Message Seller
 </a>
 <a
-  href="index.html"
+  href="#"
+  id="messageSeller"
   class="contact"
 >
-← Back to OJEWA
+  💬 Message Seller
 </a>
 </div>
 <script>
@@ -503,23 +504,22 @@ if (messageSeller) {
   if (listingId) {
 
     messageSeller.href =
-      "messages.html?listing=" +
+      "./messages.html?listing=" +
       encodeURIComponent(listingId);
 
   } else if (item) {
 
     messageSeller.href =
-      "messages.html?item=" +
+      "./messages.html?item=" +
       encodeURIComponent(item);
 
   } else {
 
     messageSeller.href =
-      "messages.html";
+      "./messages.html";
 
   }
 }
-
 </script>
 </body>
 </html>
