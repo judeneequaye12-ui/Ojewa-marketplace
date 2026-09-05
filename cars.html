@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>OJEWA - Cars & Vehicles</title>
+
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f5f5f5;
+      color: #18221b;
     }
+
     header {
       background: #0b6b3a;
       color: white;
       padding: 20px;
       text-align: center;
     }
+
     header h1 {
       margin: 0;
     }
+
     .back {
       display: block;
       margin: 15px;
@@ -26,71 +32,109 @@
       text-decoration: none;
       font-weight: bold;
     }
+
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 15px;
       padding: 15px;
     }
+
     .product {
       background: white;
       padding: 15px;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
     }
+
+    .product:active {
+      transform: scale(0.97);
+    }
+
     .pic {
       font-size: 55px;
       margin-bottom: 10px;
     }
+
     .product h3 {
       margin: 8px 0;
     }
+
     .price {
       color: #0b6b3a;
       font-weight: bold;
       font-size: 18px;
     }
+
     .location {
       color: #666;
     }
   </style>
 </head>
+
 <body>
+
 <header>
   <h1>🚗 Cars & Vehicles</h1>
   <p>Find cars and vehicles on OJEWA</p>
 </header>
+
 <a class="back" href="categories.html">← Back to Categories</a>
+
 <section class="products">
-  <div class="product">
+
+  <!-- Toyota Corolla -->
+  <div
+    class="product"
+    onclick="window.location.href='product.html?item=toyota'"
+  >
     <div class="pic">🚗</div>
     <h3>Toyota Corolla</h3>
     <p class="price">GH₵ 65,000</p>
     <p>Used</p>
     <p class="location">📍 Accra</p>
   </div>
-  <div class="product">
+
+  <!-- Hyundai Elantra -->
+  <div
+    class="product"
+    onclick="window.location.href='product.html?item=hyundai'"
+  >
     <div class="pic">🚙</div>
     <h3>Hyundai Elantra</h3>
     <p class="price">GH₵ 55,000</p>
     <p>Used</p>
     <p class="location">📍 Tema</p>
   </div>
-  <div class="product">
+
+  <!-- Mercedes-Benz -->
+  <div
+    class="product"
+    onclick="window.location.href='product.html?item=mercedes'"
+  >
     <div class="pic">🚘</div>
     <h3>Mercedes-Benz</h3>
     <p class="price">GH₵ 120,000</p>
     <p>Used</p>
     <p class="location">📍 Accra</p>
   </div>
-  <div class="product">
+
+  <!-- Family Van -->
+  <div
+    class="product"
+    onclick="window.location.href='product.html?item=familyvan'"
+  >
     <div class="pic">🚐</div>
     <h3>Family Van</h3>
     <p class="price">GH₵ 85,000</p>
     <p>Used</p>
     <p class="location">📍 Kumasi</p>
   </div>
+
 </section>
+
 </body>
 </html>
