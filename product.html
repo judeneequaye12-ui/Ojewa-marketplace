@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>OJEWA - Product Details</title>
+
 <style>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #f5f5f5;
 }
+
 header {
   background: #0b6b3a;
   color: white;
   padding: 20px;
   text-align: center;
 }
+
 .product-details {
   background: white;
   margin: 20px;
@@ -21,6 +26,7 @@ header {
   border-radius: 10px;
   text-align: center;
 }
+
 .product-image {
   width: 100%;
   max-width: 500px;
@@ -31,19 +37,23 @@ header {
   margin: 0 auto 20px;
   background: #eef5ef;
 }
+
 .pic {
   font-size: 80px;
   margin-bottom: 15px;
 }
+
 .price {
   color: green;
   font-size: 22px;
   font-weight: bold;
 }
+
 .info {
   text-align: left;
   margin-top: 20px;
 }
+
 .contact,
 .favorite {
   display: inline-block;
@@ -57,98 +67,148 @@ header {
   border: none;
   cursor: pointer;
 }
+
 .contact {
   background: #0b6b3a;
 }
+
 .favorite {
   background: #f28c28;
 }
+
 </style>
+
 </head>
+
 <body>
+
 <header>
+
 <h1>OJEWA</h1>
+
 <p>Product Details</p>
+
 </header>
+
+
 <div class="product-details">
+
+
 <img
   id="productImage"
   class="product-image"
   alt="Product photo"
 >
+
+
 <div
   class="pic"
   id="productIcon"
 >
   📦
 </div>
+
+
 <h2 id="productName">
   Product
 </h2>
+
+
 <p
   class="price"
   id="productPrice"
 >
   GH₵ 0
 </p>
+
+
 <div class="info">
+
 <p>
+
 <strong>Condition:</strong>
+
 <span id="productCondition">
 Not specified
 </span>
+
 </p>
+
+
 <p>
+
 <strong>Category:</strong>
+
 <span id="productCategory">
 Not specified
 </span>
+
 </p>
+
+
 <p>
+
 <strong>Location:</strong>
+
 <span id="productLocation">
 Not specified
 </span>
+
 </p>
+
+
 <p>
+
 <strong>Description:</strong>
+
 <span id="productDescription">
 No description available.
 </span>
+
 </p>
+
 </div>
+
+
 <button
   class="favorite"
   onclick="saveFavorite()"
 >
 ❤️ Add to Favorites
 </button>
+
+
 <br>
+
+
 <a
   href="favorites.html"
   class="contact"
 >
 ❤️ View Favourites
 </a>
-<a
-  href="./messages.html"
-  class="contact"
->
-  💬 Message Seller
-</a>
+
+
 <a
   href="#"
   id="messageSeller"
   class="contact"
 >
-  💬 Message Seller
+💬 Message Seller
 </a>
+
+
 </div>
+
+
 <script>
+
 /* =========================
    FEATURED OJEWA PRODUCTS
 ========================= */
+
 const products = {
+
   iphone: {
     icon: "📱",
     name: "iPhone 11 Pro Max",
@@ -158,6 +218,7 @@ const products = {
     location: "Accra",
     description: "iPhone 11 Pro Max in good condition."
   },
+
   samsung: {
     icon: "📱",
     name: "Samsung Galaxy Phone",
@@ -167,6 +228,7 @@ const products = {
     location: "Tema",
     description: "New Samsung Galaxy phone."
   },
+
   toyota: {
     icon: "🚗",
     name: "Toyota Corolla",
@@ -176,6 +238,7 @@ const products = {
     location: "Accra",
     description: "Toyota Corolla in good condition."
   },
+
   hyundai: {
     icon: "🚗",
     name: "Hyundai Elantra",
@@ -185,6 +248,7 @@ const products = {
     location: "Tema",
     description: "Used Hyundai Elantra."
   },
+
   tyres: {
     icon: "🛞",
     name: "Car Tyres Set",
@@ -194,6 +258,7 @@ const products = {
     location: "Accra",
     description: "New car tyres set in good quality."
   },
+
   alloy: {
     icon: "🛞",
     name: "Alloy Wheels",
@@ -203,6 +268,7 @@ const products = {
     location: "Tema",
     description: "Used alloy wheels in excellent condition."
   },
+
   smarttv: {
     icon: "📺",
     name: "Smart TV",
@@ -212,6 +278,7 @@ const products = {
     location: "Accra",
     description: "New Smart TV with high quality display."
   },
+
   laptop: {
     icon: "💻",
     name: "Laptop Computer",
@@ -221,6 +288,7 @@ const products = {
     location: "East Legon",
     description: "Laptop computer in good condition."
   },
+
   shirt: {
     icon: "👕",
     name: "Men's Shirt",
@@ -230,6 +298,7 @@ const products = {
     location: "Accra",
     description: "Men's shirt made with quality material."
   },
+
   dress: {
     icon: "👗",
     name: "Women's Dress",
@@ -239,6 +308,7 @@ const products = {
     location: "Tema",
     description: "Women's dress with a stylish design."
   },
+
   sofa: {
     icon: "🛋️",
     name: "Sofa Set",
@@ -248,6 +318,7 @@ const products = {
     location: "Accra",
     description: "Quality sofa set in good condition."
   },
+
   dining: {
     icon: "🍽️",
     name: "Dining Table",
@@ -257,6 +328,7 @@ const products = {
     location: "Tema",
     description: "Modern design dining table."
   },
+
   apartment: {
     icon: "🏠",
     name: "2 Bedroom Apartment",
@@ -266,6 +338,7 @@ const products = {
     location: "Accra",
     description: "2 bedroom apartment available for rent."
   },
+
   familyhouse: {
     icon: "🏡",
     name: "Family House",
@@ -275,6 +348,7 @@ const products = {
     location: "Tema",
     description: "Family house for sale in a good location."
   },
+
   designer: {
     icon: "🎨",
     name: "Graphic Designer",
@@ -284,6 +358,7 @@ const products = {
     location: "Accra",
     description: "Professional graphic designer for flyers, logos and designs."
   },
+
   repair: {
     icon: "🔧",
     name: "Phone Repair Service",
@@ -293,204 +368,332 @@ const products = {
     location: "Tema",
     description: "Professional phone repair service."
   }
+
 };
+
+
 /* =========================
    GET URL PARAMETERS
 ========================= */
+
 const params =
   new URLSearchParams(window.location.search);
+
 const item =
   params.get("item");
+
 const listingId =
   params.get("listing");
+
+
 /* =========================
    FIND THE PRODUCT
 ========================= */
+
 let product = null;
+
+
 /* USER POSTED LISTING */
+
 if (listingId) {
+
   const listings =
     JSON.parse(
       localStorage.getItem("ojewaListings")
     ) || [];
+
   product =
     listings.find(function(listing) {
+
       return String(listing.id) ===
              String(listingId);
+
     });
+
   if (product) {
+
     product.icon =
       getIcon(product.category);
+
     product.condition =
       product.condition ||
       "Seller listed item";
+
   }
+
 }
+
+
 /* FEATURED PRODUCT */
+
 else if (item) {
+
   product =
     products[item];
+
 }
+
+
 /* =========================
    DISPLAY PRODUCT
 ========================= */
+
 if (product) {
+
   document.getElementById("productName").textContent =
     product.name || "Product";
+
+
   document.getElementById("productPrice").textContent =
     formatPrice(product.price);
+
+
   document.getElementById("productCondition").textContent =
     product.condition ||
     "Not specified";
+
+
   document.getElementById("productCategory").textContent =
     product.category ||
     "Not specified";
+
+
   document.getElementById("productLocation").textContent =
     product.location ||
     "Not specified";
+
+
   document.getElementById("productDescription").textContent =
     product.description ||
     "No description available.";
+
+
   const productImage =
     document.getElementById("productImage");
+
+
   const productIcon =
     document.getElementById("productIcon");
-  /* =========================
-     SHOW REAL PHOTO
-  ========================= */
+
+
+  /* SHOW REAL PHOTO */
+
   if (product.image) {
+
     productImage.src =
       product.image;
+
     productImage.style.display =
       "block";
+
     productIcon.style.display =
       "none";
-    /* If image fails */
+
+
     productImage.onerror =
       function() {
+
         productImage.style.display =
           "none";
+
         productIcon.style.display =
           "block";
+
         productIcon.textContent =
           product.icon ||
           getIcon(product.category);
+
       };
+
   }
-  /* =========================
-     SHOW ICON IF NO PHOTO
-  ========================= */
+
+
+  /* SHOW ICON IF NO PHOTO */
+
   else {
+
     productImage.style.display =
       "none";
+
     productIcon.style.display =
       "block";
+
     productIcon.textContent =
       product.icon ||
       getIcon(product.category);
+
   }
+
 }
+
+
 /* PRODUCT NOT FOUND */
+
 else {
+
   document.getElementById("productName").textContent =
     "Product not found";
+
   document.getElementById("productPrice").textContent =
     "";
+
   document.getElementById("productDescription").textContent =
     "This product could not be found.";
+
 }
+
+
 /* =========================
    CATEGORY ICONS
 ========================= */
+
 function getIcon(category) {
+
   if (category === "Phones & Tablets")
     return "📱";
+
   if (category === "Computers")
     return "💻";
+
   if (category === "Cars & Vehicles")
     return "🚗";
+
   if (category === "Tyres & Wheels")
     return "🛞";
+
   if (category === "Property")
     return "🏠";
+
   if (category === "Fashion")
     return "👗";
+
   if (category === "Home & Living")
     return "🛋️";
+
   if (category === "Electronics")
     return "📺";
+
   if (category === "Jobs & Services")
     return "🔧";
+
   return "📦";
+
 }
+
+
 /* =========================
    PRICE FORMAT
 ========================= */
+
 function formatPrice(price) {
+
   if (!price)
     return "Price not specified";
+
   const text =
     String(price).trim();
+
   if (text.startsWith("GH₵"))
     return text;
+
   return "GH₵ " + text;
+
 }
+
+
 /* =========================
    SAVE FAVORITE
 ========================= */
+
 function saveFavorite() {
+
   if (!product) {
+
     alert("Product not found.");
+
     return;
+
   }
+
+
   const favorite = {
+
     id:
       product.id ||
       Date.now(),
+
     item:
       item || "",
+
     icon:
       product.icon ||
       getIcon(product.category),
+
     name:
       product.name,
+
     price:
       product.price,
+
     category:
       product.category || "",
+
     condition:
       product.condition || "",
+
     location:
       product.location,
+
     description:
       product.description,
+
     image:
       product.image || ""
+
   };
+
+
   let favorites =
     JSON.parse(
       localStorage.getItem("ojewaFavorites")
     ) || [];
+
+
   const alreadySaved =
     favorites.some(function(savedItem) {
+
       return String(savedItem.id) ===
              String(favorite.id);
+
     });
+
+
   if (alreadySaved) {
+
     alert(
       "This item is already in your Favorites ❤️"
     );
+
     return;
+
   }
+
+
   favorites.push(favorite);
+
+
   localStorage.setItem(
     "ojewaFavorites",
     JSON.stringify(favorites)
   );
+
+
   alert(
     "Item added to Favorites ❤️"
   );
+
 }
+
 
 /* =========================
    MESSAGE SELLER
@@ -498,6 +701,7 @@ function saveFavorite() {
 
 const messageSeller =
   document.getElementById("messageSeller");
+
 
 if (messageSeller) {
 
@@ -507,19 +711,26 @@ if (messageSeller) {
       "./messages.html?listing=" +
       encodeURIComponent(listingId);
 
-  } else if (item) {
+  }
+
+  else if (item) {
 
     messageSeller.href =
       "./messages.html?item=" +
       encodeURIComponent(item);
 
-  } else {
+  }
+
+  else {
 
     messageSeller.href =
       "./messages.html";
 
   }
+
 }
+
 </script>
+
 </body>
 </html>
