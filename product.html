@@ -490,6 +490,36 @@ function saveFavorite() {
     "Item added to Favorites ❤️"
   );
 }
+
+/* =========================
+   MESSAGE SELLER
+========================= */
+
+const messageSeller =
+  document.getElementById("messageSeller");
+
+if (messageSeller) {
+
+  if (listingId) {
+
+    messageSeller.href =
+      "messages.html?listing=" +
+      encodeURIComponent(listingId);
+
+  } else if (item) {
+
+    messageSeller.href =
+      "messages.html?item=" +
+      encodeURIComponent(item);
+
+  } else {
+
+    messageSeller.href =
+      "messages.html";
+
+  }
+}
+
 </script>
 </body>
 </html>
