@@ -67,12 +67,13 @@ header {
 </head>
 <body>
 <header>
-<h1>OJEWA</h1>
-<p>My Listings</p>
+  <h1>OJEWA</h1>
+  <p>My Listings</p>
 </header>
 <div class="listings">
-<h2>Your Listings</h2>
-<div id="myListings"></div>
+  <h2>Your Listings</h2>
+  <div id="myListings"></div>
+</div>
 <script>
 const listings =
   JSON.parse(localStorage.getItem("ojewaListings")) || [];
@@ -95,6 +96,15 @@ if (listings.length === 0) {
     const listingLink =
       "product.html?listing=" +
       encodeURIComponent(item.id);
+    const imageHTML = item.image
+      ? `
+        <img
+          src="${item.image}"
+          alt="${item.name}"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='📦';"
+        >
+      `
+      : "📦";
     container.innerHTML += `
       <div class="listing">
         <a
@@ -102,11 +112,7 @@ if (listings.length === 0) {
           class="pic-link"
         >
           <div class="pic">
-            ${
-              item.image
-                ? `<img src="${item.image}" alt="${item.name}">`
-                : "📦"
-            }
+            ${imageHTML}
           </div>
         </a>
         <h3>
@@ -114,7 +120,9 @@ if (listings.length === 0) {
         </h3>
         <p>
           <strong>
-            GH₵ ${item.price}
+            ${item.price.startsWith("GH₵")
+              ? item.price
+              : "GH₵ " + item.price}
           </strong>
         </p>
         <p>
@@ -144,6 +152,5 @@ if (listings.length === 0) {
 >
   ← Back to Account
 </a>
-</div>
 </body>
 </html>
