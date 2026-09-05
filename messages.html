@@ -1,39 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>OJEWA - Messages</title>
+
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #f5f5f5;
+  color: #18221b;
 }
+
 header {
   background: #0b6b3a;
   color: white;
   padding: 20px;
   text-align: center;
 }
-.messages {
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+}
+
+.message-list {
   background: white;
-  margin: 20px;
-  padding: 25px;
   border-radius: 10px;
-  text-align: center;
+  padding: 15px;
 }
-.message-box {
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
+
+.conversation {
+  display: block;
+  text-decoration: none;
+  color: #18221b;
   background: #f8faf8;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
 }
+
+.conversation h3 {
+  margin: 0 0 8px;
+}
+
+.conversation p {
+  margin: 5px 0;
+}
+
+.date {
+  font-size: 12px;
+  color: #777;
+}
+
+.empty {
+  text-align: center;
+  padding: 30px 15px;
+}
+
 .message-icon {
   font-size: 60px;
   margin-bottom: 10px;
 }
+
 .back {
-  display: inline-block;
+  display: block;
+  text-align: center;
   margin-top: 20px;
   color: #0b6b3a;
   text-decoration: none;
@@ -41,28 +77,96 @@ header {
 }
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>OJEWA</h1>
-<p>Messages 💬</p>
+  <h1>OJEWA</h1>
+  <p>Messages 💬</p>
 </header>
-<div class="messages">
-<h2>My Messages</h2>
-<div class="message-box">
-<div class="message-icon">
-  💬
+
+<div class="container">
+
+  <div class="message-list">
+
+    <h2>My Messages</h2>
+
+    <div id="messagesContainer"></div>
+
+  </div>
+
+  <a href="account.html" class="back">
+    ← Back to Account
+  </a>
+
 </div>
-<h3>No Messages Yet</h3>
-<p>
-Your conversations with buyers and sellers will appear here.
-</p>
-</div>
-<a
-  href="account.html"
-  class="back"
->
-  ← Back to Account
-</a>
-</div>
+
+<script>
+
+const messages =
+  JSON.parse(localStorage.getItem("ojewaMessages")) || [];
+
+const container =
+  document.getElementById("messagesContainer");
+
+
+if (messages.length === 0) {
+
+  container.innerHTML = `
+    <div class="empty">
+
+      <div class="message-icon">
+        💬
+      </div>
+
+      <h3>No Messages Yet</h3>
+
+      <p>
+        Your conversations with buyers and sellers will appear here.
+      </p>
+
+    </div>
+  `;
+
+} else {
+
+  // Show newest messages first
+  messages.reverse().forEach(message => {
+
+    const conversation =
+      document.createElement("a");
+
+    conversation.className = "conversation";
+
+    conversation.href =
+      "message.html?listing=" +
+      encodeURIComponent(message.listingId || "") +
+      "&item=" +
+      encodeURIComponent(message.itemKey || "");
+
+    conversation.innerHTML = `
+
+      <h3>
+        💬 ${message.productName}
+      </h3>
+
+      <p>
+        ${message.text}
+      </p>
+
+      <div class="date">
+        ${message.date}
+      </div>
+
+    `;
+
+    container.appendChild(conversation);
+
+  });
+
+}
+
+</script>
+
 </body>
 </html>
