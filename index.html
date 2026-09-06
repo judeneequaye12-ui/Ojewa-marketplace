@@ -643,7 +643,141 @@ function searchDemo(e) {
 
     return false;
 }
+/* =========================
+   APPLY FILTERS
+========================= */
 
+function applyFilters() {
+
+  const category =
+    document
+      .getElementById("categoryFilter")
+      .value;
+
+  const location =
+    document
+      .getElementById("locationFilter")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  /* NO FILTERS */
+
+  if (!category && !location) {
+
+    alert("Please choose a category or enter a location.");
+
+    return;
+
+  }
+
+
+  /* CATEGORY FILTER */
+
+  if (category === "Phones & Tablets") {
+
+    window.location.href =
+      "phones.html";
+
+    return;
+
+  }
+
+
+  if (category === "Computers") {
+
+    window.location.href =
+      "Computers.html";
+
+    return;
+
+  }
+
+
+  if (category === "Cars & Vehicles") {
+
+    window.location.href =
+      "cars.html";
+
+    return;
+
+  }
+
+
+  if (category === "Tyres & Wheels") {
+
+    window.location.href =
+      "tyres.html";
+
+    return;
+
+  }
+
+
+  if (category === "Electronics") {
+
+    window.location.href =
+      "electronics.html";
+
+    return;
+
+  }
+
+
+  if (category === "Fashion") {
+
+    window.location.href =
+      "fashion.html";
+
+    return;
+
+  }
+
+
+  if (category === "Home & Living") {
+
+    window.location.href =
+      "home.html";
+
+    return;
+
+  }
+
+
+  if (category === "Property") {
+
+    window.location.href =
+      "property.html";
+
+    return;
+
+  }
+
+
+  if (category === "Jobs & Services") {
+
+    window.location.href =
+      "jobs.html";
+
+    return;
+
+  }
+
+
+  /* LOCATION FILTER */
+
+  if (location) {
+
+    alert(
+      "Location filter selected: " +
+      location +
+      ". Location filtering for listings will be added next."
+    );
+
+  }
+
+}
 </script>
 
 </body>
