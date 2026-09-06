@@ -662,8 +662,6 @@ function applyFilters() {
       .trim();
 
 
-  /* NO FILTERS */
-
   if (!category && !location) {
 
     alert("Please choose a category or enter a location.");
@@ -673,16 +671,35 @@ function applyFilters() {
   }
 
 
-  /* CATEGORY FILTER */
+  const params =
+    new URLSearchParams();
 
-  if (category === "Phones & Tablets") {
 
-    window.location.href =
-      "phones.html";
+  if (category) {
 
-    return;
+    params.set(
+      "category",
+      category
+    );
 
   }
+
+
+  if (location) {
+
+    params.set(
+      "location",
+      location
+    );
+
+  }
+
+
+  window.location.href =
+    "search.html?" +
+    params.toString();
+
+}
 
 
   if (category === "Computers") {
