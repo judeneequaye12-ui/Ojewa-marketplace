@@ -610,62 +610,7 @@ function searchDemo(e) {
     "Product not found. Try another search."
   );
 
-  return false;
-}
-
-</script>
-
-  e.preventDefault();
-
-  const q = document
-    .getElementById('searchInput')
-    .value
-    .toLowerCase()
-    .trim();
-
-  if(q.includes("laptop")){
-
-    window.location.href = "product.html?item=laptop";
-
-  }
-
-  else if(q.includes("iphone") || q.includes("phone")){
-
-    window.location.href = "product.html?item=iphone";
-
-  }
-
-  else if(q.includes("samsung")){
-
-    window.location.href = "product.html?item=samsung";
-
-  }
-
-  else if(q.includes("car") || q.includes("toyota")){
-
-    window.location.href = "product.html?item=toyota";
-
-  }
-
-  else if(q.includes("tyre") || q.includes("wheel")){
-
-    window.location.href = "product.html?item=tyres";
-
-  }
-
-  else if(q.includes("sofa")){
-
-    window.location.href = "product.html?item=sofa";
-
-  }
-
-  else{
-
-    alert("Product not found. Try another search.");
-
-  }
-
-  return false;
+    return false;
 }
 
 </script>
