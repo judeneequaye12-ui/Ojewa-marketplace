@@ -268,9 +268,40 @@
   </p>
 
   <form class="search" onsubmit="return searchDemo(event)">
-    <input id="searchInput" placeholder="What are you looking for?">
-    <button type="submit">Search</button>
-  </form>
+  <input id="searchInput" placeholder="What are you looking for?">
+  <button type="submit">Search</button>
+</form>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap; max-width:650px; margin-top:15px;">
+
+  <select id="categoryFilter"
+    style="flex:1; min-width:150px; padding:14px; border:1px solid #ccd6ce; border-radius:10px; font-size:15px;">
+    <option value="">All Categories</option>
+    <option value="Phones & Tablets">Phones & Tablets</option>
+    <option value="Computers">Computers</option>
+    <option value="Cars & Vehicles">Cars & Vehicles</option>
+    <option value="Tyres & Wheels">Tyres & Wheels</option>
+    <option value="Electronics">Electronics</option>
+    <option value="Fashion">Fashion</option>
+    <option value="Home & Living">Home & Living</option>
+    <option value="Property">Property</option>
+    <option value="Jobs & Services">Jobs & Services</option>
+  </select>
+
+  <input
+    id="locationFilter"
+    placeholder="Location e.g. Accra"
+    style="flex:1; min-width:150px; padding:14px; border:1px solid #ccd6ce; border-radius:10px; font-size:15px;"
+  >
+
+</div>
+
+<button
+  type="button"
+  onclick="applyFilters()"
+  style="margin-top:10px; padding:14px 22px; border:0; background:#f28c28; color:white; font-weight:700; border-radius:10px; cursor:pointer;">
+  🔍 Apply Filters
+</button>
 
   <a href="sell.html" class="sell">+ Start Selling</a>
 </section>
