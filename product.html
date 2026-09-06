@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>OJEWA - Product Details</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #f5f5f5;
-  color: #18221b;
 }
 
 header {
@@ -46,7 +44,7 @@ header {
 }
 
 .price {
-  color: #0b6b3a;
+  color: green;
   font-size: 22px;
   font-weight: bold;
 }
@@ -77,14 +75,19 @@ header {
 .favorite {
   background: #f28c28;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <h1>OJEWA</h1>
-  <p>Product Details</p>
+
+<h1>OJEWA</h1>
+
+<p>Product Details</p>
+
 </header>
 
 <div class="product-details">
@@ -95,34 +98,64 @@ header {
   alt="Product photo"
 >
 
-<div class="pic" id="productIcon">📦</div>
+<div
+  class="pic"
+  id="productIcon"
+>
+  📦
+</div>
 
-<h2 id="productName">Product</h2>
+<h2 id="productName">
+  Product
+</h2>
 
-<p class="price" id="productPrice">GH₵ 0</p>
+<p
+  class="price"
+  id="productPrice"
+>
+  GH₵ 0
+</p>
 
 <div class="info">
 
 <p>
+
 <strong>Condition:</strong>
-<span id="productCondition">Not specified</span>
+
+<span id="productCondition">
+Not specified
+</span>
+
 </p>
 
 <p>
+
 <strong>Category:</strong>
-<span id="productCategory">Not specified</span>
+
+<span id="productCategory">
+Not specified
+</span>
+
 </p>
 
 <p>
+
 <strong>Location:</strong>
-<span id="productLocation">Not specified</span>
+
+<span id="productLocation">
+Not specified
+</span>
+
 </p>
 
 <p>
+
 <strong>Description:</strong>
+
 <span id="productDescription">
 No description available.
 </span>
+
 </p>
 
 </div>
@@ -136,7 +169,10 @@ No description available.
 
 <br>
 
-<a href="favorites.html" class="contact">
+<a
+  href="favorites.html"
+  class="contact"
+>
 ❤️ View Favourites
 </a>
 
@@ -150,7 +186,6 @@ No description available.
 
 </div>
 
-
 <script>
 
 /* =========================
@@ -161,7 +196,6 @@ const products = {
 
   iphone: {
     icon: "📱",
-    image: "https://images.unsplash.com/photo-1592286927505-2fd0b5c0e5b4?auto=format&fit=crop&w=800&q=80",
     name: "iPhone 11 Pro Max",
     price: "GH₵ 3,500",
     category: "Phones & Tablets",
@@ -172,7 +206,6 @@ const products = {
 
   samsung: {
     icon: "📱",
-    image: "https://images.unsplash.com/photo-1610945415295-d9bbf0f7f0b5?auto=format&fit=crop&w=800&q=80",
     name: "Samsung Galaxy Phone",
     price: "GH₵ 2,500",
     category: "Phones & Tablets",
@@ -183,7 +216,6 @@ const products = {
 
   toyota: {
     icon: "🚗",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
     name: "Toyota Corolla",
     price: "GH₵ 65,000",
     category: "Cars & Vehicles",
@@ -194,7 +226,6 @@ const products = {
 
   hyundai: {
     icon: "🚗",
-    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80",
     name: "Hyundai Elantra",
     price: "GH₵ 55,000",
     category: "Cars & Vehicles",
@@ -205,7 +236,6 @@ const products = {
 
   tyres: {
     icon: "🛞",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80",
     name: "Car Tyres Set",
     price: "GH₵ 1,200",
     category: "Tyres & Wheels",
@@ -216,7 +246,6 @@ const products = {
 
   alloy: {
     icon: "🛞",
-    image: "https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=800&q=80",
     name: "Alloy Wheels",
     price: "GH₵ 2,000",
     category: "Tyres & Wheels",
@@ -225,31 +254,8 @@ const products = {
     description: "Used alloy wheels in excellent condition."
   },
 
-  trucktyres: {
-    icon: "🛞",
-    image: "https://images.unsplash.com/photo-1600706432502-77a0e2e327b2?auto=format&fit=crop&w=800&q=80",
-    name: "Truck Tyres",
-    price: "GH₵ 3,500",
-    category: "Tyres & Wheels",
-    condition: "New",
-    location: "Kumasi",
-    description: "Heavy-duty truck tyres."
-  },
-
-  motorcycletyre: {
-    icon: "🛞",
-    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80",
-    name: "Motorcycle Tyre",
-    price: "GH₵ 450",
-    category: "Tyres & Wheels",
-    condition: "New",
-    location: "Accra",
-    description: "New motorcycle tyre."
-  },
-
   smarttv: {
     icon: "📺",
-    image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=800&q=80",
     name: "Smart TV",
     price: "GH₵ 3,000",
     category: "Electronics",
@@ -260,7 +266,6 @@ const products = {
 
   laptop: {
     icon: "💻",
-    image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
     name: "Laptop Computer",
     price: "GH₵ 4,800",
     category: "Computers",
@@ -271,7 +276,6 @@ const products = {
 
   shirt: {
     icon: "👕",
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
     name: "Men's Shirt",
     price: "GH₵ 150",
     category: "Fashion",
@@ -282,7 +286,6 @@ const products = {
 
   dress: {
     icon: "👗",
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80",
     name: "Women's Dress",
     price: "GH₵ 250",
     category: "Fashion",
@@ -293,7 +296,6 @@ const products = {
 
   sofa: {
     icon: "🛋️",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
     name: "Sofa Set",
     price: "GH₵ 3,500",
     category: "Home & Living",
@@ -304,7 +306,6 @@ const products = {
 
   dining: {
     icon: "🍽️",
-    image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=800&q=80",
     name: "Dining Table",
     price: "GH₵ 1,800",
     category: "Home & Living",
@@ -315,7 +316,6 @@ const products = {
 
   apartment: {
     icon: "🏠",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
     name: "2 Bedroom Apartment",
     price: "GH₵ 1,500/month",
     category: "Property",
@@ -326,7 +326,6 @@ const products = {
 
   familyhouse: {
     icon: "🏡",
-    image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80",
     name: "Family House",
     price: "GH₵ 450,000",
     category: "Property",
@@ -337,7 +336,6 @@ const products = {
 
   designer: {
     icon: "🎨",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80",
     name: "Graphic Designer",
     price: "GH₵ 500",
     category: "Jobs & Services",
@@ -348,7 +346,6 @@ const products = {
 
   repair: {
     icon: "🔧",
-    image: "https://images.unsplash.com/photo-1588508065123-287b28e013da?auto=format&fit=crop&w=800&q=80",
     name: "Phone Repair Service",
     price: "GH₵ 100",
     category: "Jobs & Services",
@@ -359,24 +356,26 @@ const products = {
 
 };
 
-
 /* =========================
    GET URL PARAMETERS
 ========================= */
 
-const params = new URLSearchParams(
-  window.location.search
-);
+const params =
+  new URLSearchParams(window.location.search);
 
-const item = params.get("item");
-const listingId = params.get("listing");
+const item =
+  params.get("item");
+
+const listingId =
+  params.get("listing");
+
+/* =========================
+   FIND THE PRODUCT
+========================= */
 
 let product = null;
 
-
-/* =========================
-   USER POSTED LISTING
-========================= */
+/* USER POSTED LISTING */
 
 if (listingId) {
 
@@ -385,12 +384,13 @@ if (listingId) {
       localStorage.getItem("ojewaListings")
     ) || [];
 
-  product = listings.find(function(listing) {
+  product =
+    listings.find(function(listing) {
 
-    return String(listing.id) ===
-           String(listingId);
+      return String(listing.id) ===
+             String(listingId);
 
-  });
+    });
 
   if (product) {
 
@@ -402,19 +402,17 @@ if (listingId) {
       "Seller listed item";
 
   }
+
 }
 
-
-/* =========================
-   FEATURED PRODUCT
-========================= */
+/* FEATURED PRODUCT */
 
 else if (item) {
 
-  product = products[item];
+  product =
+    products[item];
 
 }
-
 
 /* =========================
    DISPLAY PRODUCT
@@ -429,13 +427,16 @@ if (product) {
     formatPrice(product.price);
 
   document.getElementById("productCondition").textContent =
-    product.condition || "Not specified";
+    product.condition ||
+    "Not specified";
 
   document.getElementById("productCategory").textContent =
-    product.category || "Not specified";
+    product.category ||
+    "Not specified";
 
   document.getElementById("productLocation").textContent =
-    product.location || "Not specified";
+    product.location ||
+    "Not specified";
 
   document.getElementById("productDescription").textContent =
     product.description ||
@@ -447,8 +448,7 @@ if (product) {
   const productIcon =
     document.getElementById("productIcon");
 
-
-  /* REAL PRODUCT PHOTO */
+  /* SHOW REAL PHOTO */
 
   if (product.image) {
 
@@ -478,7 +478,7 @@ if (product) {
 
   }
 
-  /* FALLBACK ICON */
+  /* SHOW ICON IF NO PHOTO */
 
   else {
 
@@ -496,10 +496,7 @@ if (product) {
 
 }
 
-
-/* =========================
-   PRODUCT NOT FOUND
-========================= */
+/* PRODUCT NOT FOUND */
 
 else {
 
@@ -513,7 +510,6 @@ else {
     "This product could not be found.";
 
 }
-
 
 /* =========================
    CATEGORY ICONS
@@ -552,7 +548,6 @@ function getIcon(category) {
 
 }
 
-
 /* =========================
    PRICE FORMAT
 ========================= */
@@ -571,7 +566,6 @@ function formatPrice(price) {
   return "GH₵ " + text;
 
 }
-
 
 /* =========================
    SAVE FAVORITE
@@ -658,7 +652,6 @@ function saveFavorite() {
   );
 
 }
-
 
 /* =========================
    MESSAGE SELLER
