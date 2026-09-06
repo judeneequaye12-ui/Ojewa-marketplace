@@ -416,7 +416,204 @@
 
 <script>
 
-function searchDemo(e){
+function searchDemo(e) {
+
+  e.preventDefault();
+
+  const q = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  if (!q) {
+    alert("Please enter a product to search.");
+    return false;
+  }
+
+
+  /* PHONES */
+
+  if (
+    q.includes("iphone") ||
+    q.includes("phone")
+  ) {
+    window.location.href =
+      "product.html?item=iphone";
+    return false;
+  }
+
+
+  if (q.includes("samsung")) {
+    window.location.href =
+      "product.html?item=samsung";
+    return false;
+  }
+
+
+  /* COMPUTERS */
+
+  if (
+    q.includes("laptop") ||
+    q.includes("computer")
+  ) {
+    window.location.href =
+      "product.html?item=laptop";
+    return false;
+  }
+
+
+  /* CARS */
+
+  if (
+    q.includes("toyota") ||
+    q.includes("car")
+  ) {
+    window.location.href =
+      "product.html?item=toyota";
+    return false;
+  }
+
+
+  if (q.includes("hyundai")) {
+    window.location.href =
+      "product.html?item=hyundai";
+    return false;
+  }
+
+
+  /* TYRES */
+
+  if (
+    q.includes("tyre") ||
+    q.includes("tyres")
+  ) {
+    window.location.href =
+      "product.html?item=tyres";
+    return false;
+  }
+
+
+  if (
+    q.includes("wheel") ||
+    q.includes("alloy")
+  ) {
+    window.location.href =
+      "product.html?item=alloy";
+    return false;
+  }
+
+
+  if (q.includes("truck")) {
+    window.location.href =
+      "product.html?item=trucktyres";
+    return false;
+  }
+
+
+  if (q.includes("motorcycle")) {
+    window.location.href =
+      "product.html?item=motorcycletyre";
+    return false;
+  }
+
+
+  /* ELECTRONICS */
+
+  if (
+    q.includes("tv") ||
+    q.includes("television")
+  ) {
+    window.location.href =
+      "product.html?item=smarttv";
+    return false;
+  }
+
+
+  /* FASHION */
+
+  if (q.includes("shirt")) {
+    window.location.href =
+      "product.html?item=shirt";
+    return false;
+  }
+
+
+  if (q.includes("dress")) {
+    window.location.href =
+      "product.html?item=dress";
+    return false;
+  }
+
+
+  /* HOME */
+
+  if (q.includes("sofa")) {
+    window.location.href =
+      "product.html?item=sofa";
+    return false;
+  }
+
+
+  if (q.includes("dining") || q.includes("table")) {
+    window.location.href =
+      "product.html?item=dining";
+    return false;
+  }
+
+
+  /* PROPERTY */
+
+  if (
+    q.includes("apartment") ||
+    q.includes("2 bedroom")
+  ) {
+    window.location.href =
+      "product.html?item=apartment";
+    return false;
+  }
+
+
+  if (
+    q.includes("house") ||
+    q.includes("family")
+  ) {
+    window.location.href =
+      "product.html?item=familyhouse";
+    return false;
+  }
+
+
+  /* SERVICES */
+
+  if (
+    q.includes("designer") ||
+    q.includes("graphic")
+  ) {
+    window.location.href =
+      "product.html?item=designer";
+    return false;
+  }
+
+
+  if (
+    q.includes("repair") ||
+    q.includes("phone repair")
+  ) {
+    window.location.href =
+      "product.html?item=repair";
+    return false;
+  }
+
+
+  alert(
+    "Product not found. Try another search."
+  );
+
+  return false;
+}
+
+</script>
 
   e.preventDefault();
 
