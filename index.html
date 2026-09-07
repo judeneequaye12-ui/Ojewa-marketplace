@@ -695,9 +695,21 @@ function applyFilters() {
   }
 
 
-  window.location.href =
-    "search.html?" +
-    params.toString();
+  let url = "search.html?";
+
+if (category) {
+  url += "category=" + encodeURIComponent(category);
+}
+
+if (location) {
+  if (category) {
+    url += "&";
+  }
+
+  url += "location=" + encodeURIComponent(location);
+}
+
+window.location.href = url;
 
 }
 
