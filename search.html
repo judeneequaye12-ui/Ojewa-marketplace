@@ -88,17 +88,11 @@ header {
 
 <script>
 
-const params =
-  new URLSearchParams(window.location.search);
+const params = new URLSearchParams(window.location.search);
 
-const category =
-  params.get("category") || "";
-
-const location =
-  params.get("location") || "";
-
-const search =
-  params.get("search") || "";
+const selectedCategory = params.get("category") || "";
+const selectedLocation = params.get("location") || "";
+const searchText = params.get("search") || "";
 
 
 /* FEATURED PRODUCTS */
@@ -156,14 +150,18 @@ const products = {
 };
 
 
-/* ADD FEATURED PRODUCTS */
+/* CREATE PRODUCT LIST */
 
 let allProducts = [];
 
 Object.keys(products).forEach(function(key) {
 
   allProducts.push({
-    ...products[key],
+    name: products[key].name,
+    price: products[key].price,
+    category: products[key].category,
+    location: products[key].location,
+    description: products[key].description,
     item: key
   });
 
@@ -172,10 +170,25 @@ Object.keys(products).forEach(function(key) {
 
 /* ADD USER LISTINGS */
 
-const listings =
-  JSON.parse(
-    localStorage.getItem("ojewaListings")
-  ) || [];
+let listings = [];
+
+try {
+
+  listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings") || "[]"
+    );
+
+  if (!Array.isArray(listings)) {
+    listings = [];
+  }
+
+} catch (error) {
+
+  listings = [];
+
+}
+
 
 listings.forEach(function(listing) {
 
@@ -184,82 +197,88 @@ listings.forEach(function(listing) {
 });
 
 
-/* FILTER RESULTS */
+/* FILTER */
 
-const results =
-  allProducts.filter(function(product) {
+const results = allProducts.filter(function(product) {
 
-    const matchesCategory =
-      !category ||
-      product.category === category;
+  const productCategory =
+    String(product.category || "").toLowerCase();
 
-    const matchesLocation =
-      !location ||
-      String(product.location || "")
-        .toLowerCase()
-        .includes(location.toLowerCase());
+  const productLocation =
+    String(product.location || "").toLowerCase();
 
-    const matchesSearch =
-      !search ||
-      String(product.name || "")
-        .toLowerCase()
-        .includes(search.toLowerCase());
+  const productName =
+    String(product.name || "").toLowerCase();
 
-    return (
-      matchesCategory &&
-      matchesLocation &&
-      matchesSearch
+
+  const matchesCategory =
+    !selectedCategory ||
+    productCategory === selectedCategory.toLowerCase();
+
+
+  const matchesLocation =
+    !selectedLocation ||
+    productLocation.includes(
+      selectedLocation.toLowerCase()
     );
 
-  });
+
+  const matchesSearch =
+    !searchText ||
+    productName.includes(
+      searchText.toLowerCase()
+    );
 
 
-/* SHOW TITLE */
+  return (
+    matchesCategory &&
+    matchesLocation &&
+    matchesSearch
+  );
+
+});
+
+
+/* TITLE */
 
 let title = "Search Results";
 
-if (category) {
-  title += " - " + category;
+if (selectedCategory) {
+  title += " - " + selectedCategory;
 }
 
-if (location) {
-  title += " - " + location;
+if (selectedLocation) {
+  title += " - " + selectedLocation;
 }
 
-document.getElementById("resultTitle").textContent =
-  title;
+document.getElementById("resultTitle").textContent = title;
 
 
-/* SHOW RESULTS */
+/* DISPLAY RESULTS */
 
 const resultsBox =
   document.getElementById("results");
+
 
 if (results.length === 0) {
 
   resultsBox.innerHTML =
     "<p>No matching listings found.</p>";
 
-}
-
-else {
+} else {
 
   results.forEach(function(product) {
 
-    const id =
-      product.id || "";
+    let link;
 
-    let link = "";
 
-    if (id) {
+    if (product.id) {
 
       link =
         "product.html?listing=" +
-        encodeURIComponent(id);
+        encodeURIComponent(product.id);
 
-    }
-
-    else {
+    } else {
 
       link =
         "product.html?item=" +
