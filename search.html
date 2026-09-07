@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
 
 <title>OJEWA - Search Results</title>
 
 <style>
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -21,10 +28,26 @@ header {
   text-align: center;
 }
 
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin-bottom: 0;
+}
+
 .container {
   padding: 20px;
   max-width: 900px;
   margin: auto;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #0b6b3a;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .result {
@@ -37,6 +60,7 @@ header {
 
 .result h3 {
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .price {
@@ -59,43 +83,68 @@ header {
   margin-top: 10px;
 }
 
-.back {
-  display: inline-block;
-  margin-bottom: 20px;
-  color: #0b6b3a;
-  text-decoration: none;
-  font-weight: bold;
-}
 </style>
+
 </head>
 
 <body>
 
 <header>
+
   <h1>OJEWA</h1>
+
   <p>Search Results</p>
+
 </header>
+
 
 <div class="container">
 
-  <a href="index.html" class="back">← Back to OJEWA</a>
+  <a
+    href="index.html"
+    class="back"
+  >
+    ← Back to OJEWA
+  </a>
 
-  <h2 id="resultTitle">Search Results</h2>
+
+  <h2 id="resultTitle">
+    Search Results
+  </h2>
+
 
   <div id="results"></div>
 
 </div>
 
+
 <script>
 
-const params = new URLSearchParams(window.location.search);
+/* =========================
+   READ FILTERS
+========================= */
 
-const selectedCategory = params.get("category") || "";
-const selectedLocation = params.get("location") || "";
-const searchText = params.get("search") || "";
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
 
-/* FEATURED PRODUCTS */
+const selectedCategory =
+  params.get("category") || "";
+
+
+const selectedLocation =
+  params.get("location") || "";
+
+
+const searchText =
+  params.get("search") || "";
+
+
+/* =========================
+   FEATURED PRODUCTS
+========================= */
 
 const products = {
 
@@ -104,160 +153,325 @@ const products = {
     price: "GH₵ 3,500",
     category: "Phones & Tablets",
     location: "Accra",
-    description: "iPhone 11 Pro Max in good condition."
+    description:
+      "iPhone 11 Pro Max in good condition."
   },
+
 
   samsung: {
     name: "Samsung Galaxy Phone",
     price: "GH₵ 2,500",
     category: "Phones & Tablets",
     location: "Tema",
-    description: "New Samsung Galaxy phone."
+    description:
+      "New Samsung Galaxy phone."
   },
+
 
   laptop: {
     name: "Laptop Computer",
     price: "GH₵ 4,800",
     category: "Computers",
     location: "East Legon",
-    description: "Laptop computer in good condition."
+    description:
+      "Laptop computer in good condition."
   },
+
 
   toyota: {
     name: "Toyota Corolla",
     price: "GH₵ 65,000",
     category: "Cars & Vehicles",
     location: "Accra",
-    description: "Toyota Corolla in good condition."
+    description:
+      "Toyota Corolla in good condition."
   },
+
 
   tyres: {
     name: "Car Tyres Set",
     price: "GH₵ 1,200",
     category: "Tyres & Wheels",
     location: "Accra",
-    description: "New car tyres set in good quality."
+    description:
+      "New car tyres set in good quality."
   },
+
 
   smarttv: {
     name: "Smart TV",
     price: "GH₵ 3,000",
     category: "Electronics",
     location: "Accra",
-    description: "New Smart TV."
+    description:
+      "New Smart TV."
+  },
+
+
+  shirt: {
+    name: "Men's Shirt",
+    price: "GH₵ 250",
+    category: "Fashion",
+    location: "Accra",
+    description:
+      "Quality men's shirt."
+  },
+
+
+  dress: {
+    name: "Women's Dress",
+    price: "GH₵ 350",
+    category: "Fashion",
+    location: "Tema",
+    description:
+      "Beautiful women's dress."
+  },
+
+
+  sofa: {
+    name: "Sofa Set",
+    price: "GH₵ 3,500",
+    category: "Home & Living",
+    location: "Accra",
+    description:
+      "Comfortable sofa set."
+  },
+
+
+  dining: {
+    name: "Dining Table",
+    price: "GH₵ 1,800",
+    category: "Home & Living",
+    location: "Tema",
+    description:
+      "Quality dining table."
+  },
+
+
+  apartment: {
+    name: "2 Bedroom Apartment",
+    price: "GH₵ 1,500/month",
+    category: "Property",
+    location: "Accra",
+    description:
+      "2 bedroom apartment available."
+  },
+
+
+  familyhouse: {
+    name: "Family House",
+    price: "GH₵ 450,000",
+    category: "Property",
+    location: "Tema",
+    description:
+      "Family house available for sale."
+  },
+
+
+  designer: {
+    name: "Graphic Designer Service",
+    price: "GH₵ 500",
+    category: "Jobs & Services",
+    location: "Accra",
+    description:
+      "Professional graphic design service."
+  },
+
+
+  repair: {
+    name: "Phone Repair Service",
+    price: "GH₵ 100",
+    category: "Jobs & Services",
+    location: "Tema",
+    description:
+      "Phone repair service."
   }
 
 };
 
 
-/* CREATE PRODUCT LIST */
+/* =========================
+   CREATE PRODUCT LIST
+========================= */
 
 let allProducts = [];
 
-Object.keys(products).forEach(function(key) {
 
-  allProducts.push({
-    name: products[key].name,
-    price: products[key].price,
-    category: products[key].category,
-    location: products[key].location,
-    description: products[key].description,
-    item: key
-  });
+Object.keys(products).forEach(
+  function(key) {
 
-});
+    allProducts.push({
+
+      name:
+        products[key].name,
+
+      price:
+        products[key].price,
+
+      category:
+        products[key].category,
+
+      location:
+        products[key].location,
+
+      description:
+        products[key].description,
+
+      item: key
+
+    });
+
+  }
+);
 
 
-/* ADD USER LISTINGS */
+/* =========================
+   ADD USER LISTINGS
+========================= */
 
 let listings = [];
+
 
 try {
 
   listings =
     JSON.parse(
-      localStorage.getItem("ojewaListings") || "[]"
+      localStorage.getItem(
+        "ojewaListings"
+      ) || "[]"
     );
 
+
   if (!Array.isArray(listings)) {
+
     listings = [];
+
   }
 
-} catch (error) {
+}
+
+catch (error) {
 
   listings = [];
 
 }
 
 
-listings.forEach(function(listing) {
+listings.forEach(
+  function(listing) {
 
-  allProducts.push(listing);
+    allProducts.push(listing);
 
-});
-
-
-/* FILTER */
-
-const results = allProducts.filter(function(product) {
-
-  const productCategory =
-    String(product.category || "").toLowerCase();
-
-  const productLocation =
-    String(product.location || "").toLowerCase();
-
-  const productName =
-    String(product.name || "").toLowerCase();
+  }
+);
 
 
-  const matchesCategory =
-    !selectedCategory ||
-    productCategory === selectedCategory.toLowerCase();
+/* =========================
+   FILTER PRODUCTS
+========================= */
+
+const results =
+  allProducts.filter(
+    function(product) {
+
+      const productCategory =
+        String(
+          product.category || ""
+        ).toLowerCase();
 
 
-  const matchesLocation =
-    !selectedLocation ||
-    productLocation.includes(
-      selectedLocation.toLowerCase()
-    );
+      const productLocation =
+        String(
+          product.location || ""
+        ).toLowerCase();
 
 
-  const matchesSearch =
-    !searchText ||
-    productName.includes(
-      searchText.toLowerCase()
-    );
+      const productName =
+        String(
+          product.name || ""
+        ).toLowerCase();
 
 
-  return (
-    matchesCategory &&
-    matchesLocation &&
-    matchesSearch
+      const matchesCategory =
+        !selectedCategory ||
+        productCategory ===
+        selectedCategory.toLowerCase();
+
+
+      const matchesLocation =
+        !selectedLocation ||
+        productLocation.includes(
+          selectedLocation.toLowerCase()
+        );
+
+
+      const matchesSearch =
+        !searchText ||
+        productName.includes(
+          searchText.toLowerCase()
+        );
+
+
+      return (
+        matchesCategory &&
+        matchesLocation &&
+        matchesSearch
+      );
+
+    }
   );
 
-});
 
+/* =========================
+   SHOW RESULT TITLE
+========================= */
 
-/* TITLE */
+let title =
+  "Search Results";
 
-let title = "Search Results";
 
 if (selectedCategory) {
-  title += " - " + selectedCategory;
+
+  title +=
+    " - " +
+    selectedCategory;
+
 }
+
 
 if (selectedLocation) {
-  title += " - " + selectedLocation;
+
+  title +=
+    " - " +
+    selectedLocation;
+
 }
 
-document.getElementById("resultTitle").textContent = title;
+
+if (searchText) {
+
+  title +=
+    " - " +
+    searchText;
+
+}
 
 
-/* DISPLAY RESULTS */
+document
+  .getElementById(
+    "resultTitle"
+  )
+  .textContent = title;
+
+
+/* =========================
+   DISPLAY RESULTS
+========================= */
 
 const resultsBox =
-  document.getElementById("results");
+  document.getElementById(
+    "results"
+  );
 
 
 if (results.length === 0) {
@@ -265,66 +479,83 @@ if (results.length === 0) {
   resultsBox.innerHTML =
     "<p>No matching listings found.</p>";
 
-} else {
-
-  results.forEach(function(product) {
-
-    let link;
+}
 
 
-    if (product.id) {
+else {
 
-      link =
-        "product.html?listing=" +
-        encodeURIComponent(product.id);
+  results.forEach(
+    function(product) {
 
-    } else {
+      let link;
 
-      link =
-        "product.html?item=" +
-        encodeURIComponent(product.item);
+
+      if (product.id) {
+
+        link =
+          "product.html?listing=" +
+          encodeURIComponent(
+            product.id
+          );
+
+      }
+
+
+      else {
+
+        link =
+          "product.html?item=" +
+          encodeURIComponent(
+            product.item
+          );
+
+      }
+
+
+      resultsBox.innerHTML += `
+
+        <div class="result">
+
+          <h3>
+            ${product.name}
+          </h3>
+
+          <p class="price">
+            ${product.price}
+          </p>
+
+          <p>
+            ${product.category || ""}
+          </p>
+
+          <p class="location">
+            📍
+            ${product.location || "Location not specified"}
+          </p>
+
+          <p>
+            ${product.description || ""}
+          </p>
+
+          <a
+            href="${link}"
+            class="view"
+          >
+            View Item
+          </a>
+
+        </div>
+
+      `;
 
     }
-
-
-    resultsBox.innerHTML += `
-
-      <div class="result">
-
-        <h3>${product.name}</h3>
-
-        <p class="price">
-          ${product.price}
-        </p>
-
-        <p>
-          ${product.category || ""}
-        </p>
-
-        <p class="location">
-          📍 ${product.location || "Location not specified"}
-        </p>
-
-        <p>
-          ${product.description || ""}
-        </p>
-
-        <a
-          href="${link}"
-          class="view"
-        >
-          View Item
-        </a>
-
-      </div>
-
-    `;
-
-  });
+  );
 
 }
 
 </script>
 
+
 </body>
+
 </html>
