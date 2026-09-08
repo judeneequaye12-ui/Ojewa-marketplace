@@ -68,7 +68,14 @@ header p {
   font-weight: bold;
   font-size: 20px;
 }
-
+.result img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: #eef5ef;
+}
 .location {
   color: #555;
 }
@@ -488,7 +495,16 @@ else {
     function(product) {
 
       let link;
+      let imageHTML = "";
 
+      if (product.image) {
+        imageHTML = `
+          <img
+            src="${product.image}"
+            alt="${product.name}"
+          >
+        `;
+      }
 
       if (product.id) {
 
@@ -516,9 +532,11 @@ else {
 
         <div class="result">
 
-          <h3>
-            ${product.name}
-          </h3>
+  ${imageHTML}
+
+  <h3>
+    ${product.name}
+  </h3>
 
           <p class="price">
             ${product.price}
