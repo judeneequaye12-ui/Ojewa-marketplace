@@ -247,7 +247,31 @@ if (photoSource) {
 
       </div>
 
-      <button
+      <div class="listing-actions">
+
+  <button
+    class="edit"
+    onclick="editListing(${item.id})">
+    ✏️ Edit Listing
+  </button>
+
+  <div class="listing-actions">
+
+  <button
+    class="edit"
+    onclick="editListing(${item.id})">
+    ✏️ Edit Listing
+  </button>
+
+  <button
+    class="delete"
+    onclick="deleteListing(${item.id})">
+    🗑️ Delete Listing
+  </button>
+
+</div>
+
+</div>button
         class="delete"
         onclick="deleteListing(${item.id})">
         Delete Listing
