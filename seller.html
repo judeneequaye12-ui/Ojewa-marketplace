@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>OJEWA - Seller Profile</title>
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #18221b;
+}
+
+header {
+  background: #0b6b3a;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #0b6b3a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.profile {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #eef5ef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 45px;
+}
+
+.profile h2 {
+  margin: 8px 0;
+}
+
+.location {
+  color: #666;
+}
+
+.message {
+  display: inline-block;
+  background: #f28c28;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.listings-title {
+  margin-top: 25px;
+}
+
+.listing {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+}
+
+.listing h3 {
+  margin-top: 0;
+}
+
+.price {
+  color: #0b6b3a;
+  font-weight: bold;
+}
+
+.view {
+  display: inline-block;
+  background: #0b6b3a;
+  color: white;
+  padding: 9px 14px;
+  border-radius: 7px;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+  <h1>OJEWA</h1>
+
+  <p>Seller Profile</p>
+
+</header>
+
+
+<div class="container">
+
+  <a
+    href="javascript:history.back()"
+    class="back"
+  >
+    ← Back
+  </a>
+
+
+  <div class="profile">
+
+    <div class="avatar">
+      👤
+    </div>
+
+    <h2 id="sellerName">
+      OJEWA Seller
+    </h2>
+
+    <p class="location" id="sellerLocation">
+      📍 Location not specified
+    </p>
+
+    <p>
+      Seller on OJEWA
+    </p>
+
+    <a
+      href="#"
+      id="messageSeller"
+      class="message"
+    >
+      💬 Message Seller
+    </a>
+
+  </div>
+
+
+  <h2 class="listings-title">
+    📦 Seller's Listings
+  </h2>
+
+
+  <div id="sellerListings"></div>
+
+</div>
+
+
+<script>
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+
+const sellerId =
+  params.get("seller");
+
+
+let listings = [];
+
+
+try {
+
+  listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings") || "[]"
+    );
+
+  if (!Array.isArray(listings)) {
+    listings = [];
+  }
+
+} catch (error) {
+
+  listings = [];
+
+}
+
+
+/*
+  Current OJEWA version does not yet have
+  separate seller accounts.
+
+  For now, show the seller profile using
+  the selected listing's information.
+*/
+
+let sellerListing = null;
+
+
+if (sellerId) {
+
+  sellerListing =
+    listings.find(function(listing) {
+
+      return String(listing.id) ===
+        String(sellerId);
+
+    });
+
+}
+
+
+if (sellerListing) {
+
+  document.getElementById(
+    "sellerName"
+  ).textContent =
+    "OJEWA Seller";
+
+  document.getElementById(
+    "sellerLocation"
+  ).textContent =
+    "📍 " +
+    (
+      sellerListing.location ||
+      "Location not specified"
+    );
+
+
+  document.getElementById(
+    "messageSeller"
+  ).href =
+    "messages.html?listing=" +
+    encodeURIComponent(
+      sellerListing.id
+    );
+
+}
+
+
+/*
+  Show listings.
+*/
+
+const listingsBox =
+  document.getElementById(
+    "sellerListings"
+  );
+
+
+if (sellerListing) {
+
+  listingsBox.innerHTML = `
+
+    <div class="listing">
+
+      <h3>
+        ${sellerListing.name}
+      </h3>
+
+      <p class="price">
+        ${sellerListing.price}
+      </p>
+
+      <p>
+        ${sellerListing.category || ""}
+      </p>
+
+      <p>
+        📍 ${sellerListing.location || ""}
+      </p>
+
+      <a
+        href="product.html?listing=${encodeURIComponent(
+          sellerListing.id
+        )}"
+        class="view"
+      >
+        View Item
+      </a>
+
+    </div>
+
+  `;
+
+} else {
+
+  listingsBox.innerHTML = `
+
+    <div class="listing">
+
+      <h3>
+        OJEWA Seller
+      </h3>
+
+      <p>
+        Seller profile information will appear
+        when a seller listing is selected.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+</script>
+
+</body>
+
+</html>
