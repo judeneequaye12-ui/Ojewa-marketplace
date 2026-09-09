@@ -53,6 +53,7 @@
       margin-bottom: 10px;
       overflow: hidden;
       border-radius: 8px;
+      background: #eef5ef;
     }
 
     .pic img {
@@ -116,7 +117,7 @@
 
     <p class="location">📍 Accra</p>
 
-    <a href="iphone.html" class="button">View Details</a>
+    <a href="product.html?item=iphone" class="button">View Details</a>
 
   </div>
 
@@ -187,6 +188,95 @@
   </div>
 
 </section>
+
+
+<script>
+
+const productsSection =
+  document.querySelector(".products");
+
+
+let listings = [];
+
+try {
+
+  listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings") || "[]"
+    );
+
+  if (!Array.isArray(listings)) {
+    listings = [];
+  }
+
+} catch (error) {
+
+  listings = [];
+
+}
+
+
+listings.forEach(function(listing) {
+
+  if (
+    String(listing.category || "").toLowerCase()
+    !== "phones & tablets"
+  ) {
+    return;
+  }
+
+
+  const product = document.createElement("div");
+
+  product.className = "product";
+
+
+  product.innerHTML = `
+
+    <div class="pic">
+
+      ${
+        listing.image
+        ? `<img
+             src="${listing.image}"
+             alt="${listing.name}"
+           >`
+        : `<div style="
+             height:100%;
+             display:flex;
+             align-items:center;
+             justify-content:center;
+             font-size:50px;
+           ">📱</div>`
+      }
+
+    </div>
+
+    <h3>${listing.name}</h3>
+
+    <p class="price">${listing.price}</p>
+
+    <p>${listing.description || ""}</p>
+
+    <p class="location">
+      📍 ${listing.location || "Location not specified"}
+    </p>
+
+    <a
+      href="product.html?listing=${encodeURIComponent(listing.id)}"
+      class="button"
+    >
+      View Details
+    </a>
+
+  `;
+
+
+  productsSection.appendChild(product);
+
+});
+
+</script>
 
 </body>
 </html>
