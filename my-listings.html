@@ -195,20 +195,22 @@ function displayListings() {
 
     let picture;
 
-    if (item.image) {
+const photoSource = item.photo || item.image;
 
-      picture = `
-        <img
-          src="${item.image}"
-          alt="${item.name}">
-      `;
+if (photoSource) {
 
-    } else {
+  picture = `
+    <img
+      src="${photoSource}"
+      alt="${item.name}">
+  `;
 
-      picture =
-        getIcon(item.category);
+} else {
 
-    }
+  picture =
+    getIcon(item.category);
+
+}
 
 
     card.innerHTML = `
