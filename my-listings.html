@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +8,7 @@
 <title>OJEWA - My Listings</title>
 
 <style>
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -82,15 +84,31 @@ h2 {
   font-size: 13px;
 }
 
-.delete {
-  width: 100%;
-  padding: 11px;
+/* BUTTON AREA */
+
+.listing-actions {
+  display: flex;
+  gap: 10px;
   margin-top: 12px;
-  background: #d9534f;
+}
+
+.edit,
+.delete {
+  flex: 1;
+  padding: 11px;
   color: white;
   border: none;
   border-radius: 7px;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.edit {
+  background: #0b6b3a;
+}
+
+.delete {
+  background: #d9534f;
 }
 
 .back {
@@ -108,49 +126,84 @@ h2 {
   border-radius: 12px;
   text-align: center;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-  <h1>OJEWA</h1>
-  <p>My Listings</p>
+
+<h1>OJEWA</h1>
+
+<p>My Listings</p>
+
 </header>
+
 
 <div class="container">
 
-  <h2>Your Listings</h2>
+<h2>Your Listings</h2>
 
-  <div id="listings" class="listings"></div>
+<div id="listings" class="listings"></div>
 
-  <a href="sell.html" class="back">
-    + Post Another Item
-  </a>
 
-  <a href="index.html" class="back">
-    ← Back to OJEWA
-  </a>
+<a href="sell.html" class="back">
++ Post Another Item
+</a>
+
+
+<a href="index.html" class="back">
+← Back to OJEWA
+</a>
 
 </div>
 
+
 <script>
+
+/* =========================
+   CATEGORY ICONS
+========================= */
 
 function getIcon(category) {
 
-  if (category === "Phones & Tablets") return "📱";
-  if (category === "Computers") return "💻";
-  if (category === "Cars & Vehicles") return "🚗";
-  if (category === "Tyres & Wheels") return "🛞";
-  if (category === "Property") return "🏠";
-  if (category === "Fashion") return "👗";
-  if (category === "Home & Living") return "🛋️";
-  if (category === "Electronics") return "📺";
-  if (category === "Jobs & Services") return "🔧";
+  if (category === "Phones & Tablets")
+    return "📱";
+
+  if (category === "Computers")
+    return "💻";
+
+  if (category === "Cars & Vehicles")
+    return "🚗";
+
+  if (category === "Tyres & Wheels")
+    return "🛞";
+
+  if (category === "Property")
+    return "🏠";
+
+  if (category === "Fashion")
+    return "👗";
+
+  if (category === "Home & Living")
+    return "🛋️";
+
+  if (category === "Electronics")
+    return "📺";
+
+  if (category === "Jobs & Services")
+    return "🔧";
 
   return "📦";
+
 }
 
+
+/* =========================
+   OPEN PRODUCT
+========================= */
 
 function openListing(id) {
 
@@ -160,122 +213,182 @@ function openListing(id) {
 }
 
 
+/* =========================
+   EDIT LISTING
+========================= */
+
+function editListing(id) {
+
+  window.location.href =
+    "edit-listing.html?id=" + id;
+
+}
+
+
+/* =========================
+   DISPLAY LISTINGS
+========================= */
+
 function displayListings() {
 
   const container =
     document.getElementById("listings");
 
-  const listings =
-    JSON.parse(localStorage.getItem("ojewaListings")) || [];
 
+  const listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+
+
+  /* NO LISTINGS */
 
   if (listings.length === 0) {
 
     container.innerHTML = `
+
       <div class="empty">
+
         <h3>No listings yet</h3>
-        <p>Post your first item on OJEWA.</p>
+
+        <p>
+          Post your first item on OJEWA.
+        </p>
+
       </div>
+
     `;
 
     return;
+
   }
 
 
   container.innerHTML = "";
 
 
+  /* SHOW EACH LISTING */
+
   listings.forEach(function(item) {
 
     const card =
       document.createElement("div");
 
-    card.className = "listing";
+    card.className =
+      "listing";
 
+
+    /* PRODUCT PHOTO */
 
     let picture;
 
-const photoSource = item.photo || item.image;
+    const photoSource =
+      item.photo || item.image;
 
-if (photoSource) {
 
-  picture = `
-    <img
-      src="${photoSource}"
-      alt="${item.name}">
-  `;
+    if (photoSource) {
 
-} else {
+      picture = `
 
-  picture =
-    getIcon(item.category);
+        <img
+          src="${photoSource}"
+          alt="${item.name}"
+        >
 
-}
+      `;
 
+    }
+
+    else {
+
+      picture =
+        getIcon(item.category);
+
+    }
+
+
+    /* LISTING CARD */
 
     card.innerHTML = `
 
       <div
         class="listing-content"
-        onclick="openListing(${item.id})">
+        onclick="openListing(${item.id})"
+      >
 
         <div class="pic">
+
           ${picture}
+
         </div>
 
+
         <p class="category">
-          ${item.category}
+
+          ${item.category || "Other"}
+
         </p>
 
-        <h3>${item.name}</h3>
+
+        <h3>
+
+          ${item.name || "Unnamed Item"}
+
+        </h3>
+
 
         <p class="price">
-          ${item.price}
+
+          GH₵ ${item.price || "0"}
+
         </p>
 
-        <p>
-          📍 ${item.location}
-        </p>
 
         <p>
-          ${item.description}
+
+          📍 ${item.location || "Location not specified"}
+
         </p>
+
+
+        <p>
+
+          ${item.description || "No description available."}
+
+        </p>
+
 
         <small>
-          Posted: ${item.date}
+
+          Posted: ${item.date || "Recently"}
+
         </small>
 
       </div>
 
+
       <div class="listing-actions">
 
-  <button
-    class="edit"
-    onclick="editListing(${item.id})">
-    ✏️ Edit Listing
-  </button>
+        <button
+          class="edit"
+          onclick="editListing(${item.id})"
+        >
 
-  <div class="listing-actions">
+          ✏️ Edit Listing
 
-  <button
-    class="edit"
-    onclick="editListing(${item.id})">
-    ✏️ Edit Listing
-  </button>
+        </button>
 
-  <button
-    class="delete"
-    onclick="deleteListing(${item.id})">
-    🗑️ Delete Listing
-  </button>
 
-</div>
+        <button
+          class="delete"
+          onclick="deleteListing(${item.id})"
+        >
 
-</div>button
-        class="delete"
-        onclick="deleteListing(${item.id})">
-        Delete Listing
-      </button>
+          🗑️ Delete Listing
+
+        </button>
+
+      </div>
 
     `;
 
@@ -287,10 +400,16 @@ if (photoSource) {
 }
 
 
+/* =========================
+   DELETE LISTING
+========================= */
+
 function deleteListing(id) {
 
   if (!confirm("Delete this listing?")) {
+
     return;
+
   }
 
 
@@ -303,7 +422,8 @@ function deleteListing(id) {
   listings =
     listings.filter(function(item) {
 
-      return item.id !== id;
+      return String(item.id) !==
+             String(id);
 
     });
 
@@ -319,9 +439,14 @@ function deleteListing(id) {
 }
 
 
+/* =========================
+   START
+========================= */
+
 displayListings();
 
 </script>
 
 </body>
+
 </html>
