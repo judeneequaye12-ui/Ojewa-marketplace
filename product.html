@@ -450,10 +450,13 @@ if (product) {
 
   /* SHOW REAL PHOTO */
 
-  if (product.image) {
+  const photoSource =
+  product.photo || product.image;
 
-    productImage.src =
-      product.image;
+if (photoSource) {
+
+  productImage.src =
+    photoSource;
 
     productImage.style.display =
       "block";
@@ -613,7 +616,9 @@ function saveFavorite() {
       product.description,
 
     image:
-      product.image || ""
+  product.photo ||
+  product.image ||
+  ""
 
   };
 
