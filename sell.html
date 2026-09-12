@@ -276,17 +276,52 @@ function postItem() {
 
 
     localStorage.setItem(
-      "ojewaListings",
-      JSON.stringify(listings)
-    );
+  "ojewaListings",
+  JSON.stringify(listings)
+);
 
 
-    alert("Your item has been posted to OJEWA! 🎉");
+/* =========================
+   CREATE NOTIFICATION
+========================= */
+
+let notifications =
+  JSON.parse(
+    localStorage.getItem("ojewaNotifications")
+  ) || [];
 
 
-    window.location.href =
+notifications.unshift({
+
+  id: Date.now(),
+
+  type: "listings",
+
+  icon: "📋",
+
+  title: "Your listing is now live!",
+
+  message:
+    name + " has been successfully posted on OJEWA.",
+
+  time: new Date().toLocaleString(),
+
+  read: false
+
+});
+
+
+localStorage.setItem(
+  "ojewaNotifications",
+  JSON.stringify(notifications)
+);
+
+
+alert("Your item has been posted to OJEWA! 🎉");
+
+
+window.location.href =
   "listings.html";
-
   };
 
 
