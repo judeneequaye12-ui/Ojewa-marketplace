@@ -290,7 +290,6 @@ let notifications =
     localStorage.getItem("ojewaNotifications")
   ) || [];
 
-
 notifications.unshift({
 
   id: Date.now(),
@@ -302,14 +301,16 @@ notifications.unshift({
   title: "Your listing is now live!",
 
   text:
-  name + " has been successfully posted on OJEWA.",
+    name + " has been successfully posted on OJEWA.",
 
-  time: new Date().toLocaleString(),
+  date: new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  }),
 
   read: false
 
 });
-
 
 localStorage.setItem(
   "ojewaNotifications",
