@@ -952,22 +952,28 @@ function displayRealNotifications() {
    MARK ALL AS READ
 ========================================== */
 function markAllRead() {
+
+  // Mark saved notifications as read
   ojewaNotifications.forEach(function(notification) {
     notification.read = true;
   });
+
   localStorage.setItem(
     "ojewaNotifications",
     JSON.stringify(ojewaNotifications)
   );
+
+  // Remove unread dots from every notification
   document
     .querySelectorAll(".unread-dot")
     .forEach(function(dot) {
       dot.style.display = "none";
     });
+
+  // Hide the notification badge
   updateNotificationBadge();
-  alert(
-    "All notifications marked as read."
-  );
+
+  alert("All notifications marked as read.");
 }
 /* ==========================================
    FILTER NOTIFICATIONS
