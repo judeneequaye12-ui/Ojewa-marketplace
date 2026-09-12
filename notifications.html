@@ -879,7 +879,7 @@ let ojewaNotifications =
     localStorage.getItem("ojewaNotifications")
   ) || [];
 /* ==========================================
-   GET NOTIFICATION COUNT
+   GET UNREAD COUNT
 ========================================== */
 function getUnreadCount() {
   return ojewaNotifications.filter(function(notification) {
@@ -902,6 +902,53 @@ function updateNotificationBadge() {
   }
 }
 /* ==========================================
+   ADD REAL NOTIFICATIONS TO LIST
+========================================== */
+function displayRealNotifications() {
+  const notificationList =
+    document.getElementById("notificationList");
+  if (!notificationList) {
+    return;
+  }
+  ojewaNotifications
+    .slice()
+    .reverse()
+    .forEach(function(notification) {
+      const notificationItem =
+        document.createElement("div");
+      notificationItem.className =
+        "notification";
+      notificationItem.dataset.type =
+        notification.type || "system";
+      const unreadDot =
+        notification.read === true
+          ? ""
+          : `<div class="unread-dot"></div>`;
+      notificationItem.innerHTML = `
+        <div class="notification-icon">
+          ${notification.icon || "🔔"}
+        </div>
+        <div class="notification-text">
+          <strong>
+            ${notification.title || "OJEWA Notification"}
+          </strong>
+          ${
+            notification.text
+              ? `<p>${notification.text}</p>`
+              : ""
+          }
+        </div>
+        <div class="time">
+          ${notification.date || ""}
+        </div>
+        ${unreadDot}
+      `;
+      notificationList.prepend(
+        notificationItem
+      );
+    });
+}
+/* ==========================================
    MARK ALL AS READ
 ========================================== */
 function markAllRead() {
@@ -918,7 +965,9 @@ function markAllRead() {
       dot.style.display = "none";
     });
   updateNotificationBadge();
-  alert("All notifications marked as read.");
+  alert(
+    "All notifications marked as read."
+  );
 }
 /* ==========================================
    FILTER NOTIFICATIONS
@@ -985,8 +1034,9 @@ function goAccount() {
     "account.html";
 }
 /* ==========================================
-   UPDATE BADGE WHEN PAGE OPENS
+   START NOTIFICATIONS
 ========================================== */
+displayRealNotifications();
 updateNotificationBadge();
 </script>
 
