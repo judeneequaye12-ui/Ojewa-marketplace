@@ -267,15 +267,13 @@ function postItem() {
 
 
     let listings =
-      JSON.parse(
-        localStorage.getItem("ojewaListings")
-      ) || [];
+  JSON.parse(
+    localStorage.getItem("ojewaListings")
+  ) || [];
 
+listings.push(listing);
 
-    listings.push(listing);
-
-
-    localStorage.setItem(
+localStorage.setItem(
   "ojewaListings",
   JSON.stringify(listings)
 );
@@ -318,19 +316,19 @@ localStorage.setItem(
 );
 
 
+/* =========================
+   SUCCESS
+========================= */
+
 alert("Your item has been posted to OJEWA! 🎉");
 
+window.location.href = "listings.html";
 
-window.location.href =
-  "listings.html";
-  };
+};
 
-
-  reader.readAsDataURL(imageFile);
+reader.readAsDataURL(imageFile);
 
 }
-
-</script>
 
 </body>
 </html>
