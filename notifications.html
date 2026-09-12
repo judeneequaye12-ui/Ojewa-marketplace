@@ -905,47 +905,59 @@ function updateNotificationBadge() {
    ADD REAL NOTIFICATIONS TO LIST
 ========================================== */
 function displayRealNotifications() {
+
   const notificationList =
     document.getElementById("notificationList");
+
   if (!notificationList) {
     return;
   }
+
   ojewaNotifications
-    .slice()
-    .reverse()
     .forEach(function(notification) {
+
       const notificationItem =
         document.createElement("div");
+
       notificationItem.className =
         "notification";
+
       notificationItem.dataset.type =
         notification.type || "system";
+
       const unreadDot =
         notification.read === true
           ? ""
           : `<div class="unread-dot"></div>`;
+
       notificationItem.innerHTML = `
         <div class="notification-icon">
           ${notification.icon || "🔔"}
         </div>
+
         <div class="notification-text">
           <strong>
             ${notification.title || "OJEWA Notification"}
           </strong>
+
           ${
             notification.text
               ? `<p>${notification.text}</p>`
               : ""
           }
         </div>
+
         <div class="time">
           ${notification.date || ""}
         </div>
+
         ${unreadDot}
       `;
-      notificationList.prepend(
+
+      notificationList.appendChild(
         notificationItem
       );
+
     });
 }
 /* ==========================================
@@ -979,26 +991,34 @@ function markAllRead() {
    FILTER NOTIFICATIONS
 ========================================== */
 function filterNotifications(type, button) {
+
+  // Update active filter button
   document
     .querySelectorAll(".filter")
     .forEach(function(btn) {
       btn.classList.remove("active");
     });
+
   button.classList.add("active");
+
+  // Show matching notifications
   document
     .querySelectorAll(".notification")
     .forEach(function(item) {
+
+      const notificationType =
+        item.dataset.type || "system";
+
       if (type === "all") {
         item.style.display = "flex";
       }
-      else if (
-        item.dataset.type === type
-      ) {
+      else if (notificationType === type) {
         item.style.display = "flex";
       }
       else {
         item.style.display = "none";
       }
+
     });
 }
 /* ==========================================
@@ -1035,13 +1055,56 @@ function goFavorites() {
   window.location.href =
     "favorites.html";
 }
+
 function goAccount() {
   window.location.href =
     "account.html";
 }
+
+
+/* ==========================================
+   CREATE OJEWA NOTIFICATION
+========================================== */
+function addOjewaNotification(
+  type,
+  title,
+  text,
+  icon
+) {
+
+  let notifications =
+    JSON.parse(
+      localStorage.getItem("ojewaNotifications")
+    ) || [];
+
+  const newNotification = {
+    id: Date.now(),
+    type: type || "system",
+    title: title || "OJEWA Notification",
+    text: text || "",
+    icon: icon || "🔔",
+    date: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    }),
+    read: false
+  };
+
+  notifications.push(newNotification);
+
+  localStorage.setItem(
+    "ojewaNotifications",
+    JSON.stringify(notifications)
+  );
+
+  return newNotification;
+}
+
+
 /* ==========================================
    START NOTIFICATIONS
 ========================================== */
+
 displayRealNotifications();
 updateNotificationBadge();
 </script>
