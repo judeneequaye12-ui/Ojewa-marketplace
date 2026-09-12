@@ -871,79 +871,123 @@ h1 {
 
 
 <script>
-
+/* ==========================================
+   LOAD OJEWA NOTIFICATIONS
+========================================== */
+let ojewaNotifications =
+  JSON.parse(
+    localStorage.getItem("ojewaNotifications")
+  ) || [];
+/* ==========================================
+   GET NOTIFICATION COUNT
+========================================== */
+function getUnreadCount() {
+  return ojewaNotifications.filter(function(notification) {
+    return notification.read !== true;
+  }).length;
+}
+/* ==========================================
+   UPDATE NOTIFICATION BADGE
+========================================== */
+function updateNotificationBadge() {
+  const badge =
+    document.getElementById("notificationBadge");
+  const count =
+    getUnreadCount();
+  if (count > 0) {
+    badge.textContent = count;
+    badge.style.display = "flex";
+  } else {
+    badge.style.display = "none";
+  }
+}
+/* ==========================================
+   MARK ALL AS READ
+========================================== */
 function markAllRead() {
-
-  document.querySelectorAll(".unread-dot").forEach(function(dot) {
-    dot.style.display = "none";
+  ojewaNotifications.forEach(function(notification) {
+    notification.read = true;
   });
-
-  document.getElementById("notificationBadge").style.display = "none";
-
+  localStorage.setItem(
+    "ojewaNotifications",
+    JSON.stringify(ojewaNotifications)
+  );
+  document
+    .querySelectorAll(".unread-dot")
+    .forEach(function(dot) {
+      dot.style.display = "none";
+    });
+  updateNotificationBadge();
   alert("All notifications marked as read.");
 }
-
-
+/* ==========================================
+   FILTER NOTIFICATIONS
+========================================== */
 function filterNotifications(type, button) {
-
-  document.querySelectorAll(".filter").forEach(function(btn) {
-    btn.classList.remove("active");
-  });
-
+  document
+    .querySelectorAll(".filter")
+    .forEach(function(btn) {
+      btn.classList.remove("active");
+    });
   button.classList.add("active");
-
-  document.querySelectorAll(".notification").forEach(function(item) {
-
-    if (type === "all") {
-      item.style.display = "flex";
-    }
-
-    else if (item.dataset.type === type) {
-      item.style.display = "flex";
-    }
-
-    else {
-      item.style.display = "none";
-    }
-
-  });
+  document
+    .querySelectorAll(".notification")
+    .forEach(function(item) {
+      if (type === "all") {
+        item.style.display = "flex";
+      }
+      else if (
+        item.dataset.type === type
+      ) {
+        item.style.display = "flex";
+      }
+      else {
+        item.style.display = "none";
+      }
+    });
 }
-
-
+/* ==========================================
+   OPEN MESSAGES
+========================================== */
 function openMessages() {
-  window.location.href = "messages.html";
+  window.location.href =
+    "messages.html";
 }
-
-
+/* ==========================================
+   OPEN CART
+========================================== */
 function openCart() {
-  alert("Your OJEWA cart will appear here.");
+  alert(
+    "Your OJEWA cart will appear here."
+  );
 }
-
-
+/* ==========================================
+   MOBILE NAVIGATION
+========================================== */
 function goHome() {
-  window.location.href = "index.html";
+  window.location.href =
+    "index.html";
 }
-
-
 function goCategories() {
-  window.location.href = "categories.html";
+  window.location.href =
+    "categories.html";
 }
-
-
 function goSell() {
-  window.location.href = "sell.html";
+  window.location.href =
+    "sell.html";
 }
-
-
 function goFavorites() {
-  window.location.href = "favorites.html";
+  window.location.href =
+    "favorites.html";
 }
-
-
 function goAccount() {
-  window.location.href = "account.html";
+  window.location.href =
+    "account.html";
 }
-
+/* ==========================================
+   UPDATE BADGE WHEN PAGE OPENS
+========================================== */
+updateNotificationBadge();
 </script>
 
 </body>
