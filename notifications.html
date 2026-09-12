@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>OJEWA - Notifications</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8faf8;
+  color: #18221b;
+}
+
+/* HEADER */
+header {
+  background: white;
+  height: 85px;
+  display: flex;
+  align-items: center;
+  padding: 0 35px;
+  border-bottom: 1px solid #eeeeee;
+  gap: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 250px;
+}
+
+.logo-icon {
+  width: 50px;
+  height: 50px;
+  background: #12834b;
+  border-radius: 50% 50% 50% 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 25px;
+}
+
+.logo-text {
+  font-size: 31px;
+  font-weight: bold;
+  color: #18221b;
+}
+
+.logo-sub {
+  display: block;
+  font-size: 12px;
+  color: #12834b;
+  letter-spacing: 1px;
+  margin-top: -3px;
+}
+
+/* SEARCH */
+.search-box {
+  flex: 1;
+  max-width: 520px;
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  color: #777;
+}
+
+.search-box span {
+  font-size: 23px;
+  margin-right: 12px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+/* HEADER ICONS */
+.header-icons {
+  margin-left: auto;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.icon {
+  font-size: 25px;
+  position: relative;
+  cursor: pointer;
+}
+
+.badge {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  background: #12834b;
+  color: white;
+  font-size: 10px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* MAIN */
+.container {
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 0 25px;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.mark-read {
+  color: #087333;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* FILTER BUTTONS */
+.filters {
+  display: flex;
+  gap: 12px;
+  margin: 25px 0;
+  overflow-x: auto;
+}
+
+.filter {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 15px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.filter.active {
+  background: #12834b;
+  color: white;
+  border-color: #12834b;
+}
+
+.count {
+  margin-left: 8px;
+  font-weight: bold;
+}
+
+/* NOTIFICATION LIST */
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 25px 0 12px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+}
+
+.notifications {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+}
+
+.notification:last-child {
+  border-bottom: none;
+}
+
+.notification:hover {
+  background: #fafdfa;
+}
+
+.notification-icon {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background: #edf8f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.notification-text {
+  flex: 1;
+}
+
+.notification-text strong {
+  color: #18221b;
+}
+
+.notification-text p {
+  margin: 6px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.time {
+  color: #777;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.unread-dot {
+  width: 9px;
+  height: 9px;
+  background: #12834b;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+/* RIGHT SIDE */
+.side-card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.side-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.view-all {
+  color: #087333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.activity {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.activity-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #edf8f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-text {
+  flex: 1;
+  font-size: 14px;
+}
+
+.activity-text strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.activity-time {
+  color: #777;
+  font-size: 12px;
+}
+
+.side-button {
+  width: 100%;
+  padding: 12px;
+  background: white;
+  color: #087333;
+  border: 1px solid #087333;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* SAFETY CARD */
+.safety {
+  background: #eef9f1;
+}
+
+.safety h3 {
+  margin-top: 0;
+}
+
+.safety p {
+  color: #555;
+  line-height: 1.5;
+}
+
+.safety ul {
+  padding-left: 20px;
+  line-height: 2;
+}
+
+/* MOBILE BOTTOM NAV */
+.bottom-nav {
+  display: none;
+}
+
+/* MOBILE */
+@media (max-width: 800px) {
+
+  header {
+    height: 70px;
+    padding: 0 15px;
+    gap: 10px;
+  }
+
+  .logo {
+    min-width: auto;
+  }
+
+  .logo-text {
+    font-size: 22px;
+  }
+
+  .logo-sub {
+    font-size: 9px;
+  }
+
+  .logo-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 19px;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .header-icons {
+    gap: 18px;
+  }
+
+  .container {
+    margin: 25px auto 90px;
+    padding: 0 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .title-row {
+    align-items: center;
+  }
+
+  .mark-read {
+    font-size: 13px;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-card {
+    display: none;
+  }
+
+  .notification {
+    padding: 15px 12px;
+    gap: 10px;
+  }
+
+  .notification-icon {
+    width: 43px;
+    height: 43px;
+    min-width: 43px;
+    font-size: 20px;
+  }
+
+  .notification-text {
+    font-size: 14px;
+  }
+
+  .notification-text p {
+    font-size: 12px;
+  }
+
+  .time {
+    font-size: 11px;
+    align-self: flex-start;
+  }
+
+  .filters {
+    margin-bottom: 20px;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .nav-item {
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .nav-item div {
+    font-size: 23px;
+    margin-bottom: 3px;
+  }
+
+  .nav-item.active {
+    color: #12834b;
+    font-weight: bold;
+  }
+
+  .sell-button {
+    width: 52px;
+    height: 52px;
+    margin-top: -28px;
+    border-radius: 50%;
+    background: #12834b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px !important;
+    box-shadow: 0 3px 10px #aaa;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    <div class="logo-icon">🛍️</div>
+
+    <div>
+      <div class="logo-text">OJEWA</div>
+      <span class="logo-sub">BUY • SELL • CONNECT</span>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <span>⌕</span>
+    <input type="text" placeholder="Search for anything...">
+  </div>
+
+  <div class="header-icons">
+
+    <div class="icon" onclick="openMessages()">
+      💬
+      <span class="badge">3</span>
+    </div>
+
+    <div class="icon">
+      🔔
+      <span class="badge" id="notificationBadge">5</span>
+    </div>
+
+    <div class="icon" onclick="openCart()">
+      🛒
+    </div>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <div class="title-row">
+
+    <h1>Notifications</h1>
+
+    <div class="mark-read" onclick="markAllRead()">
+      Mark all as read ✓
+    </div>
+
+  </div>
+
+
+  <div class="filters">
+
+    <button class="filter active" onclick="filterNotifications('all', this)">
+      All <span class="count">25</span>
+    </button>
+
+    <button class="filter" onclick="filterNotifications('messages', this)">
+      Messages <span class="count">8</span>
+    </button>
+
+    <button class="filter" onclick="filterNotifications('orders', this)">
+      Orders <span class="count">6</span>
+    </button>
+
+    <button class="filter" onclick="filterNotifications('listings', this)">
+      Listings <span class="count">4</span>
+    </button>
+
+    <button class="filter" onclick="filterNotifications('system', this)">
+      System <span class="count">7</span>
+    </button>
+
+    <button class="filter" onclick="filterNotifications('promotions', this)">
+      Promotions
+    </button>
+
+  </div>
+
+
+  <div class="section-title">Today</div>
+
+  <div class="content-grid">
+
+    <div>
+
+      <div class="notifications" id="notificationList">
+
+        <div class="notification" data-type="messages">
+
+          <div class="notification-icon">💬</div>
+
+          <div class="notification-text">
+            <strong>Kwame Mensah sent you a message about iPhone 13 Pro Max</strong>
+            <p>Hi, is it still available?</p>
+          </div>
+
+          <div class="time">10:30 AM</div>
+
+          <div class="unread-dot"></div>
+
+        </div>
+
+
+        <div class="notification" data-type="listings">
+
+          <div class="notification-icon">❤️</div>
+
+          <div class="notification-text">
+            <strong>Your item iPhone 13 Pro Max has been added to someone's favorites.</strong>
+          </div>
+
+          <div class="time">9:45 AM</div>
+
+          <div class="unread-dot"></div>
+
+        </div>
+
+
+        <div class="notification" data-type="listings">
+
+          <div class="notification-icon">🛍️</div>
+
+          <div class="notification-text">
+            <strong>Your listing Toyota RAV4 2018 is getting attention!</strong>
+            <p>You have 12 new views today.</p>
+          </div>
+
+          <div class="time">9:20 AM</div>
+
+          <div class="unread-dot"></div>
+
+        </div>
+
+
+        <div class="notification" data-type="orders">
+
+          <div class="notification-icon">🧾</div>
+
+          <div class="notification-text">
+            <strong>Payment received for order #OJW-7824</strong>
+            <p>Amount: GH₵ 5,200</p>
+          </div>
+
+          <div class="time">8:15 AM</div>
+
+        </div>
+
+
+        <div class="notification" data-type="system">
+
+          <div class="notification-icon">🛡️</div>
+
+          <div class="notification-text">
+            <strong>Your account has been verified successfully.</strong>
+            <p>You can now enjoy all features on OJEWA.</p>
+          </div>
+
+          <div class="time">7:40 AM</div>
+
+        </div>
+
+      </div>
+
+
+      <div class="section-title">Yesterday</div>
+
+      <div class="notifications">
+
+        <div class="notification" data-type="messages">
+
+          <div class="notification-icon">💬</div>
+
+          <div class="notification-text">
+            <strong>Ama Serwaa sent you a message about L-Shaped Sofa</strong>
+            <p>Thanks. I'll come by later.</p>
+          </div>
+
+          <div class="time">Yesterday, 8:35 PM</div>
+
+          <div class="unread-dot"></div>
+
+        </div>
+
+
+        <div class="notification" data-type="listings">
+
+          <div class="notification-icon">📋</div>
+
+          <div class="notification-text">
+            <strong>Your listing Nike Air Force 1 is now live!</strong>
+            <p>Your item is visible to thousands of buyers.</p>
+          </div>
+
+          <div class="time">Yesterday, 6:10 PM</div>
+
+        </div>
+
+
+        <div class="notification" data-type="listings">
+
+          <div class="notification-icon">❤️</div>
+
+          <div class="notification-text">
+            <strong>Your item Men's Polo Shirt has been added to someone's favorites.</strong>
+          </div>
+
+          <div class="time">Yesterday, 4:32 PM</div>
+
+        </div>
+
+
+        <div class="notification" data-type="orders">
+
+          <div class="notification-icon">📦</div>
+
+          <div class="notification-text">
+            <strong>Order #OJW-7811 has been placed.</strong>
+            <p>1 item • Total: GH₵ 2,400</p>
+          </div>
+
+          <div class="time">Yesterday, 3:18 PM</div>
+
+        </div>
+
+
+        <div class="notification" data-type="listings">
+
+          <div class="notification-icon">🔔</div>
+
+          <div class="notification-text">
+            <strong>New offer received on iPhone 13 Pro Max 256GB</strong>
+            <p>Offer: GH₵ 4,800</p>
+          </div>
+
+          <div class="time">Yesterday, 2:05 PM</div>
+
+        </div>
+
+
+        <div class="notification" data-type="promotions">
+
+          <div class="notification-icon">📢</div>
+
+          <div class="notification-text">
+            <strong>Special promo just for you!</strong>
+            <p>Post your items for FREE this weekend.</p>
+          </div>
+
+          <div class="time">Yesterday, 11:02 AM</div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div>
+
+      <div class="side-card">
+
+        <div class="side-title">
+          Recent Activity
+          <span class="view-all">View all</span>
+        </div>
+
+
+        <div class="activity">
+
+          <div class="activity-icon">💬</div>
+
+          <div class="activity-text">
+            <strong>New message from Kwame Mensah</strong>
+            <span class="activity-time">10:30 AM</span>
+          </div>
+
+        </div>
+
+
+        <div class="activity">
+
+          <div class="activity-icon">❤️</div>
+
+          <div class="activity-text">
+            <strong>Item added to favorites</strong>
+            <span class="activity-time">9:45 AM</span>
+          </div>
+
+        </div>
+
+
+        <div class="activity">
+
+          <div class="activity-icon">👁️</div>
+
+          <div class="activity-text">
+            <strong>12 new views on Toyota RAV4 2018</strong>
+            <span class="activity-time">9:20 AM</span>
+          </div>
+
+        </div>
+
+
+        <div class="activity">
+
+          <div class="activity-icon">🧾</div>
+
+          <div class="activity-text">
+            <strong>Payment received</strong>
+            <span class="activity-time">8:15 AM</span>
+          </div>
+
+        </div>
+
+
+        <div class="activity">
+
+          <div class="activity-icon">🛡️</div>
+
+          <div class="activity-text">
+            <strong>Account verified</strong>
+            <span class="activity-time">7:40 AM</span>
+          </div>
+
+        </div>
+
+
+        <button class="side-button">
+          View all activity
+        </button>
+
+      </div>
+
+
+      <div class="side-card safety">
+
+        <h3>🛡️ Stay Safe on OJEWA</h3>
+
+        <p>Follow these simple tips when buying and selling:</p>
+
+        <ul>
+          <li>Meet in safe public places</li>
+          <li>Inspect items before payment</li>
+          <li>Never pay in advance</li>
+          <li>Report suspicious activity</li>
+        </ul>
+
+        <button class="side-button">
+          Safety Tips →
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<!-- MOBILE NAV -->
+
+<div class="bottom-nav">
+
+  <div class="nav-item" onclick="goHome()">
+    <div>⌂</div>
+    Home
+  </div>
+
+  <div class="nav-item" onclick="goCategories()">
+    <div>▦</div>
+    Categories
+  </div>
+
+  <div class="nav-item" onclick="goSell()">
+    <div class="sell-button">+</div>
+    Sell
+  </div>
+
+  <div class="nav-item" onclick="goFavorites()">
+    <div>♡</div>
+    Favorites
+  </div>
+
+  <div class="nav-item active" onclick="goAccount()">
+    <div>●</div>
+    Account
+  </div>
+
+</div>
+
+
+<script>
+
+function markAllRead() {
+
+  document.querySelectorAll(".unread-dot").forEach(function(dot) {
+    dot.style.display = "none";
+  });
+
+  document.getElementById("notificationBadge").style.display = "none";
+
+  alert("All notifications marked as read.");
+}
+
+
+function filterNotifications(type, button) {
+
+  document.querySelectorAll(".filter").forEach(function(btn) {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+  document.querySelectorAll(".notification").forEach(function(item) {
+
+    if (type === "all") {
+      item.style.display = "flex";
+    }
+
+    else if (item.dataset.type === type) {
+      item.style.display = "flex";
+    }
+
+    else {
+      item.style.display = "none";
+    }
+
+  });
+}
+
+
+function openMessages() {
+  window.location.href = "messages.html";
+}
+
+
+function openCart() {
+  alert("Your OJEWA cart will appear here.");
+}
+
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+
+function goCategories() {
+  window.location.href = "categories.html";
+}
+
+
+function goSell() {
+  window.location.href = "sell.html";
+}
+
+
+function goFavorites() {
+  window.location.href = "favorites.html";
+}
+
+
+function goAccount() {
+  window.location.href = "account.html";
+}
+
+</script>
+
+</body>
+</html>
