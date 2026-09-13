@@ -202,7 +202,7 @@ imageInput.addEventListener("change", function() {
 
 
 function postItem() {
-alert("Post button is working!");
+
   const name =
     document.getElementById("productName").value.trim();
 
@@ -227,7 +227,6 @@ alert("Post button is working!");
     alert("Please fill in all the details.");
 
     return;
-
   }
 
 
@@ -236,15 +235,13 @@ alert("Post button is working!");
     alert("Please add a photo of your item.");
 
     return;
-
   }
 
 
   const reader = new FileReader();
 
-
   reader.onload = function(event) {
-alert("Image is ready!");
+
     const listing = {
 
       id: Date.now(),
@@ -266,66 +263,95 @@ alert("Image is ready!");
     };
 
 
-    let listings =
-  JSON.parse(
-    localStorage.getItem("ojewaListings")
-  ) || [];
+    let listings = [];
 
-listings.push(listing);
+    try {
 
-localStorage.setItem(
-  "ojewaListings",
-  JSON.stringify(listings)
-);
-alert("Listing saved!");
+      listings =
+        JSON.parse(
+          localStorage.getItem("ojewaListings")
+        ) || [];
 
-/* =========================
-   CREATE NOTIFICATION
-========================= */
+    } catch (error) {
 
-let notifications =
-  JSON.parse(
-    localStorage.getItem("ojewaNotifications")
-  ) || [];
+      listings = [];
 
-notifications.unshift({
-
-  id: Date.now(),
-
-  type: "listings",
-
-  icon: "📋",
-
-  title: "Your listing is now live!",
-
-  text:
-    name + " has been successfully posted on OJEWA.",
-
-  date: new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  }),
-
-  read: false
-
-});
-
-localStorage.setItem(
-  "ojewaNotifications",
-  JSON.stringify(notifications)
-);
+    }
 
 
-/* =========================
-   SUCCESS
-========================= */
+    listings.push(listing);
 
-alert("Your item has been posted to OJEWA! 🎉");
 
-window.location.href = "listings.html";
+    localStorage.setItem(
+      "ojewaListings",
+      JSON.stringify(listings)
+    );
 
-};
-reader.readAsDataURL(imageFile);
+
+    let notifications = [];
+
+    try {
+
+      notifications =
+        JSON.parse(
+          localStorage.getItem("ojewaNotifications")
+        ) || [];
+
+    } catch (error) {
+
+      notifications = [];
+
+    }
+
+
+    notifications.unshift({
+
+      id: Date.now(),
+
+      type: "listings",
+
+      icon: "📋",
+
+      title: "Your listing is now live!",
+
+      text:
+        name + " has been successfully posted on OJEWA.",
+
+      date:
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        }),
+
+      read: false
+
+    });
+
+
+    localStorage.setItem(
+      "ojewaNotifications",
+      JSON.stringify(notifications)
+    );
+
+
+    alert("Your item has been posted to OJEWA! 🎉");
+
+
+    window.location.href = "listings.html";
+
+  };
+
+
+  reader.onerror = function() {
+
+    alert(
+      "There was a problem reading the photo. Please try another photo."
+    );
+
+  };
+
+
+  reader.readAsDataURL(imageFile);
 
 }
 
