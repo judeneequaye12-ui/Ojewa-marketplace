@@ -1,39 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OJEWA - Sell an Item</title>
-
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #f5f5f5;
 }
-
 header {
   background: #0b6b3a;
   color: white;
   padding: 20px;
   text-align: center;
 }
-
+header h1 {
+  margin: 0;
+}
+header p {
+  margin: 8px 0 0;
+}
 .sell-form {
   background: white;
   margin: 20px;
   padding: 25px;
   border-radius: 10px;
 }
-
 .sell-form h2 {
   text-align: center;
 }
-
 .sell-form label {
   display: block;
   margin-top: 15px;
   font-weight: bold;
 }
-
 .sell-form input,
 .sell-form select,
 .sell-form textarea {
@@ -45,18 +47,15 @@ header {
   border-radius: 6px;
   font-size: 15px;
 }
-
 .sell-form input[type="file"] {
   background: #f8faf8;
   padding: 10px;
 }
-
 .photo-note {
   font-size: 13px;
   color: #666;
   margin-top: 6px;
 }
-
 .preview {
   width: 100%;
   max-height: 220px;
@@ -66,7 +65,6 @@ header {
   display: none;
   background: #eef5ef;
 }
-
 .sell-form button {
   width: 100%;
   padding: 14px;
@@ -77,8 +75,12 @@ header {
   border-radius: 8px;
   font-weight: bold;
   font-size: 16px;
+  cursor: pointer;
 }
-
+.sell-form button:disabled {
+  background: #777;
+  cursor: not-allowed;
+}
 .back {
   display: block;
   text-align: center;
@@ -88,32 +90,25 @@ header {
 }
 </style>
 </head>
-
 <body>
-
 <header>
   <h1>OJEWA</h1>
   <p>Sell an Item</p>
 </header>
-
 <div class="sell-form">
-
   <h2>Post Your Item</h2>
-
   <label>Product Name</label>
   <input
     type="text"
     id="productName"
     placeholder="e.g. iPhone 14"
   >
-
   <label>Price</label>
   <input
     type="text"
     id="productPrice"
     placeholder="e.g. GH₵ 3,500"
   >
-
   <label>Category</label>
   <select id="productCategory">
     <option>Phones & Tablets</option>
@@ -127,235 +122,206 @@ header {
     <option>Jobs & Services</option>
     <option>Other</option>
   </select>
-
   <label>Location</label>
   <input
     type="text"
     id="productLocation"
     placeholder="e.g. Accra"
   >
-
   <label>Product Photo</label>
-
   <input
     type="file"
     id="productImage"
     accept="image/*"
   >
-
   <p class="photo-note">
     Add a clear photo of the item you're selling.
   </p>
-
   <img
     id="preview"
     class="preview"
     alt="Photo preview"
   >
-
   <label>Description</label>
   <textarea
     id="productDescription"
     rows="5"
     placeholder="Describe your item"
   ></textarea>
-
-  <button onclick="postItem()">Post Item</button>
-
+  <button
+    id="postButton"
+    type="button"
+    onclick="postItem()"
+  >
+    Post Item
+  </button>
   <a href="index.html" class="back">
     ← Back to OJEWA
   </a>
-
 </div>
-
 <script>
-
+/* =========================
+   PHOTO PREVIEW
+========================= */
 const imageInput =
   document.getElementById("productImage");
-
 const preview =
   document.getElementById("preview");
-
-
 imageInput.addEventListener("change", function() {
-
   const file = imageInput.files[0];
-
   if (!file) {
+    preview.src = "";
     preview.style.display = "none";
     return;
   }
-
   const reader = new FileReader();
-
   reader.onload = function(event) {
-
     preview.src = event.target.result;
-
     preview.style.display = "block";
-
   };
-
   reader.readAsDataURL(file);
-
 });
-
-
+/* =========================
+   POST ITEM
+========================= */
 function postItem() {
-
   const name =
     document.getElementById("productName").value.trim();
-
   const price =
     document.getElementById("productPrice").value.trim();
-
   const category =
     document.getElementById("productCategory").value;
-
   const location =
     document.getElementById("productLocation").value.trim();
-
   const description =
     document.getElementById("productDescription").value.trim();
-
   const imageFile =
     document.getElementById("productImage").files[0];
-
-
+  const postButton =
+    document.getElementById("postButton");
+  /* =========================
+     CHECK DETAILS
+  ========================= */
   if (!name || !price || !location || !description) {
-
     alert("Please fill in all the details.");
-
     return;
   }
-
-
+  /* =========================
+     CHECK PHOTO
+  ========================= */
   if (!imageFile) {
-
     alert("Please add a photo of your item.");
-
     return;
   }
-
-
+  /* =========================
+     PREVENT DOUBLE POSTING
+  ========================= */
+  postButton.disabled = true;
+  postButton.textContent = "Posting...";
+  /* =========================
+     READ PHOTO
+  ========================= */
   const reader = new FileReader();
-
   reader.onload = function(event) {
-alert("PHOTO HAS FINISHED READING");
-    const listing = {
-
-      id: Date.now(),
-
-      name: name,
-
-      price: price,
-
-      category: category,
-
-      location: location,
-
-      description: description,
-
-      image: event.target.result,
-
-      date: new Date().toLocaleDateString()
-
-    };
-
-
-    let listings = [];
-
     try {
-
-      listings =
-        JSON.parse(
-          localStorage.getItem("ojewaListings")
-        ) || [];
-
+      const imageData =
+        event.target.result;
+      /* =========================
+         CREATE LISTING
+      ========================= */
+      const listing = {
+        id: Date.now(),
+        name: name,
+        price: price,
+        category: category,
+        location: location,
+        description: description,
+        image: imageData,
+        date: new Date().toLocaleDateString()
+      };
+      /* =========================
+         GET EXISTING LISTINGS
+      ========================= */
+      let listings = [];
+      try {
+        listings =
+          JSON.parse(
+            localStorage.getItem("ojewaListings")
+          ) || [];
+      } catch (error) {
+        listings = [];
+      }
+      /* =========================
+         SAVE LISTING
+      ========================= */
+      listings.push(listing);
+      localStorage.setItem(
+        "ojewaListings",
+        JSON.stringify(listings)
+      );
+      /* =========================
+         CREATE NOTIFICATION
+      ========================= */
+      let notifications = [];
+      try {
+        notifications =
+          JSON.parse(
+            localStorage.getItem("ojewaNotifications")
+          ) || [];
+      } catch (error) {
+        notifications = [];
+      }
+      notifications.unshift({
+        id: Date.now(),
+        type: "listings",
+        icon: "📋",
+        title: "Your listing is now live!",
+        text:
+          name +
+          " has been successfully posted on OJEWA.",
+        date:
+          new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+          }),
+        read: false
+      });
+      localStorage.setItem(
+        "ojewaNotifications",
+        JSON.stringify(notifications)
+      );
+      /* =========================
+         SUCCESS
+      ========================= */
+      alert(
+        "Your item has been posted to OJEWA! 🎉"
+      );
+      /* =========================
+         OPEN MY LISTINGS
+      ========================= */
+      window.location.href =
+        "listings.html";
     } catch (error) {
-
-      listings = [];
-
+      console.error(error);
+      alert(
+        "Something went wrong while posting your item. Please try again."
+      );
+      postButton.disabled = false;
+      postButton.textContent = "Post Item";
     }
-
-
-    listings.push(listing);
-
-
-    localStorage.setItem(
-      "ojewaListings",
-      JSON.stringify(listings)
-    );
-
-
-    let notifications = [];
-
-    try {
-
-      notifications =
-        JSON.parse(
-          localStorage.getItem("ojewaNotifications")
-        ) || [];
-
-    } catch (error) {
-
-      notifications = [];
-
-    }
-
-
-    notifications.unshift({
-
-      id: Date.now(),
-
-      type: "listings",
-
-      icon: "📋",
-
-      title: "Your listing is now live!",
-
-      text:
-        name + " has been successfully posted on OJEWA.",
-
-      date:
-        new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit"
-        }),
-
-      read: false
-
-    });
-
-
-    localStorage.setItem(
-      "ojewaNotifications",
-      JSON.stringify(notifications)
-    );
-
-
-    alert("Your item has been posted to OJEWA! 🎉");
-
-
-    window.location.href = "listings.html";
-
   };
-
-
+  /* =========================
+     PHOTO ERROR
+  ========================= */
   reader.onerror = function() {
-
     alert(
-      "There was a problem reading the photo. Please try another photo."
+      "There was a problem reading the photo. Please choose another photo."
     );
-
+    postButton.disabled = false;
+    postButton.textContent = "Post Item";
   };
-
-alert("PHOTO IS BEING READ");
   reader.readAsDataURL(imageFile);
-
 }
-
 </script>
-
 </body>
 </html>
