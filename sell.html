@@ -27,14 +27,6 @@ header {
   text-align: center;
 }
 
-header h1 {
-  margin: 0;
-}
-
-header p {
-  margin: 8px 0 0;
-}
-
 .sell-form {
   background: white;
   margin: 20px;
@@ -95,11 +87,6 @@ header p {
   border-radius: 8px;
   font-weight: bold;
   font-size: 16px;
-  cursor: pointer;
-}
-
-.sell-form button:disabled {
-  background: #777;
 }
 
 .back {
@@ -213,11 +200,7 @@ header p {
   ></textarea>
 
 
-  <button
-    id="postButton"
-    type="button"
-    onclick="postItem()"
-  >
+  <button onclick="postItem()">
     Post Item
   </button>
 
@@ -230,7 +213,6 @@ header p {
 
 
 <script>
-
 
 /* =========================
    PHOTO PREVIEW
@@ -248,8 +230,6 @@ imageInput.addEventListener("change", function() {
   const file = imageInput.files[0];
 
   if (!file) {
-
-    preview.src = "";
 
     preview.style.display = "none";
 
@@ -275,111 +255,171 @@ imageInput.addEventListener("change", function() {
 
 
 /* =========================
-   COMPRESS PHOTO
+   COMPRESS IMAGE
 ========================= */
 
-function compressImage(file, callback) {
+function compressImage(file, maxSize = 800, quality = 0.6) {
 
-  const reader = new FileReader();
+  return new Promise(function(resolve, reject) {
 
-
-  reader.onload = function(event) {
-
-    const img = new Image();
+    const reader = new FileReader();
 
 
-    img.onload = function() {
+    reader.onload = function(event) {
 
-      const maxSize = 1000;
-
-      let width = img.width;
-
-      let height = img.height;
+      const img = new Image();
 
 
-      if (width > height) {
+      img.onload = function() {
 
-        if (width > maxSize) {
+        let width = img.width;
 
-          height =
-            Math.round(
-              height * maxSize / width
-            );
+        let height = img.height;
 
-          width = maxSize;
 
-        }
+        if (width > height) {
 
-      } else {
+          if (width > maxSize) {
 
-        if (height > maxSize) {
+            height =
+              height * (maxSize / width);
 
-          width =
-            Math.round(
-              width * maxSize / height
-            );
+            width = maxSize;
 
-          height = maxSize;
+          }
+
+        } else {
+
+          if (height > maxSize) {
+
+            width =
+              width * (maxSize / height);
+
+            height = maxSize;
+
+          }
 
         }
 
-      }
+
+        const canvas =
+          document.createElement("canvas");
 
 
-      const canvas =
-        document.createElement("canvas");
+        canvas.width = Math.round(width);
+
+        canvas.height = Math.round(height);
 
 
-      canvas.width = width;
-
-      canvas.height = height;
-
-
-      const ctx =
-        canvas.getContext("2d");
+        const ctx =
+          canvas.getContext("2d");
 
 
-      ctx.drawImage(
-        img,
-        0,
-        0,
-        width,
-        height
-      );
-
-
-      const compressedImage =
-        canvas.toDataURL(
-          "image/jpeg",
-          0.7
+        ctx.drawImage(
+          img,
+          0,
+          0,
+          canvas.width,
+          canvas.height
         );
 
 
-      callback(compressedImage);
+        const compressed =
+          canvas.toDataURL(
+            "image/jpeg",
+            quality
+          );
+
+
+        resolve(compressed);
+
+      };
+
+
+      img.onerror = function() {
+
+        reject(
+          new Error("Image could not be processed.")
+        );
+
+      };
+
+
+      img.src = event.target.result;
 
     };
 
 
-    img.onerror = function() {
+    reader.onerror = function() {
 
-      callback(null);
+      reject(
+        new Error("Image could not be read.")
+      );
 
     };
 
 
-    img.src = event.target.result;
+    reader.readAsDataURL(file);
 
-  };
+  });
 
-
-  reader.onerror = function() {
-
-    callback(null);
-
-  };
+}
 
 
-  reader.readAsDataURL(file);
+/* =========================
+   COMPRESS OLD LISTING IMAGES
+========================= */
+
+async function compressOldListings(listings) {
+
+  const updatedListings = [];
+
+
+  for (const item of listings) {
+
+    const copy = { ...item };
+
+
+    if (
+      copy.image &&
+      typeof copy.image === "string" &&
+      copy.image.startsWith("data:image/")
+    ) {
+
+      try {
+
+        const blob =
+          await fetch(copy.image)
+            .then(function(response) {
+              return response.blob();
+            });
+
+
+        copy.image =
+          await compressImage(
+            blob,
+            700,
+            0.5
+          );
+
+      } catch (error) {
+
+        console.log(
+          "Could not compress old image:",
+          error
+        );
+
+      }
+
+    }
+
+
+    updatedListings.push(copy);
+
+  }
+
+
+  return updatedListings;
 
 }
 
@@ -388,31 +428,51 @@ function compressImage(file, callback) {
    POST ITEM
 ========================= */
 
-function postItem() {
+async function postItem() {
 
   const name =
-    document.getElementById("productName").value.trim();
+    document
+      .getElementById("productName")
+      .value
+      .trim();
+
 
   const price =
-    document.getElementById("productPrice").value.trim();
+    document
+      .getElementById("productPrice")
+      .value
+      .trim();
+
 
   const category =
-    document.getElementById("productCategory").value;
+    document
+      .getElementById("productCategory")
+      .value;
+
 
   const location =
-    document.getElementById("productLocation").value.trim();
+    document
+      .getElementById("productLocation")
+      .value
+      .trim();
+
 
   const description =
-    document.getElementById("productDescription").value.trim();
+    document
+      .getElementById("productDescription")
+      .value
+      .trim();
+
 
   const imageFile =
-    document.getElementById("productImage").files[0];
+    document
+      .getElementById("productImage")
+      .files[0];
 
-  const postButton =
-    document.getElementById("postButton");
 
-
-  /* CHECK DETAILS */
+  /* =========================
+     VALIDATION
+  ========================= */
 
   if (
     !name ||
@@ -426,10 +486,9 @@ function postItem() {
     );
 
     return;
+
   }
 
-
-  /* CHECK PHOTO */
 
   if (!imageFile) {
 
@@ -438,195 +497,205 @@ function postItem() {
     );
 
     return;
+
   }
 
 
-  /* PREVENT DOUBLE POST */
+  /* =========================
+     POSTING MESSAGE
+  ========================= */
 
-  postButton.disabled = true;
+  alert(
+    "Posting your item..."
+  );
 
-  postButton.textContent =
-    "Posting...";
+
+  try {
+
+    /* =========================
+       GET EXISTING LISTINGS
+    ========================= */
+
+    let listings =
+      JSON.parse(
+        localStorage.getItem(
+          "ojewaListings"
+        )
+      ) || [];
 
 
-  /* COMPRESS PHOTO BEFORE SAVING */
+    /* =========================
+       COMPRESS EXISTING PHOTOS
+    ========================= */
 
-  compressImage(
-    imageFile,
-    function(compressedImage) {
+    listings =
+      await compressOldListings(
+        listings
+      );
 
-      if (!compressedImage) {
+
+    /* =========================
+       COMPRESS NEW PHOTO
+    ========================= */
+
+    const compressedImage =
+      await compressImage(
+        imageFile,
+        800,
+        0.6
+      );
+
+
+    /* =========================
+       CREATE NEW LISTING
+    ========================= */
+
+    const listing = {
+
+      id: Date.now(),
+
+      name: name,
+
+      price: price,
+
+      category: category,
+
+      location: location,
+
+      description: description,
+
+      image: compressedImage,
+
+      date:
+        new Date()
+          .toLocaleDateString()
+
+    };
+
+
+    listings.push(listing);
+
+
+    /* =========================
+       SAVE LISTINGS
+    ========================= */
+
+    const newListingsData =
+      JSON.stringify(listings);
+
+
+    const oldListingsData =
+      localStorage.getItem(
+        "ojewaListings"
+      );
+
+
+    try {
+
+      localStorage.setItem(
+        "ojewaListings",
+        newListingsData
+      );
+
+    } catch (storageError) {
+
+      /* =========================
+         STORAGE FULL
+      ========================= */
+
+      if (
+        storageError.name ===
+        "QuotaExceededError"
+      ) {
 
         alert(
-          "The photo could not be processed. Please choose another photo."
+          "OJEWA storage is full. Your existing listings are still safe. Please try posting with a smaller photo."
         );
-
-        postButton.disabled = false;
-
-        postButton.textContent =
-          "Post Item";
 
         return;
-      }
-
-
-      try {
-
-
-        /* =========================
-           CREATE LISTING
-        ========================= */
-
-        const listing = {
-
-          id: Date.now(),
-
-          name: name,
-
-          price: price,
-
-          category: category,
-
-          location: location,
-
-          description: description,
-
-          image: compressedImage,
-
-          date:
-            new Date().toLocaleDateString()
-
-        };
-
-
-        /* =========================
-           GET LISTINGS
-        ========================= */
-
-        let listings = [];
-
-        try {
-
-          listings =
-            JSON.parse(
-              localStorage.getItem(
-                "ojewaListings"
-              )
-            ) || [];
-
-        } catch (error) {
-
-          listings = [];
-
-        }
-
-
-        /* =========================
-           SAVE LISTING
-        ========================= */
-
-        listings.push(listing);
-
-
-        localStorage.setItem(
-          "ojewaListings",
-          JSON.stringify(listings)
-        );
-
-
-        /* =========================
-           CREATE NOTIFICATION
-        ========================= */
-
-        let notifications = [];
-
-        try {
-
-          notifications =
-            JSON.parse(
-              localStorage.getItem(
-                "ojewaNotifications"
-              )
-            ) || [];
-
-        } catch (error) {
-
-          notifications = [];
-
-        }
-
-
-        notifications.unshift({
-
-          id: Date.now(),
-
-          type: "listings",
-
-          icon: "📋",
-
-          title:
-            "Your listing is now live!",
-
-          text:
-            name +
-            " has been successfully posted on OJEWA.",
-
-          date:
-            new Date().toLocaleTimeString(
-              [],
-              {
-                hour: "2-digit",
-                minute: "2-digit"
-              }
-            ),
-
-          read: false
-
-        });
-
-
-        localStorage.setItem(
-          "ojewaNotifications",
-          JSON.stringify(
-            notifications
-          )
-        );
-
-
-        /* =========================
-           SUCCESS
-        ========================= */
-
-        alert(
-          "Your item has been posted to OJEWA! 🎉"
-        );
-
-
-        /* =========================
-           OPEN MY LISTINGS
-        ========================= */
-
-        window.location.href =
-          "listings.html";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert(
-          "Something went wrong while posting your item. Please try again."
-        );
-
-        postButton.disabled = false;
-
-        postButton.textContent =
-          "Post Item";
 
       }
+
+      throw storageError;
 
     }
-  );
+
+
+    /* =========================
+       CREATE NOTIFICATION
+    ========================= */
+
+    let notifications =
+      JSON.parse(
+        localStorage.getItem(
+          "ojewaNotifications"
+        )
+      ) || [];
+
+
+    notifications.unshift({
+
+      id: Date.now(),
+
+      type: "listings",
+
+      icon: "📋",
+
+      title:
+        "Your listing is now live!",
+
+      text:
+        name +
+        " has been successfully posted on OJEWA.",
+
+      date:
+        new Date().toLocaleTimeString(
+          [],
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        ),
+
+      read: false
+
+    });
+
+
+    localStorage.setItem(
+      "ojewaNotifications",
+      JSON.stringify(
+        notifications
+      )
+    );
+
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
+    alert(
+      "Your item has been posted to OJEWA! 🎉"
+    );
+
+
+    window.location.href =
+      "listings.html";
+
+
+  } catch (error) {
+
+    console.error(
+      "OJEWA posting error:",
+      error
+    );
+
+
+    alert(
+      "Unable to post this item. Please try again with a smaller photo."
+    );
+
+  }
 
 }
 
