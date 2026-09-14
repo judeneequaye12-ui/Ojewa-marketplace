@@ -223,7 +223,62 @@ const imageInput =
 
 const preview =
   document.getElementById("preview");
+/* =========================
+   EDIT LISTING MODE
+========================= */
 
+const editId =
+  new URLSearchParams(window.location.search)
+    .get("edit");
+
+let editingListing = null;
+
+if (editId) {
+
+  const listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+
+  editingListing =
+    listings.find(function(item) {
+      return String(item.id) === String(editId);
+    });
+
+  if (editingListing) {
+
+    document.getElementById("productName").value =
+      editingListing.name || "";
+
+    document.getElementById("productPrice").value =
+      editingListing.price || "";
+
+    document.getElementById("productCategory").value =
+      editingListing.category || "Phones & Tablets";
+
+    document.getElementById("productLocation").value =
+      editingListing.location || "";
+
+    document.getElementById("productDescription").value =
+      editingListing.description || "";
+
+    if (editingListing.image) {
+
+      preview.src = editingListing.image;
+
+      preview.style.display = "block";
+
+    }
+
+    document.querySelector(".sell-form h2").textContent =
+      "Edit Your Listing";
+
+    document.querySelector(".sell-form button").textContent =
+      "Update Listing";
+
+  }
+
+}
 
 imageInput.addEventListener("change", function() {
 
@@ -475,30 +530,30 @@ async function postItem() {
   ========================= */
 
   if (
-    !name ||
-    !price ||
-    !location ||
-    !description
-  ) {
+  !name ||
+  !price ||
+  !location ||
+  !description
+) {
 
-    alert(
-      "Please fill in all the details."
-    );
+  alert(
+    "Please fill in all the details."
+  );
 
-    return;
+  return;
 
-  }
+}
 
 
-  if (!imageFile) {
+if (!imageFile && !editingListing) {
 
-    alert(
-      "Please add a photo of your item."
-    );
+  alert(
+    "Please add a photo of your item."
+  );
 
-    return;
+  return;
 
-  }
+}
 
 
   /* =========================
@@ -535,45 +590,107 @@ async function postItem() {
 
 
     /* =========================
-       COMPRESS NEW PHOTO
-    ========================= */
+   EDIT EXISTING LISTING
+========================= */
 
-    const compressedImage =
+if (editingListing) {
+
+  const listingIndex =
+    listings.findIndex(function(item) {
+      return String(item.id) === String(editId);
+    });
+
+
+  if (listingIndex === -1) {
+
+    alert(
+      "Listing could not be found."
+    );
+
+    return;
+
+  }
+
+
+  let updatedImage =
+    listings[listingIndex].image || "";
+
+
+  if (imageFile) {
+
+    updatedImage =
       await compressImage(
         imageFile,
         800,
         0.6
       );
 
-
-    /* =========================
-       CREATE NEW LISTING
-    ========================= */
-
-    const listing = {
-
-      id: Date.now(),
-
-      name: name,
-
-      price: price,
-
-      category: category,
-
-      location: location,
-
-      description: description,
-
-      image: compressedImage,
-
-      date:
-        new Date()
-          .toLocaleDateString()
-
-    };
+  }
 
 
-    listings.push(listing);
+  listings[listingIndex] = {
+
+    ...listings[listingIndex],
+
+    name: name,
+
+    price: price,
+
+    category: category,
+
+    location: location,
+
+    description: description,
+
+    image: updatedImage
+
+  };
+
+
+} else {
+
+  /* =========================
+     COMPRESS NEW PHOTO
+  ========================= */
+
+  const compressedImage =
+    await compressImage(
+      imageFile,
+      800,
+      0.6
+    );
+
+
+  /* =========================
+     CREATE NEW LISTING
+  ========================= */
+
+  const listing = {
+
+    id: Date.now(),
+
+    name: name,
+
+    price: price,
+
+    category: category,
+
+    location: location,
+
+    description: description,
+
+    image: compressedImage,
+
+    date:
+      new Date()
+        .toLocaleDateString()
+
+  };
+
+
+  listings.push(listing);
+
+}
 
 
     /* =========================
@@ -622,66 +739,81 @@ async function postItem() {
 
 
     /* =========================
-       CREATE NOTIFICATION
-    ========================= */
+   CREATE NOTIFICATION
+========================= */
 
-    let notifications =
-      JSON.parse(
-        localStorage.getItem(
-          "ojewaNotifications"
-        )
-      ) || [];
+let notifications =
+  JSON.parse(
+    localStorage.getItem(
+      "ojewaNotifications"
+    )
+  ) || [];
 
 
-    notifications.unshift({
+notifications.unshift({
 
-      id: Date.now(),
+  id: Date.now(),
 
-      type: "listings",
+  type: "listings",
 
-      icon: "📋",
+  icon: "📋",
 
-      title:
-        "Your listing is now live!",
+  title:
+    editingListing
+      ? "Your listing was updated!"
+      : "Your listing is now live!",
 
-      text:
-        name +
+  text:
+    editingListing
+      ? name +
+        " has been successfully updated on OJEWA."
+      : name +
         " has been successfully posted on OJEWA.",
 
-      date:
-        new Date().toLocaleTimeString(
-          [],
-          {
-            hour: "2-digit",
-            minute: "2-digit"
-          }
-        ),
+  date:
+    new Date().toLocaleTimeString(
+      [],
+      {
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    ),
 
-      read: false
+  read: false
 
-    });
-
-
-    localStorage.setItem(
-      "ojewaNotifications",
-      JSON.stringify(
-        notifications
-      )
-    );
+});
 
 
-    /* =========================
-       SUCCESS
-    ========================= */
+localStorage.setItem(
+  "ojewaNotifications",
+  JSON.stringify(
+    notifications
+  )
+);
 
-    alert(
-      "Your item has been posted to OJEWA! 🎉"
-    );
+
+    
+/* =========================
+   SUCCESS
+========================= */
+
+if (editingListing) {
+
+  alert(
+    "Your listing has been updated successfully! 🎉"
+  );
+
+} else {
+
+  alert(
+    "Your item has been posted to OJEWA! 🎉"
+  );
+
+}
 
 
-    window.location.href =
-      "listings.html";
-
+window.location.href =
+  "listings.html";
 
   } catch (error) {
 
