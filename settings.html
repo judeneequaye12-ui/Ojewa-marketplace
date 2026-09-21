@@ -206,7 +206,7 @@ function clearOjewaData() {
 
   const confirmClear =
     confirm(
-      "Are you sure you want to clear your saved OJEWA listings and favourites?"
+      "Are you sure you want to clear your saved OJEWA listings, favourites, messages and notifications?"
     );
 
   if (!confirmClear) {
@@ -219,12 +219,15 @@ function clearOjewaData() {
 
   localStorage.removeItem("ojewaMessages");
 
-  alert("Your local OJEWA data has been cleared.");
+  localStorage.removeItem("ojewaNotifications");
+
+  alert(
+    "Your local OJEWA data has been cleared."
+  );
 
   window.location.href = "account.html";
 
 }
-
 </script>
 
 </body>
