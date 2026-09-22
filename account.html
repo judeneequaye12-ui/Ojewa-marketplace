@@ -2,18 +2,23 @@
 <html>
 <head>
 <title>OJEWA - Account</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   background: #f5f5f5;
 }
+
 header {
   background: #0b6b3a;
   color: white;
   padding: 20px;
   text-align: center;
 }
+
 .account {
   background: white;
   margin: 20px;
@@ -21,11 +26,14 @@ header {
   border-radius: 10px;
   text-align: center;
 }
+
 .account-icon {
   font-size: 70px;
   margin-bottom: 15px;
 }
-.account a {
+
+.account a,
+.auth-button {
   display: block;
   background: #0b6b3a;
   color: white;
@@ -34,10 +42,16 @@ header {
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
 }
+
 .sell-button {
   background: #f28c28 !important;
 }
+
 .back {
   display: inline-block !important;
   background: none !important;
@@ -45,29 +59,117 @@ header {
   padding: 0 !important;
   margin-top: 15px !important;
 }
+
 .stats {
   background: #eef5ef;
   padding: 12px;
   border-radius: 8px;
   margin: 15px 0;
 }
+
+.auth-box {
+  background: #f8faf8;
+  padding: 18px;
+  border-radius: 10px;
+  margin: 20px 0;
+  text-align: left;
+}
+
+.auth-box h3 {
+  text-align: center;
+  color: #18221b;
+}
+
+.auth-box input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.auth-message {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.logout-button {
+  background: #777 !important;
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>OJEWA</h1>
 <p>My Account</p>
 </header>
+
 <div class="account">
+
 <div class="account-icon">
   👤
 </div>
+
 <h2>
   My Account
 </h2>
+
 <p>
   Manage your OJEWA marketplace account.
 </p>
+
+<!-- SUPABASE LOGIN -->
+<div class="auth-box">
+
+<h3>OJEWA Account Login</h3>
+
+<input
+  type="email"
+  id="email"
+  placeholder="Email address"
+>
+
+<input
+  type="password"
+  id="password"
+  placeholder="Password"
+>
+
+<button
+  class="auth-button"
+  onclick="signIn()"
+>
+  Sign In
+</button>
+
+<button
+  class="auth-button"
+  onclick="signUp()"
+>
+  Create Account
+</button>
+
+<p
+  id="authMessage"
+  class="auth-message"
+></p>
+
+<button
+  id="logoutButton"
+  class="auth-button logout-button"
+  onclick="signOut()"
+  style="display:none;"
+>
+  Sign Out
+</button>
+
+</div>
+
 <div class="stats">
   <strong id="listingCount">
     0
@@ -75,6 +177,7 @@ header {
   <br>
   Items Posted
 </div>
+
 <!-- SELL ITEM -->
 <a
   href="sell.html"
@@ -82,18 +185,21 @@ header {
 >
   🛍️ Sell an Item
 </a>
+
 <!-- MY LISTINGS -->
 <a
   href="listings.html"
 >
   📋 My Listings
 </a>
+
 <!-- FAVOURITES -->
 <a
   href="favorites.html"
 >
   ❤️ My Favourites
 </a>
+
 <!-- MESSAGES -->
 <a href="messages.html">
   💬 Messages
@@ -108,6 +214,7 @@ header {
 <a href="settings.html">
   ⚙️ Settings
 </a>
+
 <!-- BACK -->
 <a
   href="index.html"
@@ -115,19 +222,225 @@ header {
 >
   ← Back to OJEWA
 </a>
+
 </div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+const SUPABASE_URL =
+  "https://ywzybrglgwyxewuyfpil.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  ywzybrglgwyxewuyfpil
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
 /* =========================
    COUNT USER LISTINGS
 ========================= */
+
 const listings =
   JSON.parse(
     localStorage.getItem("ojewaListings")
   ) || [];
+
 document.getElementById(
   "listingCount"
 ).textContent =
   listings.length;
+
+
+/* =========================
+   SHOW MESSAGE
+========================= */
+
+function showMessage(message) {
+
+  document.getElementById(
+    "authMessage"
+  ).textContent = message;
+
+}
+
+
+/* =========================
+   CREATE ACCOUNT
+========================= */
+
+async function signUp() {
+
+  const email =
+    document.getElementById(
+      "email"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "password"
+    ).value;
+
+  if (!email || !password) {
+
+    showMessage(
+      "Please enter your email and password."
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Creating your account..."
+  );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.signUp({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+
+    showMessage(
+      error.message
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Account created. Please check your email to confirm your account."
+  );
+}
+
+
+/* =========================
+   SIGN IN
+========================= */
+
+async function signIn() {
+
+  const email =
+    document.getElementById(
+      "email"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "password"
+    ).value;
+
+  if (!email || !password) {
+
+    showMessage(
+      "Please enter your email and password."
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Signing in..."
+  );
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+  if (error) {
+
+    showMessage(
+      error.message
+    );
+
+    return;
+  }
+
+  showMessage(
+    "Login successful!"
+  );
+
+  document.getElementById(
+    "logoutButton"
+  ).style.display =
+    "block";
+}
+
+
+/* =========================
+   SIGN OUT
+========================= */
+
+async function signOut() {
+
+  const {
+    error
+  } =
+    await supabaseClient.auth.signOut();
+
+  if (error) {
+
+    showMessage(
+      error.message
+    );
+
+    return;
+  }
+
+  showMessage(
+    "You have been signed out."
+  );
+
+  document.getElementById(
+    "logoutButton"
+  ).style.display =
+    "none";
+}
+
+
+/* =========================
+   CHECK CURRENT USER
+========================= */
+
+async function checkUser() {
+
+  const {
+    data
+  } =
+    await supabaseClient.auth.getUser();
+
+  if (data.user) {
+
+    showMessage(
+      "You are signed in as " +
+      data.user.email
+    );
+
+    document.getElementById(
+      "logoutButton"
+    ).style.display =
+      "block";
+  }
+}
+
+checkUser();
+
 </script>
+
 </body>
 </html>
