@@ -225,6 +225,7 @@ header {
 
 </div>
 
+
 <!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -235,7 +236,6 @@ const SUPABASE_URL =
 
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_d_ijgSVbgDi9MnkPtXuJcQ_5GcjKp1T";
-
 
 const supabaseClient =
   window.supabase.createClient(
@@ -306,8 +306,18 @@ async function signUp() {
     error
   } =
     await supabaseClient.auth.signUp({
+
       email: email,
-      password: password
+
+      password: password,
+
+      options: {
+
+        emailRedirectTo:
+          "https://judeneequaye12-ui.github.io/Ojewa-marketplace/"
+
+      }
+
     });
 
   if (error) {
@@ -322,6 +332,7 @@ async function signUp() {
   showMessage(
     "Account created. Please check your email to confirm your account."
   );
+
 }
 
 
@@ -359,8 +370,11 @@ async function signIn() {
     error
   } =
     await supabaseClient.auth.signInWithPassword({
+
       email: email,
+
       password: password
+
     });
 
   if (error) {
@@ -380,6 +394,7 @@ async function signIn() {
     "logoutButton"
   ).style.display =
     "block";
+
 }
 
 
@@ -411,6 +426,7 @@ async function signOut() {
     "logoutButton"
   ).style.display =
     "none";
+
 }
 
 
@@ -436,7 +452,9 @@ async function checkUser() {
       "logoutButton"
     ).style.display =
       "block";
+
   }
+
 }
 
 checkUser();
