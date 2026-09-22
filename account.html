@@ -421,7 +421,24 @@ async function signOut() {
   showMessage(
     "You have been signed out."
   );
+if (data.user) {
 
+  showMessage(
+    "You are signed in as " +
+    data.user.email
+  );
+
+  document.getElementById(
+    "accountTitle"
+  ).textContent =
+    "My Account - " + data.user.email;
+
+  document.getElementById(
+    "logoutButton"
+  ).style.display =
+    "block";
+
+}
   document.getElementById(
     "logoutButton"
   ).style.display =
