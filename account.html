@@ -82,8 +82,45 @@ header {
   font-weight: bold;
   margin: 10px 0;
 }
-.logout-button {
+  .logout-button {
   background: #777 !important;
+}
+
+.profile-banner {
+  background: #0b6b3a;
+  color: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.profile-banner h2 {
+  margin: 0 0 6px;
+}
+
+.profile-banner p {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  background: rgba(255,255,255,0.12);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.profile-stats div {
+  text-align: center;
+  flex: 1;
+}
+
+.profile-stats strong {
+  display: block;
+  font-size: 20px;
 }
 </style>
 </head>
@@ -95,6 +132,27 @@ header {
 <div class="account">
 <div class="account-icon">
   👤
+</div>
+  <div class="profile-banner">
+  <h2>Welcome to OJEWA</h2>
+  <p>BUY • SELL • CONNECT</p>
+
+  <div class="profile-stats">
+    <div>
+      <strong id="profileListingCount">0</strong>
+      Listings
+    </div>
+
+    <div>
+      <strong>❤️</strong>
+      Favourites
+    </div>
+
+    <div>
+      <strong>💬</strong>
+      Messages
+    </div>
+  </div>
 </div>
 <h2 id="accountTitle">
   My Account
@@ -207,6 +265,10 @@ const listings =
   ) || [];
 document.getElementById(
   "listingCount"
+).textContent =
+  listings.length;
+  document.getElementById(
+  "profileListingCount"
 ).textContent =
   listings.length;
 /* =========================
