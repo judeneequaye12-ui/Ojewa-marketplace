@@ -212,8 +212,16 @@ header {
 </div>
 
 
-<script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://ywzybrglgwyxewuyfpil.supabase.co";
+const SUPABASE_KEY = "sb_publishable_d_ijgSVbgDi9MnkPtXuJcQ_5GcjKp1T";
+
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 /* =========================
    PHOTO PREVIEW
 ========================= */
@@ -665,27 +673,19 @@ if (editingListing) {
      CREATE NEW LISTING
   ========================= */
 
-  const listing = {
+  const { data: { user } } = await supabase.auth.getUser();
 
-    id: Date.now(),
-
-    name: name,
-
-    price: price,
-
-    category: category,
-
-    location: location,
-
-    description: description,
-
-    image: compressedImage,
-
-    date:
-      new Date()
-        .toLocaleDateString()
-
-  };
+const listing = {
+  id: Date.now(),
+  name: name,
+  price: price,
+  category: category,
+  location: location,
+  description: description,
+  image: compressedImage,
+  date: new Date().toLocaleDateString(),
+  userId: user ? user.id : null
+};
 
 
   listings.push(listing);
