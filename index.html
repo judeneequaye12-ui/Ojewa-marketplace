@@ -306,7 +306,61 @@
 
   <a href="sell.html" class="sell">+ Start Selling</a>
 </section>
-
+<section class="section">
+  <div style="
+    background:#fff;
+    border:1px solid #e1e7e2;
+    border-radius:16px;
+    padding:18px;
+  ">
+<h2 style="
+  margin-top:0;
+  font-size:24px;
+">
+  OJEWA Marketplace
+</h2>
+<div style="
+  display:flex;
+  justify-content:space-between;
+  text-align:center;
+  gap:10px;
+">
+  <div style="flex:1;">
+    <strong
+      id="homeListingCount"
+      style="
+        display:block;
+        font-size:22px;
+        color:#12834b;
+      "
+    >0</strong>
+    <small>📋 Listings</small>
+  </div>
+  <div style="flex:1;">
+    <strong
+      id="homeFavouriteCount"
+      style="
+        display:block;
+        font-size:22px;
+        color:#12834b;
+      "
+    >0</strong>
+    <small>❤️ Favourites</small>
+  </div>
+  <div style="flex:1;">
+    <strong
+      id="homeMessageCount"
+      style="
+        display:block;
+        font-size:22px;
+        color:#12834b;
+      "
+    >0</strong>
+    <small>💬 Messages</small>
+  </div>
+</div>
+  </div>
+</section>
 
 <section class="section" id="categories">
 
@@ -713,7 +767,39 @@ if (location) {
 window.location.href = url;
 
 }
+/* =========================
+HOME MARKETPLACE STATS
+========================= */
 
+const homeListings =
+JSON.parse(
+localStorage.getItem("ojewaListings")
+) || [];
+
+const homeFavourites =
+JSON.parse(
+localStorage.getItem("ojewaFavorites")
+) || [];
+
+const homeMessages =
+JSON.parse(
+localStorage.getItem("ojewaMessages")
+) || [];
+
+document.getElementById(
+"homeListingCount"
+).textContent =
+homeListings.length;
+
+document.getElementById(
+"homeFavouriteCount"
+).textContent =
+homeFavourites.length;
+
+document.getElementById(
+"homeMessageCount"
+).textContent =
+homeMessages.length;
 </script>
 
 </body>
