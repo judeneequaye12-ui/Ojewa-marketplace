@@ -357,24 +357,49 @@ async function checkUser() {
     error
   } =
     await supabaseClient.auth.getUser();
+
   if (error) {
     return;
   }
+
   if (data.user) {
     showMessage(
       "You are signed in as " +
       data.user.email
     );
+
     document.getElementById(
       "accountTitle"
     ).textContent =
       "My Account - " + data.user.email;
+
     document.getElementById(
       "logoutButton"
     ).style.display =
       "block";
+
+    document.getElementById(
+      "email"
+    ).style.display =
+      "none";
+
+    document.getElementById(
+      "password"
+    ).style.display =
+      "none";
+
+    document.querySelector(
+      ".auth-button[onclick='signIn()']"
+    ).style.display =
+      "none";
+
+    document.querySelector(
+      ".auth-button[onclick='signUp()']"
+    ).style.display =
+      "none";
   }
 }
+
 checkUser();
 </script>
 </body>
