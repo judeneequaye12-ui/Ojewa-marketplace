@@ -312,19 +312,15 @@ async function signIn() {
     return;
   }
   if (data.user) {
-    showMessage(
-      "You are signed in as " +
-      data.user.email
-    );
-    document.getElementById(
-      "accountTitle"
-    ).textContent =
-      "My Account - " + data.user.email;
-    document.getElementById(
-      "logoutButton"
-    ).style.display =
-      "block";
-  }
+  showMessage(
+    "You are signed in as " +
+    data.user.email
+  );
+
+  setTimeout(function() {
+    window.location.href = "index.html";
+  }, 500);
+}
 }
 /* =========================
    SIGN OUT
