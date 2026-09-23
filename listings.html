@@ -118,37 +118,89 @@ header {
   <h2 class="listings-title">Your Listings</h2>
   <div id="myListings"></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const listings =
-  JSON.parse(localStorage.getItem("ojewaListings")) || [];
-const container =
-  document.getElementById("myListings");
-if (listings.length === 0) {
-  container.innerHTML = `
-    <div class="listing">
-      <div class="pic">
-        📦
+/* =========================
+   SUPABASE CONNECTION
+========================= */
+const SUPABASE_URL =
+  "https://ywzybrglgwyxewuyfpil.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_d_ijgSVbgDi9MnkPtXuJcQ_5GcjKp1T";
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+/* =========================
+   GET CURRENT USER
+========================= */
+async function getCurrentUser() {
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth.getUser();
+  if (error) {
+    console.log(
+      "Could not get current user:",
+      error
+    );
+    return null;
+  }
+  return data.user || null;
+}
+/* =========================
+   LOAD MY LISTINGS
+========================= */
+async function loadListings() {
+  const allListings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+  const currentUser =
+    await getCurrentUser();
+  const container =
+    document.getElementById("myListings");
+  /* =========================
+     KEEP EXISTING LISTINGS SAFE
+  ========================= */
+  const listings =
+    allListings;
+  /* =========================
+     NO LISTINGS
+  ========================= */
+  if (listings.length === 0) {
+    container.innerHTML = `
+      <div class="listing">
+        <div class="pic">
+          📦
+        </div>
+        <h3>No listings yet</h3>
+        <p>
+          Your products will appear here when you post them.
+        </p>
       </div>
-      <h3>No listings yet</h3>
-      <p>
-        Your products will appear here when you post them.
-      </p>
-    </div>
-  `;
-} else {
-  listings.forEach(item => {
+    `;
+    return;
+  }
+  /* =========================
+     DISPLAY LISTINGS
+  ========================= */
+  listings.forEach(function(item) {
     const listingLink =
       "product.html?listing=" +
       encodeURIComponent(item.id);
-    const imageHTML = item.image
-      ? `
-        <img
-          src="${item.image}"
-          alt="${item.name}"
-          onerror="this.style.display='none'; this.parentElement.innerHTML='📦';"
-        >
-      `
-      : "📦";
+    const imageHTML =
+      item.image
+        ? `
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='📦';"
+          >
+        `
+        : "📦";
     container.innerHTML += `
       <div class="listing">
         <a
@@ -164,9 +216,11 @@ if (listings.length === 0) {
         </h3>
         <p>
           <strong>
-            ${item.price.startsWith("GH₵")
-              ? item.price
-              : "GH₵ " + item.price}
+            ${
+              item.price.startsWith("GH₵")
+                ? item.price
+                : "GH₵ " + item.price
+            }
           </strong>
         </p>
         <p>
@@ -176,30 +230,26 @@ if (listings.length === 0) {
           ${item.description}
         </p>
         <small>
-  Posted: ${item.date}
-</small>
-
-<br>
-
-<span class="status-active">
-  🟢 Active
-</span>
-
-<br>
-
-<a
+          Posted: ${item.date}
+        </small>
+        <br>
+        <span class="status-active">
+          🟢 Active
+        </span>
+        <br>
+        <a
           href="${listingLink}"
           class="view-details"
         >
           View Details
-        </a>        <div class="listing-actions">
+        </a>
+        <div class="listing-actions">
           <button
             class="edit-btn"
             onclick="editListing(${item.id})"
           >
             Edit
           </button>
-
           <button
             class="delete-btn"
             onclick="deleteListing(${item.id})"
@@ -209,39 +259,48 @@ if (listings.length === 0) {
         </div>
       </div>
     `;
-    });
+  });
 }
-
+/* =========================
+   DELETE LISTING
+========================= */
 function deleteListing(id) {
   const confirmDelete =
-    confirm("Are you sure you want to delete this listing?");
-
+    confirm(
+      "Are you sure you want to delete this listing?"
+    );
   if (!confirmDelete) {
     return;
   }
-
   let listings =
-    JSON.parse(localStorage.getItem("ojewaListings")) || [];
-
-  listings = listings.filter(function(item) {
-    return item.id != id;
-  });
-
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+  listings =
+    listings.filter(function(item) {
+      return item.id != id;
+    });
   localStorage.setItem(
     "ojewaListings",
     JSON.stringify(listings)
   );
-
-  alert("Listing deleted successfully.");
-
+  alert(
+    "Listing deleted successfully."
+  );
   location.reload();
 }
-
-
+/* =========================
+   EDIT LISTING
+========================= */
 function editListing(id) {
   window.location.href =
-    "sell.html?edit=" + encodeURIComponent(id);
+    "sell.html?edit=" +
+    encodeURIComponent(id);
 }
+/* =========================
+   LOAD PAGE
+========================= */
+loadListings();
 </script>
 <a
   href="account.html"
