@@ -165,8 +165,15 @@ async function loadListings() {
   /* =========================
      KEEP EXISTING LISTINGS SAFE
   ========================= */
-  const listings =
-    allListings;
+  let listings;
+
+if (currentUser) {
+  listings = allListings.filter(function(item) {
+    return !item.userId || item.userId === currentUser.id;
+  });
+} else {
+  listings = allListings;
+}
   /* =========================
      NO LISTINGS
   ========================= */
