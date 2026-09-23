@@ -215,13 +215,8 @@ header {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://ywzybrglgwyxewuyfpil.supabase.co";
-const SUPABASE_KEY = "sb_publishable_d_ijgSVbgDi9MnkPtXuJcQ_5GcjKp1T";
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+
 /* =========================
    PHOTO PREVIEW
 ========================= */
@@ -673,7 +668,14 @@ if (editingListing) {
      CREATE NEW LISTING
   ========================= */
 
-  const { data: { user } } = await supabase.auth.getUser();
+
+
+const supabaseClient = window.supabase.createClient(
+  "https://ywzybrglgwyxewuyfpil.supabase.co",
+  "sb_publishable_d_ijgSVbgDi9MnkPtXuJcQ_5GcjKp1T"
+);
+
+const { data: { user } } = await supabaseClient.auth.getUser();
 
 const listing = {
   id: Date.now(),
