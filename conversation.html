@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OJEWA - Conversation</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+  color: #18221b;
+}
+header {
+  background: #0b6b3a;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+}
+.conversation-box {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+}
+.product-card {
+  background: #f8faf8;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.product-card h2 {
+  margin: 0 0 8px;
+  color: #18221b;
+}
+.product-card p {
+  margin: 6px 0;
+}
+.product-price {
+  color: #0b6b3a;
+  font-size: 20px;
+  font-weight: bold;
+}
+.chat-area {
+  min-height: 180px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.chat-message {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.chat-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: 6px;
+}
+.message-form {
+  display: flex;
+  gap: 8px;
+}
+.message-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.send-button {
+  background: #0b6b3a;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  color: #0b6b3a;
+  text-decoration: none;
+  font-weight: bold;
+}
+.product-icon {
+  font-size: 55px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.product-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #eef5ef;
+  display: block;
+  margin-bottom: 10px;
+}
+.not-found {
+  text-align: center;
+  padding: 30px 15px;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>OJEWA</h1>
+  <p>Conversation 💬</p>
+</header>
+<div class="container">
+  <div class="conversation-box">
+<div
+  id="productCard"
+  class="product-card"
+>
+</div>
+<div
+  id="chatArea"
+  class="chat-area"
+>
+</div>
+<form
+  class="message-form"
+  onsubmit="sendMessage(event)"
+>
+  <input
+    type="text"
+    id="messageInput"
+    class="message-input"
+    placeholder="Write a message..."
+    autocomplete="off"
+  >
+  <button
+    type="submit"
+    class="send-button"
+  >
+    Send
+  </button>
+</form>
+  </div>
+
+<a
+href=“messages.html”
+class=“back”
+
+← Back to Messages
+  </a>
+</div>
+<script>
+/* =========================
+   GET URL PARAMETERS
+========================= */
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+const listingId =
+  params.get("listing");
+const itemKey =
+  params.get("item");
+/* =========================
+   GET PRODUCT INFORMATION
+========================= */
+let product = null;
+/* USER POSTED LISTING */
+if (listingId) {
+  const listings =
+    JSON.parse(
+      localStorage.getItem("ojewaListings")
+    ) || [];
+  product =
+    listings.find(function(listing) {
+      return String(listing.id) ===
+             String(listingId);
+    });
+}
+/* FEATURED PRODUCT */
+if (!product && itemKey) {
+  const products = {
+    iphone: {
+      icon: "📱",
+      name: "iPhone 11 Pro Max",
+      price: "GH₵ 3,500",
+      category: "Phones & Tablets",
+      location: "Accra"
+    },
+    samsung: {
+      icon: "📱",
+      name: "Samsung Galaxy Phone",
+      price: "GH₵ 2,500",
+      category: "Phones & Tablets",
+      location: "Tema"
+    },
+    toyota: {
+      icon: "🚗",
+      name: "Toyota Corolla",
+      price: "GH₵ 65,000",
+      category: "Cars & Vehicles",
+      location: "Accra"
+    },
+    hyundai: {
+      icon: "🚗",
+      name: "Hyundai Elantra",
+      price: "GH₵ 55,000",
+      category: "Cars & Vehicles",
+      location: "Tema"
+    },
+    tyres: {
+      icon: "🛞",
+      name: "Car Tyres Set",
+      price: "GH₵ 1,200",
+      category: "Tyres & Wheels",
+      location: "Accra"
+    },
+    alloy: {
+      icon: "🛞",
+      name: "Alloy Wheels",
+      price: "GH₵ 2,000",
+      category: "Tyres & Wheels",
+      location: "Tema"
+    },
+    smarttv: {
+      icon: "📺",
+      name: "Smart TV",
+      price: "GH₵ 3,000",
+      category: "Electronics",
+      location: "Accra"
+    },
+    laptop: {
+      icon: "💻",
+      name: "Laptop Computer",
+      price: "GH₵ 4,800",
+      category: "Computers",
+      location: "East Legon"
+    },
+    shirt: {
+      icon: "👕",
+      name: "Men's Shirt",
+      price: "GH₵ 150",
+      category: "Fashion",
+      location: "Accra"
+    },
+    dress: {
+      icon: "👗",
+      name: "Women's Dress",
+      price: "GH₵ 250",
+      category: "Fashion",
+      location: "Tema"
+    },
+    sofa: {
+      icon: "🛋️",
+      name: "Sofa Set",
+      price: "GH₵ 3,500",
+      category: "Home & Living",
+      location: "Accra"
+    },
+    dining: {
+      icon: "🍽️",
+      name: "Dining Table",
+      price: "GH₵ 1,800",
+      category: "Home & Living",
+      location: "Tema"
+    },
+    apartment: {
+      icon: "🏠",
+      name: "2 Bedroom Apartment",
+      price: "GH₵ 1,500/month",
+      category: "Property",
+      location: "Accra"
+    },
+    familyhouse: {
+      icon: "🏡",
+      name: "Family House",
+      price: "GH₵ 450,000",
+      category: "Property",
+      location: "Tema"
+    },
+    designer: {
+      icon: "🎨",
+      name: "Graphic Designer",
+      price: "GH₵ 500",
+      category: "Jobs & Services",
+      location: "Accra"
+    },
+    repair: {
+      icon: "🔧",
+      name: "Phone Repair Service",
+      price: "GH₵ 100",
+      category: "Jobs & Services",
+      location: "Tema"
+    }
+  };
+  product =
+    products[itemKey];
+}
+/* =========================
+   DISPLAY PRODUCT
+========================= */
+const productCard =
+  document.getElementById(
+    "productCard"
+  );
+if (product) {
+  const imageSource =
+    product.photo ||
+    product.image ||
+    "";
+  const icon =
+    product.icon ||
+    getIcon(product.category);
+  let imageHTML = "";
+  if (imageSource) {
+    imageHTML = `
+      <img
+        src="${imageSource}"
+        class="product-image"
+        alt="${product.name || "Product"}"
+        onerror="this.style.display='none';"
+      >
+    `;
+  }
+  else {
+    imageHTML = `
+      <div class="product-icon">
+        ${icon}
+      </div>
+    `;
+  }
+  productCard.innerHTML = `
+    ${imageHTML}
+    <h2>
+      ${product.name || "OJEWA Item"}
+    </h2>
+    <p class="product-price">
+      ${formatPrice(product.price)}
+    </p>
+    <p>
+      📍 ${product.location || "Location not specified"}
+    </p>
+    <p>
+      ${product.category || ""}
+    </p>
+  `;
+}
+else {
+  productCard.innerHTML = `
+    <div class="not-found">
+      <div class="product-icon">
+        📦
+      </div>
+      <h2>
+        Product not found
+      </h2>
+      <p>
+        This product could not be found.
+      </p>
+    </div>
+  `;
+}
+/* =========================
+   MESSAGE STORAGE KEY
+========================= */
+function getConversationKey() {
+  return (
+    "ojewaConversation_" +
+    (listingId || itemKey || "general")
+  );
+}
+/* =========================
+   DISPLAY SAVED MESSAGES
+========================= */
+function displayMessages() {
+  const chatArea =
+    document.getElementById(
+      "chatArea"
+    );
+  const key =
+    getConversationKey();
+  const conversationMessages =
+    JSON.parse(
+      localStorage.getItem(key)
+    ) || [];
+  if (
+    conversationMessages.length === 0
+  ) {
+    chatArea.innerHTML = `
+      <p style="text-align:center;color:#777;">
+        Start your conversation with the seller.
+      </p>
+    `;
+    return;
+  }
+  chatArea.innerHTML = "";
+  conversationMessages.forEach(
+    function(message) {
+      const messageDiv =
+        document.createElement("div");
+      messageDiv.className =
+        "chat-message";
+      messageDiv.innerHTML = `
+        <div>
+          ${message.text}
+        </div>
+        <div class="chat-date">
+          ${message.date}
+        </div>
+      `;
+      chatArea.appendChild(
+        messageDiv
+      );
+    }
+  );
+}
+/* =========================
+   SEND MESSAGE
+========================= */
+function sendMessage(event) {
+  event.preventDefault();
+  const input =
+    document.getElementById(
+      "messageInput"
+    );
+  const text =
+    input.value.trim();
+  if (!text) {
+    alert(
+      "Please write a message first."
+    );
+    return;
+  }
+  if (!product) {
+    alert(
+      "Product not found."
+    );
+    return;
+  }
+  const now =
+    new Date().toLocaleString();
+  /* SAVE CONVERSATION */
+  const key =
+    getConversationKey();
+  const conversationMessages =
+    JSON.parse(
+      localStorage.getItem(key)
+    ) || [];
+  conversationMessages.push({
+    text: text,
+    date: now,
+    listingId:
+      listingId || "",
+    itemKey:
+      itemKey || "",
+    productName:
+      product.name || "OJEWA Item"
+  });
+  localStorage.setItem(
+    key,
+    JSON.stringify(
+      conversationMessages
+    )
+  );
+  /* =========================
+     SAVE MESSAGE TO OJEWA MESSAGES
+  ========================= */
+  let messages =
+    JSON.parse(
+      localStorage.getItem(
+        "ojewaMessages"
+      )
+    ) || [];
+  messages.push({
+    id: Date.now(),
+    listingId:
+      listingId || "",
+    itemKey:
+      itemKey || "",
+    productName:
+      product.name || "OJEWA Item",
+    text: text,
+    date: now
+  });
+  localStorage.setItem(
+    "ojewaMessages",
+    JSON.stringify(messages)
+  );
+  /* =========================
+     CREATE NOTIFICATION
+  ========================= */
+  let notifications =
+    JSON.parse(
+      localStorage.getItem(
+        "ojewaNotifications"
+      )
+    ) || [];
+  notifications.push({
+    id:
+      "message_" +
+      Date.now(),
+    type:
+      "messages",
+    icon:
+      "💬",
+    title:
+      "New message about " +
+      (product.name || "your item"),
+    text:
+      text,
+    date:
+      now,
+    read:
+      false,
+    listingId:
+      listingId || "",
+    itemKey:
+      itemKey || "",
+    productName:
+      product.name ||
+      "OJEWA item"
+  });
+  localStorage.setItem(
+    "ojewaNotifications",
+    JSON.stringify(
+      notifications
+    )
+  );
+  input.value = "";
+  displayMessages();
+  alert(
+    "Message sent successfully 💬"
+  );
+}
+/* =========================
+   CATEGORY ICONS
+========================= */
+function getIcon(category) {
+  if (
+    category ===
+    "Phones & Tablets"
+  )
+    return "📱";
+  if (
+    category ===
+    "Computers"
+  )
+    return "💻";
+  if (
+    category ===
+    "Cars & Vehicles"
+  )
+    return "🚗";
+  if (
+    category ===
+    "Tyres & Wheels"
+  )
+    return "🛞";
+  if (
+    category ===
+    "Property"
+  )
+    return "🏠";
+  if (
+    category ===
+    "Fashion"
+  )
+    return "👗";
+  if (
+    category ===
+    "Home & Living"
+  )
+    return "🛋️";
+  if (
+    category ===
+    "Electronics"
+  )
+    return "📺";
+  if (
+    category ===
+    "Jobs & Services"
+  )
+    return "🔧";
+  return "📦";
+}
+/* =========================
+   PRICE FORMAT
+========================= */
+function formatPrice(price) {
+  if (!price)
+    return "Price not specified";
+  const text =
+    String(price).trim();
+  if (
+    text.startsWith("GH₵")
+  )
+    return text;
+  return "GH₵ " + text;
+}
+/* =========================
+   LOAD CONVERSATION
+========================= */
+displayMessages();
+</script>
+</body>
+</html>
