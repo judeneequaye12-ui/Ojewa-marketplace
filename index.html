@@ -247,7 +247,38 @@ line-height:1.3;
     .banner h2{
       font-size:32px
     }
+.banner-content{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+}
 
+.banner-content small{
+  display:inline-block;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1px;
+  opacity:.85;
+}
+
+.banner-content h2{
+  margin:10px 0 8px;
+}
+
+.banner-content p{
+  margin:0;
+  line-height:1.6;
+  max-width:600px;
+  opacity:.9;
+}
+
+.banner-content .sell{
+  flex-shrink:0;
+  margin-top:0;
+  background:#fff;
+  color:var(--green);
+}
     footer{
       text-align:center;
       padding:30px;
@@ -269,7 +300,21 @@ line-height:1.3;
       nav{
         display:none
       }
+.banner{
+  padding:28px 22px;
+}
 
+.banner-content{
+  display:block;
+}
+
+.banner-content h2{
+  font-size:27px;
+}
+
+.banner-content .sell{
+  margin-top:18px;
+}
       .hero h1{
         font-size:44px
       }
@@ -489,17 +534,23 @@ line-height:1.3;
 
 <section class="banner" id="sell">
 
-  <h2>Turn what you have into an opportunity.</h2>
+  <div class="banner-content">
 
-  <p>
-    Post a listing on OJEWA and reach buyers around Ghana.
-  </p>
+    <div>
+      <small>START SELLING ON OJEWA</small>
 
-  <button
-    class="sell"
-    onclick="alert('Selling flow coming next in the OJEWA MVP.')">
-    Post an item
-  </button>
+      <h2>Turn what you have into an opportunity.</h2>
+
+      <p>
+        Post a listing on OJEWA and reach buyers around Ghana.
+      </p>
+    </div>
+
+    <a href="sell.html" class="sell">
+      + Post an item
+    </a>
+
+  </div>
 
 </section>
 
